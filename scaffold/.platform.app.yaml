@@ -1,24 +1,33 @@
 name: scaffold
 type: nodejs:10
 
+size: S
 dependencies:
   nodejs:
-    pm2: "^2.4.0"
+    yarn: "^1.15.0"
+
+# Because there is no composer.json file we deactivate the build flavor.
+build:
+  flavor: none
+
 hooks:
   build: |
+    set -e
     yarn install
     yarn run build
 
 web:
   commands:
-    start: "PM2_HOME=$PLATFORM_APP_DIR/run pm2 start index.js --no-daemon"
-    #in this setup you will find your application stdout and stderr in /app/run/logs
+    # Run a no-op process that uses no CPU resources, since this is a static site.
+    start: sleep infinity
   locations:
-    "/public":
-      passthru: false
-      root: "public"
-      # Whether to allow files not matching a rule or not.
-      allow: true
+    "/":
+      root: "build"
+      index:
+        - "index.html"
+      expires: 300s
+      scripts: false
+      allow: false
       rules:
         \.(css|js|gif|jpe?g|png|ttf|eot|woff2?|otf|html|ico|svg?)$:
           allow: true
