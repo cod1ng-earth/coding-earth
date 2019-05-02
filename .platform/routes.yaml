@@ -2,6 +2,11 @@
     type: upstream
     upstream: "scaffold:http"
 
+"https://{default}/php":
+  type: upstream
+  upstream: "phpservice:http"
+
 "https://www.{default}/":
     type: redirect
     to: "https://{default}/"
+
