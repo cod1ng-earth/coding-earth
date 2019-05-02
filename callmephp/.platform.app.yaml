@@ -1,0 +1,37 @@
+name: phpservice
+type: php:7.3
+
+build:
+  flavor: composer
+
+dependencies:
+  php:
+    wizaplace/php-fpm-status-cli: "^1.0"
+
+variables:
+  env:
+    APP_ENV: 'prod'
+    APP_DEBUG: 0
+
+hooks:
+  build: |
+    set -e
+    bin/console assets:install --no-debug
+    bin/console cache:clear
+  deploy: |
+    set -e
+    bin/console assets:install --symlink --relative public
+    bin/console cache:clear
+
+web:
+  locations:
+    "/":
+      root: "public"
+      passthru: "/index.php"
+
+mounts:
+  "/var/cache": "shared:files/cache"
+  "/var/log": "shared:files/log"
+  "/var/sessions": "shared:files/sessions"
+
+disk: 2048
