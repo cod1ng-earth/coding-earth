@@ -1,12 +1,10 @@
-// Load the http module to create an http server.
-var http = require('http');
+const Static = require('node-static');
+const platformsh = require("platformsh").config();
 
-// Load the Platform.sh configuration.
-var config = require("platformsh").config();
+const file = new Static.Server('./build');
 
-var server = http.createServer(function (request, response) {
-  response.writeHead(200, {"Content-Type": "text/html"});
-  response.end("<html><head><title>Hello node</title></head><body><h1><img src='public/js.png'>Hello Node</h1><h3>Platform configuration:</h3><pre>"+JSON.stringify(config, null, 4) + "</pre></body></html>");
-});
-
-server.listen(config.port);
+require('http').createServer(function (request, response) {
+    request.addListener('end', function () {
+        file.serve(request, response);
+    }).resume();
+}).listen(platformsh.port);

@@ -1,13 +1,9 @@
-name: scaffold
+name: node
 type: nodejs:10
 
 dependencies:
   nodejs:
     pm2: "^2.4.0"
-hooks:
-  build: |
-    yarn install
-    yarn run build
 
 web:
   commands:
