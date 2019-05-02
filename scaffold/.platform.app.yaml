@@ -1,9 +1,9 @@
-name: node
+name: scaffold
 type: nodejs:10
 
 dependencies:
   nodejs:
-    pm2: "^2.0.0"
+    pm2: "^2.4.0"
 
 web:
   commands:
@@ -24,4 +24,4 @@ web:
 mounts:
   "/run": "shared:files/run"
 
-disk: 512
+disk: 128

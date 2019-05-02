@@ -1,6 +1,6 @@
 "https://{default}/":
     type: upstream
-    upstream: "node:http"
+    upstream: "scaffold:http"
 
 "https://www.{default}/":
     type: redirect
