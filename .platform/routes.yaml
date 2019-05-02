@@ -2,11 +2,11 @@
     type: upstream
     upstream: "scaffold:http"
 
-"https://{default}/node":
+"https://node.{default}/":
   type: upstream
   upstream: "node:http"
 
-"https://{default}/php":
+"https://php.{default}/":
   type: upstream
   upstream: "phpservice:http"
 
