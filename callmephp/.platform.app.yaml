@@ -28,7 +28,8 @@ web:
     "/":
       root: "public"
       passthru: "/index.php"
-
+      headers:
+        "Access-Control-Allow-Origin": "*"
 mounts:
   "/var/cache": "shared:files/cache"
   "/var/log": "shared:files/log"
