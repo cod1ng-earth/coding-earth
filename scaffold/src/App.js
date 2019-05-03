@@ -1,24 +1,19 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+
+import CallMeNode from './components/CallMeNode'
+import CallMePhp from './components/CallMePhp'
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h2> putting it all together</h2>
+      <div className="col-6">
+        <CallMeNode/>
+      </div>
+
+      <div className="col-6">
+        <CallMePhp/>
+      </div>
     </div>
   );
 }
