@@ -11,7 +11,7 @@ export default props => {
 
     useEffect( () => {
         async function fetchData() {
-            console.log("Q" + process.env.REACT_APP_COORDINATOR + "Q")
+            console.log("QQQ" + process.env.REACT_APP_COORDINATOR + "Q")
             const routes = await coordinator
             setRoutes(routes.data);
         }
