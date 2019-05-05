@@ -20,7 +20,7 @@ export default props => {
 
   return (
     <div className="App">
-        <div>known routes</div>
+        <div>Known routes</div>
         <ul>
             {Object.keys(routes).map(k => <li key={k}>{k}</li>)}
         </ul>
