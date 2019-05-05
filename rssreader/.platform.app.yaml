@@ -1,0 +1,17 @@
+name: rssreader
+type: nodejs:10
+
+dependencies:
+
+web:
+  commands:
+    start: "micro -l tcp://0.0.0.0:$PORT"
+    #in this setup you will find your application stdout and stderr in /app/run/logs
+  locations:
+    "/":
+      passthru: true
+
+mounts:
+  "/run": "shared:files/run"
+
+disk: 128

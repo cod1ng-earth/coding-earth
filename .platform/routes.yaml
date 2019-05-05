@@ -2,15 +2,21 @@
     type: upstream
     upstream: "scaffold:http"
 
+"https://www.{default}/":
+  type: redirect
+  to: "https://{default}/"
+
 "https://coordinator.{default}/":
   type: upstream
   upstream: "coordinator:http"
+
+"https://rssreader.{default}/":
+  type: upstream
+  upstream: "rssreader:http"
 
 "https://php.{default}/":
   type: upstream
   upstream: "phpservice:http"
 
-"https://www.{default}/":
-    type: redirect
-    to: "https://{default}/"
+
 

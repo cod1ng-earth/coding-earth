@@ -11,7 +11,7 @@ export default props => {
     useEffect( () => {
         async function fetchData() {
             const routes = await coordinator
-            const endpoint = routes.data['coordinator'].endpoint
+            const endpoint = routes.data['rssreader'].endpoint
             const nodeResult = await axios.get(endpoint);
             console.log(nodeResult.data)
             setContent(nodeResult.data);
