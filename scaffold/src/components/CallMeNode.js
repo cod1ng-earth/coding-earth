@@ -1,23 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { darcula } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-const endpoint = process.env.REACT_APP_CALLMENODE;
+import axios from 'axios'
+import routes from '../routes'
 
 export default props => {
-    const [content, setContent] = useState("");
+    const [content, setContent] = useState({});
 
     useEffect( () => {
         async function fetchData() {
+            const endpoint = routes.node.endpoint
             const nodeResult = await axios.get(endpoint);
-            setContent(nodeResult);
+            console.log(nodeResult.data)
+            setContent(nodeResult.data);
         }
         fetchData()
     }, []);
 
+    const sContent = JSON.stringify(content, null, 4)
+
     return (
         <div>
             <h2>from Node</h2>
-            {content}
+            <SyntaxHighlighter language="json" style={darcula}>{sContent}</SyntaxHighlighter>
         </div>
     );
 }

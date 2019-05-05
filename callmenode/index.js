@@ -1,5 +1,9 @@
 // Load the http module to create an http server.
-var http = require('http');
+const express = require('express')
+const cors = require('cors')
+const app = express()
+
+app.use(cors())
 
 // Load the Platform.sh configuration.
 const config = require("platformsh-config").config();
@@ -11,11 +15,9 @@ if (!config.isValidPlatform()) {
   PORT=config.port;
 }
 
-var server = http.createServer(function (request, response) {
-  response.writeHead(200, {"Content-Type": "text/html"});
-  response.end("<html><head><title>Hello node</title></head><body><h1><img src='public/js.png'>Hello Node</h1><h3>Platform configuration:</h3><pre>"+JSON.stringify(config, null, 4) + "</pre></body></html>");
-});
+app.get('/discover', (req, res) => res.json({service: true}))
+app.get('/', (req, res) => {
+  res.json(config)
+})
 
-server.listen(PORT, () => {
-  console.log(`started on ${PORT}`)
-});
+app.listen(PORT, () => console.log(`node app listening on port ${PORT}!`))

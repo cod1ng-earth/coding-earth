@@ -16,7 +16,7 @@ web:
       # Whether to allow files not matching a rule or not.
       allow: true
       rules:
-        \.(css|js|gif|jpe?g|png|ttf|eot|woff2?|otf|html|ico|svg?)$:
+        \.(css|js|gif|jpe?g|png|ttf|eot|woff2?|otf|html|ico|svg|json?)$:
           allow: true
         ^/robots\.txt$:
           allow: true

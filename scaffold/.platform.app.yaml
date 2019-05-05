@@ -33,6 +33,8 @@ web:
           allow: true
         ^/robots\.txt$:
           allow: true
+      headers:
+        Access-Control-Allow-Origin: "*"
 
 mounts:
   "/run": "shared:files/run"
