@@ -3,7 +3,7 @@ type: nodejs:10
 
 web:
   commands:
-    start: "micro -l tcp://0.0.0.0:$PORT"
+    start: "./node_modules/.bin/micro -l tcp://0.0.0.0:$PORT"
     #in this setup you will find your application stdout and stderr in /app/run/logs
   locations:
     "/":
