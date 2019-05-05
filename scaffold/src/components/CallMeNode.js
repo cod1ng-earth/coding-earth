@@ -3,14 +3,15 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { darcula } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 import axios from 'axios'
-import routes from '../routes'
+import coordinator from '../coordinator'
 
 export default props => {
     const [content, setContent] = useState({});
 
     useEffect( () => {
         async function fetchData() {
-            const endpoint = routes.node.endpoint
+            const routes = await coordinator
+            const endpoint = routes.data['coordinator'].endpoint
             const nodeResult = await axios.get(endpoint);
             console.log(nodeResult.data)
             setContent(nodeResult.data);

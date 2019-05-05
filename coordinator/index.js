@@ -1,6 +1,8 @@
-// Load the http module to create an http server.
+require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
+const routesDef = require('./routesDef')
+
 const app = express()
 
 app.use(cors())
@@ -15,7 +17,7 @@ if (!config.isValidPlatform()) {
   PORT=config.port;
 }
 
-app.get('/discover', (req, res) => res.json({service: true}))
+app.get('/services', (req, res) => res.json(routesDef(config.routesDef)))
 app.get('/', (req, res) => {
   res.json(config)
 })

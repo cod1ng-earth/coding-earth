@@ -2,9 +2,9 @@
     type: upstream
     upstream: "scaffold:http"
 
-"https://node.{default}/":
+"https://coordinator.{default}/":
   type: upstream
-  upstream: "node:http"
+  upstream: "coordinator:http"
 
 "https://php.{default}/":
   type: upstream

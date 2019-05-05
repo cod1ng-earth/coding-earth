@@ -1,11 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import CallMeNode from './components/CallMeNode'
 import CallMePhp from './components/CallMePhp'
 
-import routes from './routes';
+import coordinator from "./coordinator";
 
-function App() {
+export default props => {
+
+    const [routes, setRoutes] = useState({});
+
+    useEffect( () => {
+        async function fetchData() {
+            const routes = await coordinator
+            setRoutes(routes.data);
+        }
+        fetchData()
+    }, []);
+
 
   return (
     <div className="App">
@@ -15,14 +26,15 @@ function App() {
         </ul>
       <h2> putting it all together</h2>
       <div className="col-6">
-          <CallMeNode/>
+          {<CallMeNode/>}
       </div>
 
       <div className="col-6">
-        <CallMePhp/>
+          {<CallMePhp/>}
+
       </div>
     </div>
   );
 }
 
-export default App;
+
