@@ -1,8 +1,6 @@
 name: rssreader
 type: nodejs:10
 
-dependencies:
-
 web:
   commands:
     start: "micro -l tcp://0.0.0.0:$PORT"
