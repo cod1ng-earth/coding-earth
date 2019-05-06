@@ -13,4 +13,4 @@ const PORT= !config.isValidPlatform() ? (process.env.PORT || 3000) : config.port
 
 app.get('/', (req, res) => res.json(routesDef(config.routesDef)))
 
-app.listen(PORT, () => console.log(`node app listening on port ${PORT}!`))
+app.listen(PORT, () => console.log(`coordinator app listening on port ${PORT}!`))

@@ -1,5 +1,8 @@
 import axios from 'axios'
 
-const promise = axios.get(process.env.REACT_APP_COORDINATOR)
+const endpoint = process.env.REACT_APP_COORDINATOR ||
+                 "https://coordinator." + window.location.hostname
+
+const promise = axios.get(endpoint)
 
 export default promise;

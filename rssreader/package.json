@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "micro",
+    "start": "micro -l tcp://0.0.0.0:$PORT",
     "dev": "micro-dev"
   },
   "author": "",
