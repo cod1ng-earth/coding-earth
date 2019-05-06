@@ -1,25 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'
-import coordinator from '../coordinator'
+
+import componentData from "../componentData";
+import Heading from "./Heading";
 
 export default props => {
-    const [content, setContent] = useState("");
+    const [content, setContent] = useState({});
 
     useEffect( () => {
-        async function fetchData() {
-            const routes = await coordinator
-            const endpoint = routes.data['phpservice'].endpoint
-            const phpResult = await axios.get(endpoint);
-            console.log(phpResult)
-            setContent(phpResult.data);
-        }
-        fetchData()
+        componentData("phpservice", setContent)
     }, []);
+
+    const sContent = JSON.stringify(content, null, 4)
 
     return (
         <div>
-            <h2>from PHP</h2>
-            {content}
+            <Heading level={2}>Calendar</Heading>
+            {sContent}
         </div>
     );
 }

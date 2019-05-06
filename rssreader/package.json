@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "micro": "^9.3.4"
+    "micro": "^9.3.4",
+    "rss-parser": "^3.7.0"
   },
   "devDependencies": {
     "micro-dev": "^3.0.0"

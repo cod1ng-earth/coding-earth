@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from 'react';
 
-import CallMeNode from './components/CallMeNode'
+import RssReader from './components/RssReader'
 import CallMePhp from './components/CallMePhp'
+import styled from "styled-components";
+import { Container, Row, Col } from 'react-awesome-styled-grid'
+import Heading from './components/Heading'
 
 import coordinator from "./coordinator";
+
+const Wrapper = styled.section`
+  font-family: 'Source Sans Pro', sans-serif;
+`;
 
 export default props => {
 
@@ -19,21 +26,31 @@ export default props => {
 
 
   return (
-    <div className="App">
-        <div>Known routes</div>
-        <ul>
-            {Object.keys(routes).map(k => <li key={k}>{k}</li>)}
-        </ul>
-      <h2> putting it all together</h2>
-      <div className="col-6">
-          {<CallMeNode/>}
-      </div>
+    <Wrapper>
 
-      <div className="col-6">
-          {<CallMePhp/>}
+        <Container>
+            <Heading level={1}>Known routes</Heading>
+            <Row>
+                <Col>
+                    <ul>
+                        {Object.keys(routes).map(k => <li key={k}>{k}</li>)}
+                    </ul>
+                </Col>
+            </Row>
+        </Container>
 
-      </div>
-    </div>
+
+        <Container>
+            <Row>
+                <Col>
+                    <RssReader/>
+                </Col>
+                <Col>
+                    <CallMePhp></CallMePhp>
+                </Col>
+            </Row>
+        </Container>
+    </Wrapper>
   );
 }
 

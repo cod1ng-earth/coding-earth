@@ -5,9 +5,11 @@
   "dependencies": {
     "axios": "^0.18.0",
     "react": "^16.8.6",
+    "react-awesome-styled-grid": "^2.2.3",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.0",
-    "react-syntax-highlighter": "^10.2.1"
+    "react-syntax-highlighter": "^10.2.1",
+    "styled-components": "^4.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
