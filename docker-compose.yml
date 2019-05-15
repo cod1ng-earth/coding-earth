@@ -1,0 +1,40 @@
+version: '3.4'
+
+services:
+  web:
+    build:
+      context: ./web
+    ports:
+      - "80:80"
+    volumes:
+      - ./web/conf.d:/etc/nginx/conf.d:rw,cached
+    depends_on:
+      - rssreader
+      - coordinator
+      - callmephp
+      - scaffold
+
+  scaffold:
+    build:
+      context: ./scaffold
+    volumes:
+      - ./scaffold:/app:rw,cached
+
+  coordinator:
+    build:
+      context: ./coordinator
+    volumes:
+      - ./coordinator:/app:rw,cached
+
+  rssreader:
+    build:
+      context: ./rssreader
+    volumes:
+      - ./rssreader:/app:rw,cached
+
+  callmephp:
+    build:
+      context: ./callmephp
+    volumes:
+      - ./callmephp:/var/www/app:rw,cached
+
