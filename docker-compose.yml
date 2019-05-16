@@ -9,9 +9,9 @@ services:
     volumes:
       - ./web/conf.d:/etc/nginx/conf.d:rw,cached
     depends_on:
-      - rssreader
       - coordinator
-      - callmephp
+      - rssreader
+      - calendarservice
       - scaffold
 
   scaffold:
@@ -32,9 +32,9 @@ services:
     volumes:
       - ./rssreader:/app:rw,cached
 
-  callmephp:
+  calendarservice:
     build:
-      context: ./callmephp
+      context: ./calendarservice
     volumes:
-      - ./callmephp:/var/www/app:rw,cached
+      - ./calendarservice:/var/www/app:rw,cached
 

@@ -1,0 +1,47 @@
+#!/usr/bin/env node
+const path = require('path')
+const fs = require('fs')
+const YAML = require('yaml')
+
+const PLATFORMSH_APPYML_FILENAME = ".platform.app.yaml";
+
+const isPlatformShService = (dirName) => {
+    const files = fs.readdirSync(dirName)
+    return files.filter(f => f === PLATFORMSH_APPYML_FILENAME).length > 0
+}
+
+const skipDirs = dir => {
+    return !(dir.startsWith(".") || dir.startsWith("_"))
+}
+
+const readPlatformFiles = (rootPath, defaultDomain) => {
+    const exposedServices = {};
+    const dirs = fs.readdirSync(rootPath).filter(skipDirs)
+    for(dir of dirs) {
+        const theDir = rootPath + "/" + dir
+        const stats = fs.statSync(theDir)
+        if (stats.isDirectory()) {
+            if (isPlatformShService(theDir)) {
+                const platformFile = `${theDir}/${PLATFORMSH_APPYML_FILENAME}`
+                const f = fs.readFileSync(platformFile).toString()
+                const definition = YAML.parse(f)
+                const endpoint = `//${definition.name}.${defaultDomain}/`
+
+                exposedServices[endpoint] = {
+                    original_url: `//${definition.name}.{default}/`,
+                    type: 'upstream',
+                    upstream: definition.name,
+
+                }
+            }
+        }
+    }
+    return exposedServices
+}
+
+const definitions = readPlatformFiles(path.resolve(".."), "devday.local")
+const b64 = Buffer.from(JSON.stringify(definitions)).toString('base64')
+console.dir(definitions)
+console.dir(b64)
+
+fs.writeFileSync(".env", `PLATFORM_ROUTES=${b64}`)

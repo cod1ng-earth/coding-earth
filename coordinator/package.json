@@ -15,6 +15,7 @@
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
     "express": "^4.16.4",
-    "platformsh-config": "^2.2.4"
+    "platformsh-config": "^2.2.4",
+    "yaml": "^1.5.1"
   }
 }

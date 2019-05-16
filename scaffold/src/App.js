@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import RssReader from './components/RssReader'
-import CallMePhp from './components/CallMePhp'
+import CalendarService from './components/CalendarService'
 import styled from "styled-components";
 import { Container, Row, Col } from 'react-awesome-styled-grid'
 import Heading from './components/Heading'
@@ -46,7 +46,7 @@ export default props => {
                     <RssReader/>
                 </Col>
                 <Col>
-                    <CallMePhp></CallMePhp>
+                    <CalendarService></CalendarService>
                 </Col>
             </Row>
         </Container>

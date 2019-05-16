@@ -7,7 +7,7 @@ export default props => {
     const [content, setContent] = useState({});
 
     useEffect( () => {
-        componentData("phpservice", setContent)
+        componentData("calendarservice", setContent)
     }, []);
 
     const sContent = JSON.stringify(content, null, 4)

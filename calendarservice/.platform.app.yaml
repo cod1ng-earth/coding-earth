@@ -1,4 +1,4 @@
-name: phpservice
+name: calendarservice
 type: php:7.3
 
 build:

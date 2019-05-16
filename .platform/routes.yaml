@@ -14,9 +14,9 @@
   type: upstream
   upstream: "rssreader:http"
 
-"https://php.{default}/":
+"https://calendarservice.{default}/":
   type: upstream
-  upstream: "phpservice:http"
+  upstream: "calendarservice:http"
 
 
 
