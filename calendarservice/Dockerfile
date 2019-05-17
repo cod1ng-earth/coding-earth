@@ -13,9 +13,6 @@ ARG SYMFONY_SKIP_REGISTRATION=1
 ENV APP_ENV=${APP_ENV}
 ENV APP_PATH=/app
 
-RUN addgroup app --gid $GID
-RUN adduser app --disabled-login --uid $UID --ingroup app
-
 RUN apt-get update && apt-get install -y \
     zlib1g-dev \
     unzip \
@@ -47,8 +44,6 @@ RUN set -eux; \
 	composer run-script post-install-cmd;
 RUN chown -R app:app var; \
 	chmod +x bin/console; sync
-
-USER app
 
 EXPOSE 3000
 CMD ["bin/console", "server:run", "0.0.0.0:3000"]

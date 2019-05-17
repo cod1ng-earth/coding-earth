@@ -6,7 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "nelmio/cors-bundle": "^1.5",
-        "platformsh/symfonyflex-bridge": "^2.0",
+        "platformsh/symfonyflex-bridge": "^2.1",
         "sensio/framework-extra-bundle": "^5.3",
         "symfony/console": "4.2.*",
         "symfony/dotenv": "4.2.*",
