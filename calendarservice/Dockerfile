@@ -11,7 +11,7 @@ ARG WITH_XDEBUG=false
 ARG SYMFONY_SKIP_REGISTRATION=1
 
 ENV APP_ENV=${APP_ENV}
-ENV APP_PATH=/app
+ENV APP_PATH=/var/www/app
 
 RUN apt-get update && apt-get install -y \
     zlib1g-dev \
