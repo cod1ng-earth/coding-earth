@@ -5,7 +5,7 @@ services:
     build:
       context: ./web
     ports:
-      - "80:80"
+      - "${PORT}:80"
     volumes:
       - ./web/conf.d:/etc/nginx/conf.d:rw,cached
     depends_on:

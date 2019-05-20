@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 const endpoint = process.env.REACT_APP_COORDINATOR ||
-                 "//coordinator." + window.location.hostname
+                 "//coordinator." + window.location.host
+
 
 const promise = axios.get(endpoint)
 
