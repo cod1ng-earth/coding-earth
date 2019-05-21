@@ -32,14 +32,18 @@ services:
     volumes:
       - ./rssreader:/app:rw,cached
     depends_on:
-      - rssreader_elasticsearch
+      - rssreaderelasticsearch
 
-  rssreader_elasticsearch:
+  rssreaderelasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.5.4
     environment:
       - node.name=es01
       - discovery.type=single-node
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - http.cors.enabled=true
+      - http.cors.allow-origin=*
+      - http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization
+      - http.cors.allow-credentials=true
     ulimits:
       memlock:
         soft: -1
