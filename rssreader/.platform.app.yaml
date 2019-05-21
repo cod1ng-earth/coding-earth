@@ -20,4 +20,4 @@ disk: 128
 crons:
   news:
     spec: '*/15 * * * *'
-    cmd: 'bin/readFeeds.js'
+    cmd: 'cd bin; ./readFeeds.js'
