@@ -13,6 +13,11 @@ mounts:
   "/run": "shared:files/run"
 
 relationships:
-  elasticsearch: "rssreader_elasticsearch:elasticsearch"
+  elasticsearch: "rssreaderelasticsearch:elasticsearch"
 
 disk: 128
+
+crons:
+  news:
+    spec: '*/15 * * * *'
+    cmd: 'bin/readFeeds.js'
