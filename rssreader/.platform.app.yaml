@@ -12,4 +12,7 @@ web:
 mounts:
   "/run": "shared:files/run"
 
+relationships:
+  elasticsearch: "rssreader_elasticsearch:elasticsearch"
+
 disk: 128

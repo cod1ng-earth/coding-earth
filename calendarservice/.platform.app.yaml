@@ -35,4 +35,4 @@ mounts:
   "/var/log": "shared:files/log"
   "/var/sessions": "shared:files/sessions"
 
-disk: 2048
+disk: 512

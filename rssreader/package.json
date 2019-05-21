@@ -10,7 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "elasticsearch": "^16.0.0",
     "micro": "^9.3.4",
+    "platformsh-config": "^2.2.4",
     "rss-parser": "^3.7.0"
   },
   "devDependencies": {

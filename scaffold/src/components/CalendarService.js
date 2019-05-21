@@ -4,18 +4,20 @@ import componentData from "../componentData";
 import Heading from "./Heading";
 
 export default props => {
-    const [content, setContent] = useState({});
+    const [content, setContent] = useState([]);
 
     useEffect( () => {
         componentData("calendarservice", setContent)
     }, []);
 
-    const sContent = JSON.stringify(content, null, 4)
+    const sContent = content.map( date => (<li>{date}</li>))
 
     return (
         <div>
             <Heading level={2}>Calendar</Heading>
+            <ul>
             {sContent}
+            </ul>
         </div>
     );
 }

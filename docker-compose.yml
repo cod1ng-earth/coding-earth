@@ -31,6 +31,21 @@ services:
       context: ./rssreader
     volumes:
       - ./rssreader:/app:rw,cached
+    depends_on:
+      - rssreader_elasticsearch
+
+  rssreader_elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.5.4
+    environment:
+      - node.name=es01
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata01:/usr/share/elasticsearch/data
 
   calendarservice:
     build:
@@ -38,3 +53,6 @@ services:
     volumes:
       - ./calendarservice:/var/www/app:rw,cached
 
+volumes:
+  esdata01:
+    driver: local
