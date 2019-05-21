@@ -1,8 +1,10 @@
 FROM node:10-alpine
 
-WORKDIR /app
+RUN npm install -g yarn
 
+WORKDIR /app
 COPY package*.json ./
 RUN npm install
+COPY . ./
 
-CMD [ "npm", "run", "start" ]
+CMD [ "yarn", "run", "start" ]

@@ -19,18 +19,21 @@ services:
       context: ./scaffold
     volumes:
       - ./scaffold:/app:rw,cached
+      - /app/node_modules
 
   coordinator:
     build:
       context: ./coordinator
     volumes:
       - ./coordinator:/app:rw,cached
+      - /app/node_modules
 
   rssreader:
-    build:
-      context: ./rssreader
+    build: ./rssreader
     volumes:
-      - ./rssreader:/app:rw,cached
+      - ./rssreader:/app
+      - /app/node_modules
+     # - ./rssreader/node_modules:/app/node_modules
     depends_on:
       - rssreaderelasticsearch
 
@@ -56,7 +59,8 @@ services:
       context: ./calendarservice
     volumes:
       - ./calendarservice:/var/www/app:rw,cached
-
+      - /var/www/app/vendor
+      
 volumes:
   esdata01:
     driver: local

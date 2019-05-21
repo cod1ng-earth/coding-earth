@@ -36,7 +36,7 @@ RUN set -eux; \
 
 COPY . ./
 
-VOLUME ${APP_PATH}
+#VOLUME ${APP_PATH}
 
 RUN set -eux; \
 	mkdir -p var/cache var/log; \
