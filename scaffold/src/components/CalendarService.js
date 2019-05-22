@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import componentData from "../componentData";
-import Heading from "./Heading";
+import { Columns } from 'react-bulma-components';
 
 export default props => {
     const [content, setContent] = useState([]);
@@ -10,14 +10,13 @@ export default props => {
         componentData("calendarservice", setContent)
     }, []);
 
-    const sContent = content.map( date => (<li>{date}</li>))
+    const sContent = content.map( date => (<Columns.Column size={2}><p className="day">{date.d}</p></Columns.Column>));
 
     return (
-        <div>
-            <Heading level={2}>Calendar</Heading>
-            <ul>
+        <div className="calendar">
+            <Columns >
             {sContent}
-            </ul>
+            </Columns>
         </div>
     );
 }

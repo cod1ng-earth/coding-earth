@@ -1,0 +1,11 @@
+@import "~_variables.sass";
+
+.calendar {
+  .day {
+    border-radius: 100%;
+    background-color: $grey-lighter;
+    display:inline-block;
+    padding: 1em;
+    line-height: normal;
+  }
+}

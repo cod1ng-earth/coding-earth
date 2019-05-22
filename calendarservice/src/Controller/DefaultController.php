@@ -18,11 +18,22 @@ class DefaultController extends AbstractController
         $d = new DateTime();
         $d->modify("first day of this month");
 
-        $result = [$d->format("Y-m-d")];
+        $result = [];
+
+        $result[] = [
+            "d" => $d->format("d"),
+            "m" => $d->format("m"),
+            "y" => $d->format("Y")
+        ];
 
         $oneDay = new DateInterval("P1D");
         for ($i = 0; $i < 30; $i++) {
-            $result[] = $d->add($oneDay)->format("Y-m-d");
+            $d->add($oneDay);
+            $result[] = [
+                "d" => $d->format("d"),
+                "m" => $d->format("m"),
+                "y" => $d->format("Y")
+            ];
         }
 
         return new JsonResponse($result);

@@ -1,56 +1,34 @@
-import React, { useState, useEffect } from 'react';
-
+import React from 'react'
+import Navbar from './components/Navbar'
+import HelperBar from './components/HelperBar'
 import RssReader from './components/RssReader'
 import CalendarService from './components/CalendarService'
-import styled from "styled-components";
-import { Container, Row, Col } from 'react-awesome-styled-grid'
-import Heading from './components/Heading'
 
-import coordinator from "./coordinator";
+import './index.scss';
 
-const Wrapper = styled.section`
-  font-family: 'Source Sans Pro', sans-serif;
-`;
+import {  Section, Container, Columns, Heading} from 'react-bulma-components/lib';
 
 export default props => {
 
-    const [routes, setRoutes] = useState({});
-
-    useEffect( () => {
-        async function fetchData() {
-            const routes = await coordinator
-            setRoutes(routes.data);
-        }
-        fetchData()
-    }, []);
-
-
   return (
-    <Wrapper>
-
-        <Container>
-            <Heading level={1}>Known routes</Heading>
-            <Row>
-                <Col>
-                    <ul>
-                        {Object.keys(routes).map(k => <li key={k}>{k}</li>)}
-                    </ul>
-                </Col>
-            </Row>
-        </Container>
-
-
-        <Container>
-            <Row>
-                <Col>
-                    <RssReader/>
-                </Col>
-                <Col>
-                    <CalendarService></CalendarService>
-                </Col>
-            </Row>
-        </Container>
-    </Wrapper>
+      <div>
+        <Navbar />
+          <Section>
+              <Container>
+                  <Columns>
+                      <Columns.Column>
+                          <Heading>News</Heading>
+                          <RssReader/>
+                      </Columns.Column>
+                      <Columns.Column>
+                          <Heading>Calendar</Heading>
+                          <CalendarService></CalendarService>
+                      </Columns.Column>
+                  </Columns>
+              </Container>
+      </Section>
+       <HelperBar />
+    </div>
   );
 }
 
