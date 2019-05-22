@@ -4,7 +4,8 @@ RUN npm install -g yarn
 
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
+COPY yarn.lock ./
+RUN yarn install
 COPY . ./
 
 CMD [ "yarn", "run", "start" ]
