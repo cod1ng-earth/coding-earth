@@ -1,5 +1,9 @@
 version: '3.4'
 
+volumes:
+  esdata01:
+    driver: local
+
 services:
   web:
     build:
@@ -61,6 +65,3 @@ services:
       - ./calendarservice:/var/www/app:rw,cached
       - /var/www/app/vendor
       
-volumes:
-  esdata01:
-    driver: local
