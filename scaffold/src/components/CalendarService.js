@@ -7,15 +7,19 @@ export default props => {
     const [content, setContent] = useState([]);
 
     useEffect( () => {
-        componentData("calendarservice", setContent)
+        componentData(props.tag, setContent)
     }, []);
-
-    const sContent = content.map( date => (<Columns.Column size={2}><p className="day">{date.d}</p></Columns.Column>));
 
     return (
         <div className="calendar">
-            <Columns >
-            {sContent}
+            <Columns className="is-mobile">
+            {content.map(
+                date => (
+                    <Columns.Column size={2} key={date.d}>
+                        <p className="day">{date.d}</p>
+                    </Columns.Column>
+                ))
+            }
             </Columns>
         </div>
     );

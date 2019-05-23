@@ -1,19 +1,8 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 
 import {Navbar} from 'react-bulma-components/lib';
-import coordinator from "../coordinator";
 
-export default function () {
-    const [routes, setRoutes] = useState({});
-
-    useEffect(() => {
-        async function fetchData() {
-            const routes = await coordinator;
-            setRoutes(routes.data);
-        }
-
-        fetchData()
-    }, []);
+export default function (props) {
 
     return <Navbar
         color="black"
@@ -21,7 +10,7 @@ export default function () {
     >
         <Navbar.Menu>
             <Navbar.Container>
-                {Object.keys(routes).map(k =>
+                {Object.keys(props.services).map(k =>
                     <Navbar.Item href="#" key={k}>{k}</Navbar.Item>
                 )}
             </Navbar.Container>

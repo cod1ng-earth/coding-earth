@@ -17,6 +17,3 @@
 "https://calendarservice.{default}/":
   type: upstream
   upstream: "calendarservice:http"
-
-
-

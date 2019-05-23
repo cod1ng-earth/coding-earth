@@ -7,15 +7,14 @@ export default props => {
     const [content, setContent] = useState({});
 
     useEffect( () => {
-        componentData("rssreader", setContent)
+        componentData(props.tag, setContent)
     }, []);
-
 
     return (
         <Card>
             {content.news ?
                 content.news.map(item => (
-                    <Card>
+                    <Card key={item.id}>
                         <Card.Header>
                             <Card.Header.Title>{item.title}</Card.Header.Title>
                         </Card.Header>
