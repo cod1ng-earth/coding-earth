@@ -1,0 +1,17 @@
+#see https://docs.platform.sh/configuration/app-containers.html
+#this is just a very basic node example
+
+name: #service_name#
+type: nodejs:10
+
+web:
+  commands:
+    start: "npm run start"
+  locations:
+    "/":
+      passthru: true
+
+mounts:
+  "/run": "shared:files/run"
+
+disk: 128
