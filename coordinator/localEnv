@@ -46,5 +46,5 @@ const definitions = readPlatformFiles(path.resolve(".."), defaultHost)
 const b64 = Buffer.from(JSON.stringify(definitions)).toString('base64')
 
 const env =  `PLATFORM_ROUTES=${b64}\nDEFAULT_HOST=${defaultHost}`
-
+console.log(definitions)
 fs.writeFileSync(".env",env)

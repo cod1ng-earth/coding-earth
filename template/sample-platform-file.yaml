@@ -1,7 +1,7 @@
 #see https://docs.platform.sh/configuration/app-containers.html
 #this is just a very basic node example
 
-name: #service_name#
+name: #servicename#
 type: nodejs:10
 
 web:

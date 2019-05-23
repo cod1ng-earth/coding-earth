@@ -32,14 +32,25 @@ ifeq (cli,$(firstword $(MAKECMDGOALS)))
     endif
 endif
 
+ifeq (logs,$(firstword $(MAKECMDGOALS)))
+    LOGS_TAIL := 0
+    ifdef tail
+        LOGS_TAIL := $(tail)
+    endif
+endif
+
 help: ##@other Show this help.
 	@perl -e '$(HELP_FUN)' $(MAKEFILE_LIST)
 .PHONY: help
 
-prepare: ##@setup env files and build coordinator env
+prepare: ##@setup copy env files and build coordinator env
 	cp .env.dist .env
-	cd coordinator && cp .env.dist .env && npm install && node ./localEnv
+	cd coordinator && cp .env.dist .env
 .PHONY: prepare
+
+coordinator: ##@setup scan local dirs and create a platform.sh compatible local env in coordinator
+	cd coordinator && npm install && node ./localEnv
+.PHONY: coordinator
 
 setup: prepare build-images start ##@setup Create dev enviroment
 .PHONY: setup
