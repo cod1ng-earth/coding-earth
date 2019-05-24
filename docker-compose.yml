@@ -65,9 +65,3 @@ services:
       - ./calendarservice:/var/www/app:rw,cached
       - /var/www/app/vendor
 
-  xkcd:
-    build:
-      context: ./xkcd
-    volumes:
-      - ./xkcd:/app
-      - /app/node_modules

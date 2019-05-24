@@ -2,10 +2,10 @@ const elasticsearch = require('@elastic/elasticsearch');
 const config = require("platformsh-config").config();
 
 let node;
-if (config.isValidPlatform()) {
+try {
     const credentials = config.credentials('elasticsearch');
     node = `http://${credentials.host}:${credentials.port}`
-} else {
+} catch(e) {
     node = process.env.ELASTICSEARCH_HOST || 'http://localhost:9200';
 }
 
