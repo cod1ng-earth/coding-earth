@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
-import componentData from "../componentData";
 import { Columns } from 'react-bulma-components';
 
 export default props => {
     const [content, setContent] = useState([]);
 
     useEffect( () => {
-        componentData(props.tag, setContent)
-    }, []);
+        props.componentData(props.tag, setContent)
+    }, [props]);
 
     return (
         <div className="calendar">

@@ -1,14 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import componentData from '../componentData'
 
 import { Card, Content } from 'react-bulma-components';
+
+function feedFilter(data, filter) {
+  let news = data.news;
+  if (news) {
+    news = news.filter(({title, contentSnippet, publishDate}) => {
+      return filter.test(title) || filter.test(contentSnippet) || filter.test(publishDate)
+    })
+    console.log(news, filter);
+    return {...data, news};
+  }
+  return data;
+}
 
 export default props => {
     const [content, setContent] = useState({});
 
-    useEffect( () => {
-        componentData(props.tag, setContent)
-    }, []);
+    useEffect(
+      () => {
+        props.componentData(props.tag, setContent, feedFilter)
+    },
+      [props]
+    );
 
     return (
         <Card>

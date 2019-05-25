@@ -22,7 +22,8 @@ A typical coordinator response looks like
 ```json
 {
     "calendarservice": {
-        "endpoint":"https://calendarservice.devday.tk/","original_url":"https://calendarservice.{default}/"
+        "endpoint":"https://calendarservice.devday.tk/",
+        "original_url":"https://calendarservice.{default}/"
     }
 }
 ```
