@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import Navbar from './components/Navbar'
 import HelperBar from './components/HelperBar'
 import BuildComponent from './components/BuildComponent';
+import componentData from './componentData'
 
 import './index.scss';
 
@@ -12,6 +13,12 @@ import coordinator from "./coordinator";
 export default props => {
 
     const [knownServices, setServices] = useState({});
+    const [dataFilter, setDataFilter] = useState(undefined);
+
+    function setFilter(input) {
+      console.log(input);
+      setDataFilter(input ? new RegExp(input, 'i') : undefined);
+    }
 
     useEffect(() => {
         async function fetchData() {
@@ -20,18 +27,18 @@ export default props => {
         }
 
         fetchData()
-    }, []);
+    }, [dataFilter]);
 
   return (
       <div>
-        <Navbar />
+        <Navbar setFilter={setFilter}/>
           <Section>
               <Container>
                   <Columns>
                       {Object.keys(knownServices).map(k =>
                       <Columns.Column size="half" key={k}>
                           <Heading>{k}</Heading>
-                          <BuildComponent tag={k}/>
+                          <BuildComponent componentData={componentData(dataFilter)} tag={k}/>
                       </Columns.Column>
                       )}
                   </Columns>
