@@ -1,0 +1,15 @@
+name: rssreader
+type: nodejs:10
+
+web:
+  commands:
+    start: "npm run start"
+    #in this setup you will find your application stdout and stderr in /app/run/logs
+  locations:
+    "/":
+      passthru: true
+
+mounts:
+  "/run": "shared:files/run"
+
+disk: 128

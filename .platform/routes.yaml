@@ -17,3 +17,7 @@
 "https://calendarservice.{default}/":
   type: upstream
   upstream: "calendarservice:http"
+
+"https://tweets.{default}/":
+  type: upstream
+  upstream: "tweets:http"

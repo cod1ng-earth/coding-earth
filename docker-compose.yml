@@ -65,3 +65,9 @@ services:
       - ./calendarservice:/var/www/app:rw,cached
       - /var/www/app/vendor
 
+  tweets:
+    build:
+      context: ./tweets
+    volumes:
+      - ./tweets:/app
+      - /app/node_modules
