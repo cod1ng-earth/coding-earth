@@ -12,19 +12,19 @@ export default props => {
 
     return (
         <Card>
-            {content.news ?
-                content.news.map(item => (
-                    <Card key={item.id}>
+            {content.tweets ?
+                content.tweets.map(tweet => (
+                    <Card key={tweet.id}>
                         <Card.Header>
-                            <Card.Header.Title>{item.title}</Card.Header.Title>
+                            <Card.Header.Title>{tweet.user.screen_name}</Card.Header.Title>
                         </Card.Header>
                         <Card.Content>
                             <Content>
-                                {item.contentSnippet}
+                                {tweet.text}
                             </Content>
                         </Card.Content>
                         <Card.Footer>
-                            <Card.Footer.Item renderAs="a" href={item.link}>
+                            <Card.Footer.Item renderAs="a" href={tweet.url}>
                                 visit
                             </Card.Footer.Item>
                         </Card.Footer>
