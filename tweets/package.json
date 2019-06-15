@@ -10,9 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^8.0.0",
     "install": "^0.12.2",
     "micro": "^9.3.4",
     "npm": "^6.9.0",
+    "platformsh-config": "^2.2.5",
+    "request": "^2.88.0",
     "twitter": "^1.7.1"
   }
 }
