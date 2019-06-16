@@ -1,5 +1,6 @@
 name: coordinator
 type: nodejs:10
+size: S
 
 dependencies:
   nodejs:

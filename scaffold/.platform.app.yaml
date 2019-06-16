@@ -1,7 +1,7 @@
 name: scaffold
 type: nodejs:10
-
 size: S
+
 dependencies:
   nodejs:
     yarn: "^1.15.0"

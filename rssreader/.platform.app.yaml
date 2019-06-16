@@ -1,5 +1,6 @@
 name: rssreader
 type: nodejs:10
+size: S
 
 web:
   commands:
