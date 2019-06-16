@@ -14,16 +14,10 @@ module.exports = {
     },
 
     search: async (phrase) => {
-        const { body } = await elastic.search({
+        const response = await elastic.search({
             index: 'news',
-            contentSnippet: {
-                query: {
-                    match: {
-                        body: phrase
-                    }
-                }
-            }
+            q: phrase
         });
-        return body;
+        return response;
     },
 };

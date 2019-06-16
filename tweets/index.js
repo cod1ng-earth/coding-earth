@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
     }
     const request = url.parse(req.url, true)
     const params = {
-        q: request.query.search || 'devday'
+        q: "#" + (request.query.search || 'devday')
     }
 
     const cached = cache.get(params.q)

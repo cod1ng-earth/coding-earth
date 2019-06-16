@@ -7,8 +7,8 @@ export default props => {
     const [content, setContent] = useState({});
 
     useEffect( () => {
-        componentData(props.tag, setContent)
-    }, []);
+        componentData(props.tag, setContent, {search: props.search})
+    }, [props.search]);
 
     return (
         <Card>

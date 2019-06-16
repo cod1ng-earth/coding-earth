@@ -12,6 +12,7 @@ import coordinator from "./coordinator";
 export default props => {
 
     const [knownServices, setServices] = useState({});
+    const [search, setSearch] = useState("")
 
     useEffect(() => {
         async function fetchData() {
@@ -24,14 +25,14 @@ export default props => {
 
   return (
       <div>
-        <Navbar />
+        <Navbar onSearch={newSearch => setSearch(newSearch)}/>
           <Section>
               <Container>
                   <Columns>
                       {Object.keys(knownServices).map(k =>
                       <Columns.Column size="half" key={k}>
                           <Heading>{k}</Heading>
-                          <BuildComponent tag={k}/>
+                          <BuildComponent tag={k} search={search}/>
                       </Columns.Column>
                       )}
                   </Columns>
