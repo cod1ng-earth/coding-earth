@@ -5,6 +5,7 @@ const {send} = require('micro')
 
 const routes = {
   "/": require('./routes/search'),
+  "/list": require('./routes/list'),
   "/handle": require('./routes/handle'),
 }
 
