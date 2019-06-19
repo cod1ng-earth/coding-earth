@@ -38,6 +38,7 @@ services:
     volumes:
       - ./rssreader:/app
       - /app/node_modules
+      - ./rssreader/db:/app/db
      # - ./rssreader/node_modules:/app/node_modules
     depends_on:
       - rssreaderelasticsearch

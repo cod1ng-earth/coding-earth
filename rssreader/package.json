@@ -14,9 +14,14 @@
     "dotenv": "^8.0.0",
     "micro": "^9.3.4",
     "platformsh-config": "^2.2.4",
-    "rss-parser": "^3.7.0"
+    "rss-parser": "^3.7.0",
+    "sql-template-strings": "^2.2.2",
+    "sqlite": "^3.0.3",
+    "urlencoded-body-parser": "^2.0.1"
   },
   "devDependencies": {
-    "micro-dev": "^3.0.0"
+    "chai": "^4.2.0",
+    "micro-dev": "^3.0.0",
+    "mocha": "^6.1.4"
   }
 }

@@ -1,8 +1,12 @@
 require('dotenv').config();
-const {send} = require('micro')
-const url = require('url')
-const api = require('./lib/api');
 
+const url = require('url')
+const {send} = require('micro')
+
+const routes = {
+  "/": require('./routes/search'),
+  "/handle": require('./routes/handle'),
+}
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -10,15 +14,10 @@ module.exports = async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
 
   const request = url.parse(req.url, true)
-  let result
-  if (request.query.search && request.query.search.length > 2) {
-    result = await api.search(request.query.search);
-  } else {
-    result = await api.latest();
-  }
-  const response = {
-    news: result.body.hits.hits.map(h => h._source)
-  };
 
-  send(res, 200, response)
+  if (!routes[request.pathname]) {
+    return send(res, 404, {error: `${request.pathname} not found`})
+  }
+
+  routes[request.pathname](req, res)
 };
