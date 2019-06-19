@@ -12,11 +12,14 @@ web:
 
 mounts:
   "/run": "shared:files/run"
+  "db":
+    source: local
+    source_path: db
 
 relationships:
   elasticsearch: "rssreaderelasticsearch:elasticsearch"
 
-disk: 128
+disk: 256
 
 crons:
   news:
