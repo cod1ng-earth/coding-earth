@@ -10,13 +10,20 @@ const importer = require('../lib/import')
 
 module.exports = async (req, res) => {
 
-    if (req.method !== 'POST')
+    if (req.method !== 'POST' && req.method !== 'DELETE')
         return send(res, 405, `${req.method} not allowed`)
 
     const body = await bodyparse(req);
     if (!body.url) {
         return send(res, 400, "must send an url along")
     }
+
+    if (req.method === 'DELETE') {
+        const apiResponse = await api.deleteFeed(body.url)
+        await feeds.delete(body.url)
+        return send(res, 200, apiResponse)
+    }
+
     try {
         let status
 
@@ -36,7 +43,8 @@ module.exports = async (req, res) => {
             if (existing) {
                 await feeds.patch(content.feedUrl, {
                     name: content.title,
-                    last_read: now
+                    last_read: now,
+                    language: body.lang || content.language
                 })
                 status = 200;
             } else {
@@ -44,7 +52,7 @@ module.exports = async (req, res) => {
                     url: content.feedUrl,
                     name: content.title,
                     last_read: now,
-                    language: 'de_DE'
+                    language: body.lang || 'de_DE'
                 })
                 status = 201
             }

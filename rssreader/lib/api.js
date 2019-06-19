@@ -20,4 +20,20 @@ module.exports = {
         });
         return response;
     },
+
+    deleteFeed: async (feedUrl) => {
+        const response = await elastic.delete_by_query({
+            index: 'news',
+            body: {
+                "query": {
+                    "bool": {
+                        "filter": [
+                            {"term": {"feed": feedUrl}}
+                        ]
+                    }
+                }
+            }
+        })
+        return response
+    }
 };

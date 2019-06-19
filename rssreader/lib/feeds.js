@@ -71,12 +71,17 @@ module.exports = {
         const db = await dbPromise;
         const sql = SQL`
             REPLACE INTO feeds
-            (url, name, created, language) 
+            (url, name, created, last_read, language) 
             VALUES 
-            (${feed.url}, ${feed.name}, datetime('now'), ${feed.language})
+            (${feed.url}, ${feed.name}, datetime('now'), ${feed.last_read}, ${feed.language})
             `
         await db.run(sql)
         return await this.find(feed.url)
+    },
+
+    async delete(url) {
+        const db = await dbPromise
+        return await db.run(`DELETE FROM feeds where url = ?`, url)
     },
     async find(url) {
         const db = await dbPromise;
