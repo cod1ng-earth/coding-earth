@@ -1,7 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import componentData from '../componentData'
+import truncate from '../lib/truncate'
 
-import { Card, Content } from 'react-bulma-components';
+import { Box, Media, Content, Heading, Tag } from 'react-bulma-components';
+
+
+const NewsCard = ({item}) => {
+
+    const pubDate = new Date(item.pubDate).toLocaleString()
+    return <Box>
+        <Media>
+            <Media.Item>
+                <Heading size={6}>{item.title}</Heading>
+                <Heading subtitle size={7}>
+                    {pubDate} - {' '}
+                    <a href={item.link} target="_blank">{item.id}</a>
+                </Heading>
+
+                <Content>
+                    {truncate(item.contentSnippet, 300)}
+                </Content>
+
+                {item.categories && item.categories.map(c => (<Tag>{c}</Tag>))}
+            </Media.Item>
+        </Media>
+    </Box>
+}
 
 export default props => {
     const [content, setContent] = useState({});
@@ -11,29 +35,12 @@ export default props => {
     }, [props.search]);
 
     return (
-        <Card>
+        <div>
             {content.news ?
-                content.news.map(item => (
-                    <Card key={item.id}>
-                        <Card.Header>
-                            <Card.Header.Title>{item.title}</Card.Header.Title>
-                        </Card.Header>
-                        <Card.Content>
-                            <Content>
-                                {item.contentSnippet}
-                            </Content>
-                        </Card.Content>
-                        <Card.Footer>
-                            <Card.Footer.Item renderAs="a" href={item.link}>
-                                visit
-                            </Card.Footer.Item>
-                        </Card.Footer>
-                    </Card>
-                ))
-
+                content.news.map(item => <NewsCard item={item} key={item.id} />)
                 :
                 <p>no news yet</p>
             }
-        </Card>
+        </div>
     );
 }
