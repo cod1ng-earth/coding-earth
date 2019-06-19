@@ -1,6 +1,9 @@
 name: rssreader
 type: nodejs:10
 size: S
+dependencies:
+  nodejs:
+    "node-pre-gyp": "^0.13"
 
 web:
   commands:
