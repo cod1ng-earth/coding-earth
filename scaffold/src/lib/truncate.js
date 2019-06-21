@@ -7,7 +7,7 @@ function pos(str, char) {
     return ret
 }
 
-function truncate(str, len) {
+export default function truncate(str, len) {
     if (str.length < len)
         return str
 
@@ -22,5 +22,3 @@ function truncate(str, len) {
         }
     }
 }
-
-module.exports = truncate
