@@ -1,7 +1,7 @@
 function pos(str, char) {
     let pos = 0
     const ret = []
-    while ( (pos = str.indexOf(char, pos + 1)) != -1) {
+    while ( (pos = str.indexOf(char, pos + 1)) !== -1) {
         ret.push(pos)
     }
     return ret

@@ -29,6 +29,9 @@
     "doctrine/reflection": {
         "version": "v1.0.0"
     },
+    "johngrogg/ics-parser": {
+        "version": "v2.1.11"
+    },
     "nelmio/cors-bundle": {
         "version": "1.5",
         "recipe": {
@@ -40,6 +43,9 @@
         "files": [
             "config/packages/nelmio_cors.yaml"
         ]
+    },
+    "nesbot/carbon": {
+        "version": "2.19.2"
     },
     "platformsh/config-reader": {
         "version": "2.2.2"
@@ -167,6 +173,19 @@
             "config/packages/routing.yaml",
             "config/packages/test/routing.yaml",
             "config/routes.yaml"
+        ]
+    },
+    "symfony/translation": {
+        "version": "3.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.3",
+            "ref": "2ad9d2545bce8ca1a863e50e92141f0b9d87ffcd"
+        },
+        "files": [
+            "config/packages/translation.yaml",
+            "translations/.gitignore"
         ]
     },
     "symfony/var-exporter": {

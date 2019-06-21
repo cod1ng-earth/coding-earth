@@ -12,7 +12,7 @@ const NewsCard = ({item}) => {
         <Media>
             <Media.Item>
                 <Heading size={6}>{item.title}</Heading>
-                <Heading subtitle size={7}>
+                <Heading subtitle size={6}>
                     {pubDate} - {' '}
                     <a href={item.link} target="_blank">{item.id}</a>
                 </Heading>
@@ -21,7 +21,7 @@ const NewsCard = ({item}) => {
                     {truncate(item.contentSnippet, 300)}
                 </Content>
 
-                {item.categories && item.categories.map(c => (<Tag>{c}</Tag>))}
+                {item.categories && item.categories.map(c => (<Tag key={c}>{c}</Tag>))}
             </Media.Item>
         </Media>
     </Box>

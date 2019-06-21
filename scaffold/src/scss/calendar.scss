@@ -1,11 +1,28 @@
 @import "~_variables.sass";
 
 .calendar {
-  .day {
-    border-radius: 100%;
-    background-color: $grey-lighter;
-    display:inline-block;
-    padding: 1em;
-    line-height: normal;
+  td.day {
+    height: 0;
+    text-align: center;
+    &:after, &:before {
+      content: '';
+
+      display: block;
+      padding-bottom: calc(40% - 0.5em);
+    }
+    &.active {
+      color: #1f24cc !important;
+      box-shadow: rgba(0,0,0,.25) 1px 1px 3px -1px inset;
+      background: rgba(0,0,255,.07) !important;
+    }
+    &.light {
+      color: $grey-light;
+    }
+    &.today {
+      font-weight: bold;
+    }
+    &.event-border {
+      box-shadow: #0fd9a3 0 -3px 0 0 inset;
+    }
   }
 }
