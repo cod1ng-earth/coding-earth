@@ -154,11 +154,17 @@
     "symfony/http-kernel": {
         "version": "v4.2.7"
     },
+    "symfony/inflector": {
+        "version": "v4.2.9"
+    },
     "symfony/polyfill-mbstring": {
         "version": "v1.11.0"
     },
     "symfony/process": {
         "version": "v4.2.8"
+    },
+    "symfony/property-access": {
+        "version": "v4.2.9"
     },
     "symfony/routing": {
         "version": "4.2",
@@ -174,6 +180,9 @@
             "config/packages/test/routing.yaml",
             "config/routes.yaml"
         ]
+    },
+    "symfony/serializer": {
+        "version": "v4.2.9"
     },
     "symfony/translation": {
         "version": "3.3",

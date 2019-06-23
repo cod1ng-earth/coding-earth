@@ -1,71 +1,51 @@
 <?php
 namespace App\Controller;
 
-use App\Util\Location;
+use App\Sources\EventSourceCollection;
 use DateTime;
 use Exception;
-use ICal\ICal;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\Cache\CacheInterface;
-use Symfony\Contracts\Cache\ItemInterface;
-use function property_exists;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Contracts\Cache\TagAwareCacheInterface;
+use function array_merge;
+
 
 class DefaultController extends AbstractController
 {
     /**
-     * @var \Symfony\Contracts\Cache\CacheInterface
+     * @var \App\Sources\EventSourceInterface[]
      */
-    private $cache;
+    private $eventSources;
+    /**
+     * @var \Symfony\Component\Serializer\SerializerInterface
+     */
+    private $serializer;
+    /**
+     * @var \Symfony\Contracts\Cache\TagAwareCacheInterface
+     */
+    private $appCache;
+
 
     /**
-     * @param CacheInterface $appCache
-     */
-    public function __construct(CacheInterface $appCache)
-    {
-        $this->cache = $appCache;
-    }
-
-    /**
-     * @param $from DateTime
-     * @param $to DateTime
-     * @param $remote string
+     * DefaultController constructor.
      *
-     * @return array
-     * @throws \Exception
+     * @param \App\Sources\EventSourceCollection $eventSources
+     * @param \Symfony\Contracts\Cache\TagAwareCacheInterface $taggedPoolCache
+     * @param \Symfony\Component\Serializer\SerializerInterface $serializer
      */
-    protected function readCalendarMonth($from, $to, $remote): array {
-        $iCal = new ICal();
-        $iCal->initUrl($remote);
-
-        $events = $iCal->eventsFromRange($from->format(DateTime::ATOM), $to->format(DateTime::ATOM));
-        $result = [];
-        foreach ($events as $event) {
-            /** @var \ICal\Event $event */
-            $details = [
-                'summary' => $event->summary,
-                'start' => (new DateTime($event->dtstart))->format(DateTime::ATOM),
-                'end' => (new DateTime($event->dtend))->format(DateTime::ATOM),
-                'description' => $event->description,
-                'location' => $event->location,
-            ];
-
-            $details['url'] = $event->url ?? null;
-
-            if (property_exists($event, 'x_apple_structured_location')) {
-                $details['geo'] = Location::extractAppleStructuredLocation($event->x_apple_structured_location);
-            }
-            $details['type'] = 'conference';
-            $result[] = $details;
-        }
-        return $result;
+    public function __construct(EventSourceCollection $eventSources, TagAwareCacheInterface $taggedPoolCache, SerializerInterface $serializer)
+    {
+        $this->eventSources= $eventSources->getEventSources();
+        $this->serializer = $serializer;
+        $this->appCache = $taggedPoolCache;
     }
 
     /**
-     * @Route("/", name="index")
+     * @Route("/", name="index", methods={"GET","HEAD", "POST"})
      * @param Request $request
      *
      * @return Response
@@ -74,17 +54,26 @@ class DefaultController extends AbstractController
     public function index(Request $request) : Response {
         try {
 
+            if (Request::METHOD_POST === $request->getMethod()) {
+                $purge = (boolean)$request->get('purge', false);
+                if ($purge) {
+                    $this->appCache->invalidateTags(['calendar']);
+                    return new Response('purged calendars',Response::HTTP_ACCEPTED);
+                }
+                return new Response('',Response::HTTP_NO_CONTENT);
+            }
+
             $from = new DateTime($request->get('from', 'first day of this month'));
             $to = new DateTime($request->get('to', 'last day of this month'));
 
-            $result = $this->cache->get("calendar.turbine.{$from->format('Ymd')}.{$to->format('Ymd')}",
-                function(ItemInterface $item) use ($from, $to) {
-                    $item->expiresAfter(3600);
-                    $results = $this->readCalendarMonth($from, $to, 'https://hermes.turbinekreuzberg.com/ical/turbinekreuzberg.com/public/events4devs');
-                    return $results;
-            });
+            $events = [[]];
 
-            return new JsonResponse($result);
+            foreach($this->eventSources as $eventSource) {
+                $events[] = $eventSource->getEvents($from, $to);
+            }
+            $events = array_merge(...$events);
+
+            return new JsonResponse($this->serializer->serialize($events, "json"), Response::HTTP_OK,  [], true);
         } catch(Exception $e) {
             throw $e;
         }

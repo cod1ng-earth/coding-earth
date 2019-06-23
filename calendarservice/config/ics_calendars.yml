@@ -1,0 +1,5 @@
+calendars:
+  turbine:
+    url: https://hermes.turbinekreuzberg.com/ical/turbinekreuzberg.com/public/events4devs
+    cachekey: calendar.turbine.ics
+    eventtype: conference

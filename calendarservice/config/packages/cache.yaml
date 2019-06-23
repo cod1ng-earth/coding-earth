@@ -17,3 +17,7 @@ framework:
         # Namespaced pools use the above "app" backend by default
         #pools:
             #my.dedicated.cache: ~
+        pools:
+            tagged_pool.cache:
+                adapter: cache.app
+                tags: true
