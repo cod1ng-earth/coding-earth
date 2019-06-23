@@ -21,8 +21,21 @@
     &.today {
       font-weight: bold;
     }
-    &.event-border {
-      box-shadow: #0fd9a3 0 -3px 0 0 inset;
+    &.event-conference {
+      box-shadow: #0fd9a3 0 -6px 0 0 inset;
+    }
+    &.event-meetup {
+      border-bottom: 3px solid #F54261;
+    }
+  }
+  .event-detail {
+    .event-conference {
+      background-color: #0fd9a3;
+      color: white;
+    }
+    .event-meetup {
+      background-color: #F54261;
+      color: white;
     }
   }
 }

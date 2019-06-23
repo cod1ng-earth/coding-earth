@@ -38,13 +38,15 @@ function daysWithEvents(events) {
 }
 
 const Day = ({day, month, active, events, onSelect}) => {
+    const types = events.map(e => e.type);
 
     return  <td onClick={() => { return events.length === 0 ? false : onSelect(day) } } className={classnames({
         day: true,
         'light': !dfns.isSameMonth(day, month) || events.length === 0,
         'today': dfns.isToday(day),
+        'event-meetup': types.includes('meetup'),
+        'event-conference': types.includes('conference'),
         'active': active,
-        'event-border': events.length > 0
     })}>
         {dfns.format(day, 'D')}
     </td>
@@ -83,11 +85,8 @@ const Calendar = ({month, events, setActive, active}) => {
 
 
 const Event = (evt) => {
-    const tags = [
-        evt.type,
-        ...evt.tags
-    ]
-    return <Box>
+
+    return <Box className="event-detail">
         <Media>
             <Media.Item>
                 <Heading size={6}>{evt.summary}</Heading>
@@ -100,7 +99,8 @@ const Event = (evt) => {
                 <Content>
                     {evt.description && truncate(evt.description, 400)}
                 </Content>
-                {tags.map(t => <Tag key={t}>{t}</Tag>)}
+                <Tag className={`event-${evt.type}`}>{evt.type}</Tag>
+                {evt.tags.map(t => <Tag key={t}>{t}</Tag>)}
             </Media.Item>
         </Media>
     </Box>
