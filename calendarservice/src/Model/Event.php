@@ -1,8 +1,8 @@
 <?php
-
-
 namespace App\Model;
 
+
+use function array_unique;
 
 class Event
 {
@@ -45,6 +45,19 @@ class Event
      * @var string
      */
     private $type;
+
+    /**
+     * @var array
+     */
+    private $tags;
+
+    /**
+     * Event constructor.
+     */
+    public function __construct()
+    {
+        $this->tags = [];
+    }
 
     /**
      * @return string
@@ -195,6 +208,36 @@ class Event
     public function setType(string $type): Event
     {
         $this->type = $type;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTags(): array
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @param array $tags
+     *
+     * @return Event
+     */
+    public function setTags(array $tags): Event
+    {
+        $this->tags = $tags;
+        return $this;
+    }
+
+    /**
+     * @param string $tag
+     *
+     * @return Event
+     */
+    public function addTag(string $tag): Event {
+        $this->tags[] = $tag;
+        $this->tags = array_unique($this->tags);
         return $this;
     }
 
