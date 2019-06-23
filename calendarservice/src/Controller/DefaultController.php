@@ -1,9 +1,11 @@
 <?php
 namespace App\Controller;
 
+use App\Model\Event;
 use App\Sources\EventSourceCollection;
 use DateTime;
 use Exception;
+use function strlen;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -65,6 +67,7 @@ class DefaultController extends AbstractController
 
             $from = new DateTime($request->get('from', 'first day of this month'));
             $to = new DateTime($request->get('to', 'last day of this month'));
+            $search = $request->get('search', '');
 
             $events = [[]];
 
@@ -72,7 +75,11 @@ class DefaultController extends AbstractController
                 $events[] = $eventSource->getEvents($from, $to);
             }
             $events = array_merge(...$events);
-
+            if (strlen($search) > 2) {
+                $events = array_values(array_filter($events, function(Event $event) use ($search) {
+                    return in_array($search, $event->getTags());
+                }));
+            }
             return new JsonResponse($this->serializer->serialize($events, "json"), Response::HTTP_OK,  [], true);
         } catch(Exception $e) {
             throw $e;

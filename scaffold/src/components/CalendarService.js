@@ -116,17 +116,17 @@ export default props => {
 
     useEffect( () => {
         componentData(props.tag, (evts) => {
-
             setEvents(evts.map(evt => ({
                 ...evt,
                 start: new Date(evt.start),
                 end: new Date(evt.end)
             })))
         }, {
+            search: props.search,
             from: dfns.format(month, 'YYYY-MM-DD'),
             to: dfns.format(dfns.addMonths(month, 1), 'YYYY-MM-DD')
         })
-    }, [month]);
+    }, [month, props.search]);
 
     return (
         <div className="calendar">
