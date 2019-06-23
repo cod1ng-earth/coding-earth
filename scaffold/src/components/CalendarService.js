@@ -83,6 +83,10 @@ const Calendar = ({month, events, setActive, active}) => {
 
 
 const Event = (evt) => {
+    const tags = [
+        evt.type,
+        ...evt.tags
+    ]
     return <Box>
         <Media>
             <Media.Item>
@@ -96,7 +100,7 @@ const Event = (evt) => {
                 <Content>
                     {evt.description && truncate(evt.description, 400)}
                 </Content>
-                <Tag>{evt.type}</Tag>
+                {tags.map(t => <Tag key={t}>{t}</Tag>)}
             </Media.Item>
         </Media>
     </Box>
