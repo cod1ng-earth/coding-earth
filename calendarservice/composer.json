@@ -9,13 +9,13 @@
         "nelmio/cors-bundle": "^1.5",
         "platformsh/symfonyflex-bridge": "^2.1",
         "sensio/framework-extra-bundle": "^5.3",
-        "symfony/console": "4.2.*",
-        "symfony/dotenv": "4.2.*",
+        "symfony/console": "4.3.*",
+        "symfony/dotenv": "4.3.*",
         "symfony/flex": "^1.1",
-        "symfony/framework-bundle": "4.2.*",
-        "symfony/property-access": "4.2.*",
-        "symfony/serializer": "4.2.*",
-        "symfony/yaml": "4.2.*"
+        "symfony/framework-bundle": "4.3.*",
+        "symfony/property-access": "4.3.*",
+        "symfony/serializer": "4.3.*",
+        "symfony/yaml": "4.3.*"
     },
     "config": {
         "preferred-install": {
@@ -59,10 +59,10 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "4.2.*"
+            "require": "4.3.*"
         }
     },
     "require-dev": {
-        "symfony/web-server-bundle": "4.2.*"
+        "symfony/web-server-bundle": "4.3.*"
     }
 }

@@ -80,6 +80,9 @@
     "symfony/cache": {
         "version": "v4.2.7"
     },
+    "symfony/cache-contracts": {
+        "version": "v1.1.5"
+    },
     "symfony/config": {
         "version": "v4.2.7"
     },
@@ -96,9 +99,6 @@
             "config/bootstrap.php"
         ]
     },
-    "symfony/contracts": {
-        "version": "v1.0.2"
-    },
     "symfony/debug": {
         "version": "v4.2.7"
     },
@@ -110,6 +110,9 @@
     },
     "symfony/event-dispatcher": {
         "version": "v4.2.7"
+    },
+    "symfony/event-dispatcher-contracts": {
+        "version": "v1.1.5"
     },
     "symfony/filesystem": {
         "version": "v4.2.7"
@@ -157,7 +160,19 @@
     "symfony/inflector": {
         "version": "v4.2.9"
     },
+    "symfony/mime": {
+        "version": "v4.3.1"
+    },
+    "symfony/polyfill-intl-idn": {
+        "version": "v1.11.0"
+    },
     "symfony/polyfill-mbstring": {
+        "version": "v1.11.0"
+    },
+    "symfony/polyfill-php72": {
+        "version": "v1.11.0"
+    },
+    "symfony/polyfill-php73": {
         "version": "v1.11.0"
     },
     "symfony/process": {
@@ -184,6 +199,9 @@
     "symfony/serializer": {
         "version": "v4.2.9"
     },
+    "symfony/service-contracts": {
+        "version": "v1.1.5"
+    },
     "symfony/translation": {
         "version": "3.3",
         "recipe": {
@@ -196,6 +214,9 @@
             "config/packages/translation.yaml",
             "translations/.gitignore"
         ]
+    },
+    "symfony/translation-contracts": {
+        "version": "v1.1.5"
     },
     "symfony/var-exporter": {
         "version": "v4.2.7"
