@@ -22,6 +22,9 @@ services:
   scaffold:
     build:
       context: ./scaffold
+      dockerfile: ../docker/nodejs-yarn.dockerfile
+
+    command: "sh -c 'yarn install --dev; yarn run start'"
     volumes:
       - ./scaffold:/app:rw,cached
       - /app/node_modules
@@ -29,19 +32,33 @@ services:
   coordinator:
     build:
       context: ./coordinator
+      dockerfile: ../docker/nodejs-npm.dockerfile
+
+    command: "sh -c 'npm install --dev; npm run dev'"
     volumes:
       - ./coordinator:/app:rw,cached
       - /app/node_modules
 
   rssreader:
-    build: ./rssreader
+    build:
+      context: ./rssreader
+      dockerfile: ../docker/nodejs-npm.dockerfile
+
+    command: "sh -c 'npm install --dev; npm run dev'"
     volumes:
       - ./rssreader:/app
-      - /app/node_modules
       - ./rssreader/db:/app/db
-     # - ./rssreader/node_modules:/app/node_modules
     depends_on:
       - rssreaderelasticsearch
+
+  tweets:
+    build:
+      context: ./tweets
+      dockerfile: ../docker/nodejs-npm.dockerfile
+    command: "sh -c 'npm install --dev; npm run dev'"
+    volumes:
+      - ./tweets:/app
+      - /app/node_modules
 
   rssreaderelasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.5.4
@@ -65,11 +82,6 @@ services:
       context: ./calendarservice
     volumes:
       - ./calendarservice:/var/www/app:rw,cached
-      - /var/www/app/vendor
+      # If you develop on Linux, uncomment the following line to use a bind-mounted host directory instead
+      - ./calendarservice/var:/var/www/app/var:rw
 
-  tweets:
-    build:
-      context: ./tweets
-    volumes:
-      - ./tweets:/app
-      - /app/node_modules
