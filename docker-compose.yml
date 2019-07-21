@@ -47,7 +47,7 @@ services:
       context: ./rssreader
       dockerfile: ../docker/nodejs-npm.dockerfile
     environment:
-      - ELASTICSEARCH_HOST="http://rssreaderelasticsearch:9200"
+      - ELASTICSEARCH_HOST=http://rssreaderelasticsearch:9200
     command: "npm run dev"
     volumes:
       - ./rssreader:/app

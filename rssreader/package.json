@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "micro -l tcp://0.0.0.0:$PORT",
+    "postinstall": "bin/createTable.js",
     "dev": "micro-dev"
   },
   "author": "",
