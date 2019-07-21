@@ -23,11 +23,12 @@ services:
     build:
       context: ./frontend
       dockerfile: ../docker/nodejs-yarn.dockerfile
-
-    command: "sh -c 'yarn install --dev; yarn run start'"
+    environment:
+      - SKIP_PREFLIGHT_CHECK=true
+      - REACT_APP_COORDINATOR=coordinator.${DEFAULT_HOST}
+    command: "yarn run start"
     volumes:
       - ./frontend:/app:rw,cached
-      - /app/node_modules
 
   coordinator:
     build:
@@ -36,10 +37,9 @@ services:
     environment:
       - DEFAULT_HOST=${DEFAULT_HOST}
 
-    command: "sh -c 'npm install --dev; npm run dev'"
+    command: "npm run dev"
     volumes:
       - ./coordinator:/app:rw,cached
-      - /app/node_modules
       - ./.platform/routes.yaml:/app/routes.yaml:ro
 
   rssreader:
@@ -47,7 +47,7 @@ services:
       context: ./rssreader
       dockerfile: ../docker/nodejs-npm.dockerfile
 
-    command: "sh -c 'npm install --dev; npm run dev'"
+    command: "npm run dev"
     volumes:
       - ./rssreader:/app
       - ./rssreader/db:/app/db
@@ -58,10 +58,10 @@ services:
     build:
       context: ./tweets
       dockerfile: ../docker/nodejs-npm.dockerfile
-    command: "sh -c 'npm install --dev; npm run dev'"
+    command: "npm run dev"
     volumes:
       - ./tweets:/app
-      - /app/node_modules
+
 
   rssreaderelasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.5.4

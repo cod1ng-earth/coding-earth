@@ -27,22 +27,18 @@ help: ##@other Show this help.
 
 prepare: ##@setup copy env files and build coordinator env
 	cp .env.dist .env
-	cp coordinator/.env.dist coordinator/.env
-	cp frontend/.env.dist frontend/.env
 .PHONY: prepare
 
-port: ##@setup print port
-	cp .env.dist .env
-	cp coordinator/.env.dist coordinator/.env
-	cp frontend/.env.dist frontend/.env
-.PHONY: prepare
-
-coordinator: ##@setup scan local dirs and create a platform.sh compatible local env in coordinator
-	cd coordinator && npm install && node ./localEnv
-.PHONY: coordinator
-
-setup: prepare build-images start ##@setup Create dev enviroment
+setup: prepare build-images dependencies ##@setup Create dev enviroment
 .PHONY: setup
+
+dependencies: ##@development install local dependencies
+	$(DOCKER_COMPOSE) run calendarservice composer install
+	$(DOCKER_COMPOSE) run rssreader npm install
+	$(DOCKER_COMPOSE) run tweets npm install
+	$(DOCKER_COMPOSE) run coordinator npm install
+	$(DOCKER_COMPOSE) run frontend yarn install
+.PHONY: dependencies
 
 build-images: ##@setup build docker images
 	$(DOCKER_COMPOSE) build
