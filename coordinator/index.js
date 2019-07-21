@@ -1,17 +1,28 @@
-require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
-const routesDef = require('./routesDef')
+const fs = require('fs')
+const YAML = require('yaml')
+
+const {routesDef} = require('./routesDef')
 
 const app = express()
-app.use(cors())
 
-// Load the Platform.sh configuration.
-// picks up b64 encoded PLATFORM_ROUTES from .env, yay :D
+app.use(cors())
 const config = require("platformsh-config").config();
 
-const PORT= !config.isValidPlatform() ? (process.env.PORT || 3000) : config.port;
+let PORT, routes;
 
-app.get('/', (req, res) => res.json(routesDef(config.routesDef)))
+if (config.isValidPlatform()) {
+    PORT = config.port
+    routes = routesDef(config.routesDef);
+} else {
+    PORT = process.env.PORT || 3000;
+    const DEFAULT_HOST = process.env.DEFAULT_HOST || "cearth.local:8000";
+    const f = fs.readFileSync('routes.yaml').toString();
+    const definitions = YAML.parse(f);
+    routes = routesDef(definitions, DEFAULT_HOST, true);
+}
+
+app.get('/', (req, res) => res.json(routes) )
 
 app.listen(PORT, () => console.log(`coordinator app listening on port ${PORT}!`))

@@ -16,28 +16,31 @@ services:
       - coordinator
       - rssreader
       - calendarservice
-      - scaffold
+      - frontend
       - tweets
 
-  scaffold:
+  frontend:
     build:
-      context: ./scaffold
+      context: ./frontend
       dockerfile: ../docker/nodejs-yarn.dockerfile
 
     command: "sh -c 'yarn install --dev; yarn run start'"
     volumes:
-      - ./scaffold:/app:rw,cached
+      - ./frontend:/app:rw,cached
       - /app/node_modules
 
   coordinator:
     build:
       context: ./coordinator
       dockerfile: ../docker/nodejs-npm.dockerfile
+    environment:
+      - DEFAULT_HOST=${DEFAULT_HOST}
 
     command: "sh -c 'npm install --dev; npm run dev'"
     volumes:
       - ./coordinator:/app:rw,cached
       - /app/node_modules
+      - ./.platform/routes.yaml:/app/routes.yaml:ro
 
   rssreader:
     build:

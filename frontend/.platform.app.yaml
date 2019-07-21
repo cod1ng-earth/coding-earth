@@ -1,4 +1,4 @@
-name: scaffold
+name: frontend
 type: nodejs:10
 size: S
 
