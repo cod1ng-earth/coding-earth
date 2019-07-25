@@ -2,7 +2,8 @@ MAKE = make --no-print-directory
 DOCKER = docker
 DOCKER_COMPOSE = docker-compose
 UNAME := $(shell uname)
-
+UID := $(shell id -u)
+GID := $(shell id -g)
 # Add the following 'help' target to your Makefile
 # And add help text after each target name starting with '\#\#'
 # A category can be added with @category
@@ -41,7 +42,7 @@ dependencies: ##@development install local dependencies
 .PHONY: dependencies
 
 build-images: ##@setup build docker images
-	$(DOCKER_COMPOSE) build
+	$(DOCKER_COMPOSE) build --build-arg UID=$(UID) --build-arg GID=$(GID)
 .PHONY: build-images
 
 rebuild: ##@setup removes images

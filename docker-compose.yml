@@ -26,7 +26,6 @@ services:
     environment:
       - SKIP_PREFLIGHT_CHECK=true
       - REACT_APP_COORDINATOR=coordinator.${DEFAULT_HOST}
-    command: "yarn run start"
     volumes:
       - ./frontend:/app:rw,cached
 
@@ -63,7 +62,6 @@ services:
     volumes:
       - ./tweets:/app
 
-
   rssreaderelasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.5.4
     environment:
@@ -86,6 +84,5 @@ services:
       context: ./calendarservice
     volumes:
       - ./calendarservice:/var/www/app:rw,cached
-      # If you develop on Linux, uncomment the following line to use a bind-mounted host directory instead
-      - ./calendarservice/var:/var/www/app/var:rw
+
 

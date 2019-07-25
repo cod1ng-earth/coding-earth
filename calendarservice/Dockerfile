@@ -83,10 +83,21 @@ RUN set -eux; \
 	mkdir -p var/cache var/log; \
 	composer dump-autoload --classmap-authoritative; \
 	composer run-script post-install-cmd;
-RUN chown -R app:app var; \
+
+RUN addgroup -S --gid "$GID" appgroup \
+    && adduser -S appuser -G appgroup \
+    --uid "$UID" \
+    --no-create-home \
+    --disabled-password \
+    --gecos "" \
+    --home "$(pwd)"
+
+RUN chown -R appuser:appgroup ${APP_PATH}; \
+    chown -R appuser:appgroup ${APP_PATH}/var; \
 	chmod +x bin/console; sync
 
-VOLUME ${APP_PATH}
+#VOLUME ${APP_PATH}
+USER $UID:$GID
 
 EXPOSE 3000
 CMD ["bin/console", "server:run", "0.0.0.0:3000"]
