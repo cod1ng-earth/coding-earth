@@ -14,8 +14,8 @@
     "atob": "^2.1.2",
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
-    "express": "^4.16.4",
-    "platformsh-config": "^2.2.4",
-    "yaml": "^1.5.1"
+    "express": "^4.17.1",
+    "platformsh-config": "^2.2.5",
+    "yaml": "^1.6.0"
   }
 }

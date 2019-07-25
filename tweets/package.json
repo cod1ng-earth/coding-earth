@@ -15,7 +15,7 @@
     "install": "^0.12.2",
     "micro": "^9.3.4",
     "node-cache": "^4.2.0",
-    "npm": "^6.9.0",
+    "npm": "^6.10.2",
     "platformsh-config": "^2.2.5",
     "request": "^2.88.0",
     "twitter": "^1.7.1"
