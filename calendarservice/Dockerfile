@@ -87,10 +87,8 @@ RUN set -eux; \
 RUN addgroup -S --gid "$GID" appgroup \
     && adduser -S appuser -G appgroup \
     --uid "$UID" \
-    --no-create-home \
-    --disabled-password \
-    --gecos "" \
-    --home "$(pwd)"
+    --disabled-password
+
 
 RUN chown -R appuser:appgroup ${APP_PATH}; \
     chown -R appuser:appgroup ${APP_PATH}/var; \

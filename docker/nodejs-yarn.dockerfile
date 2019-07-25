@@ -16,10 +16,7 @@ COPY . ./
 RUN addgroup -S --gid "$GID" appgroup \
     && adduser -S appuser -G appgroup \
     --uid "$UID" \
-    --no-create-home \
-    --disabled-password \
-    --gecos "" \
-    --home "$(pwd)"
+    --disabled-password
 
 RUN chown -R appuser:appgroup /app
 USER $UID:$GID
