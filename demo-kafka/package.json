@@ -1,0 +1,16 @@
+{
+  "name": "coding-earth-kafka-demo",
+  "version": "1.0.0",
+  "description": "simple kafka demo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "init": "node init.js"
+  },
+  "author": "Jonas Kroeger",
+  "license": "ISC",
+  "dependencies": {
+    "kafka-node": "^4.1.3",
+    "platformsh-config": "^2.2.5"
+  }
+}

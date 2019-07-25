@@ -1,0 +1,19 @@
+# This file describes an application. You can have multiple applications
+# in the same project.
+
+# The name of this app. Must be unique within a project.
+name: kafkademo
+
+# The type of the application to build.
+type: nodejs:10
+
+relationships:
+  kafka: "kafkastreaming:kafka"
+
+# The size of the persistent disk of the application (in MB).
+disk: 1024
+
+# The configuration of app when it is exposed to the web.
+web:
+  commands:
+    start: "node index.js"
