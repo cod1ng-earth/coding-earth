@@ -1,4 +1,4 @@
-import coordinator from "./coordinator";
+import {coordinator} from "./coordinator";
 import axios from "axios";
 
 export default async function (serviceName, setContent, options) {

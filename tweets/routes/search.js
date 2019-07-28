@@ -8,7 +8,7 @@ const cache = new NodeCache({
 });
 
 let client;
-Client().then(cl => client = cl );
+Client.then(cl => client = cl );
 
 module.exports = (req, res) => {
     const request = url.parse(req.url, true)

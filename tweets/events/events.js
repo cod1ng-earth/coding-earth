@@ -26,7 +26,14 @@ module.exports = new Promise( (resolve, reject) => {
         );
 
         consumer.on('message', message => {
-            console.log(message)
+            try {
+                if (message.topic === TOPIC_NEW_URL) {
+                    const value = JSON.parse(message.value);
+                    onUrl(value);
+                }
+            } catch(e) {
+                console.error(e);
+            }
         });
         consumer.on('error', function (error) {
             throw error;

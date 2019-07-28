@@ -1,8 +1,16 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 
 import {Navbar} from 'react-bulma-components/lib';
+import {endpoint} from '../coordinator';
 
 export default function (props) {
+
+    useEffect( () => {
+        const evtSource = new EventSource(`${endpoint}/events`);
+        evtSource.onmessage = e => {
+            console.log(e);
+        }
+    }, []);
 
     return <Navbar
         color="black"

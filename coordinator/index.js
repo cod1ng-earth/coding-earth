@@ -4,13 +4,12 @@ const fs = require('fs')
 const YAML = require('yaml')
 
 const {routesDef} = require('./routesDef')
-const sendMessage = require('./lib/sendMessage');
+const dispatchUrl = require('./lib/dispatchUrl');
 
 const app = express()
 
 app.use(cors())
 app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
 
 const config = require("platformsh-config").config();
 
@@ -30,7 +29,9 @@ if (config.isValidPlatform()) {
 app.get('/', (req, res) => res.json(routes) )
 app.post('/url', (req, res) => {
     const body = req.body;
-    return sendMessage(req.body, res)
+
+    //todo: check this is an url!
+    return dispatchUrl(body, res)
 })
 
 app.get('/events', (req, res) => {
@@ -41,7 +42,7 @@ app.get('/events', (req, res) => {
     })
     setInterval(() => {
         const d = (new Date).toISOString();
-        res.write(d + "\n\n");
+        res.write(`data: ${d} \n\n`);
     }, 5000);
 });
 

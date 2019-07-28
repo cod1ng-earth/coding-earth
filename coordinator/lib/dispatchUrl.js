@@ -12,7 +12,7 @@ module.exports = (body, response) => {
     if (!producerReady) {
         return response.sendStatus(503);
     }
-    producer.send([{ topic: 'NewUrl', messages: body.url, partition: 0 }], (error, data) => {
+    producer.send([{ topic: 'NewUrl', messages: JSON.stringify(body), partition: 0 }], (error, data) => {
         if(error) { throw error }
         console.log(data)
     });
