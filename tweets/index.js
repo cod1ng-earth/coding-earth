@@ -1,10 +1,14 @@
 require('dotenv').config()
+
+const events = require('./events/events');
 const url = require('url')
 const {send} = require('micro')
 
 const routes = {
     "/": require('./routes/search'),
 };
+
+events.then (consumer => {}); //unsure if this is the best place, but... why not :D
 
 module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');

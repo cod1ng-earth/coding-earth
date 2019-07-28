@@ -35,7 +35,7 @@ services:
       dockerfile: ../docker/nodejs-npm.dockerfile
     environment:
       - DEFAULT_HOST=${DEFAULT_HOST}
-
+      - KAFKA_HOST=kafka:9092
     command: "npm run dev"
     volumes:
       - ./coordinator:/app:rw,cached
@@ -58,9 +58,11 @@ services:
     build:
       context: ./tweets
       dockerfile: ../docker/nodejs-npm.dockerfile
-    command: "npm run dev"
+    command: "npm run start"
     volumes:
       - ./tweets:/app
+    environment:
+      - KAFKA_HOST=kafka:9092
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.5.4
