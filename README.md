@@ -147,5 +147,5 @@ Have you tried shutting it off and on again? In platform.sh terms that's a `plat
 #### Error: watch ... ENOSPC
 Uhoh, you ran out of system resources (node_modules, Visual Studio and Docker together can run into this pretty soon). Check this [StackOverflow question](https://stackoverflow.com/questions/16748737/grunt-watch-error-waiting-fatal-error-watch-enospc/17437601#17437601).
 
-
-
+#### get the host's ip from inside a docker container
+`ip route show default | awk '/default/ {print $3}'`

@@ -6,6 +6,8 @@ ARG GID=1005
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 
+RUN apk update && apk add python make g++
+
 COPY package*.json ./
 RUN npm install
 COPY . ./
