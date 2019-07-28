@@ -1,7 +1,9 @@
 const Request = require('request')
 const config = require("platformsh-config").config();
+const Twitter = require('twitter')
 
 let credentials;
+
 if (config.isValidPlatform()) {
     const variables = config.variables();
     credentials = {
@@ -31,7 +33,12 @@ module.exports = () => {
             if (error || response.statusCode >= 400) {
                 return reject(response.body)
             }
-            resolve(JSON.parse(body).access_token)
+            const token = (JSON.parse(body).access_token);
+            console.log("got a new bearer token")
+            const client = new Twitter({
+                bearer_token: token
+            });
+            resolve(client);
         })
     } )
 }

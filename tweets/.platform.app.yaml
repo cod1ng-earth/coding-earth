@@ -10,6 +10,9 @@ web:
     "/":
       passthru: true
 
+relationships:
+  kafka: "kafkastreaming:kafka"
+
 mounts:
   "/run": "shared:files/run"
 

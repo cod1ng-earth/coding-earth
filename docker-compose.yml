@@ -46,13 +46,13 @@ services:
       context: ./rssreader
       dockerfile: ../docker/nodejs-npm.dockerfile
     environment:
-      - ELASTICSEARCH_HOST=http://rssreaderelasticsearch:9200
+      - ELASTICSEARCH_HOST=http://elasticsearch:9200
     command: "npm run dev"
     volumes:
       - ./rssreader:/app
       - ./rssreader/db:/app/db
     depends_on:
-      - rssreaderelasticsearch
+      - elasticsearch
 
   tweets:
     build:
@@ -62,7 +62,7 @@ services:
     volumes:
       - ./tweets:/app
 
-  rssreaderelasticsearch:
+  elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.5.4
     environment:
       - node.name=es01
