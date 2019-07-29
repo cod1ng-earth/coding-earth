@@ -20,7 +20,7 @@ mounts:
     source_path: db
 
 relationships:
-  elasticsearch: "rssreaderelasticsearch:elasticsearch"
+  elasticsearch: "elasticsearch:elasticsearch"
 
 disk: 256
 
