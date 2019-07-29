@@ -13,7 +13,8 @@ Client.then(cl => client = cl );
 module.exports = (req, res) => {
     const request = url.parse(req.url, true)
     const params = {
-        q: "#" + (request.query.search || 'devday')
+        q: "#" + (request.query.search || 'devday'),
+        tweet_mode: 'extended'
     };
 
     const cached = cache.get(params.q);
@@ -42,7 +43,7 @@ module.exports = (req, res) => {
                     profile_image_url_https: s.user.profile_image_url_https,
                 },
                 entities: s.entities,
-                text: s.text
+                full_text: s.full_text
             }))
         };
 

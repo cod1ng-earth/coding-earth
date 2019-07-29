@@ -8,8 +8,6 @@ const routes = {
     "/": require('./routes/search'),
 };
 
-events.then (consumer => {}); //unsure if this is the best place, but... why not :D
-
 module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
