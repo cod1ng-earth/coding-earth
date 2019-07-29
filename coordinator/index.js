@@ -2,9 +2,10 @@ const express = require('express')
 const cors = require('cors')
 const fs = require('fs')
 const YAML = require('yaml')
+const {Consumer, Producer} = require('kafka-node');
+const kafka = require('./lib/kafka')
 
 const {routesDef} = require('./routesDef')
-const dispatchUrl = require('./lib/dispatchUrl');
 
 const app = express()
 
@@ -26,24 +27,33 @@ if (config.isValidPlatform()) {
     routes = routesDef(definitions, DEFAULT_HOST, true);
 }
 
-app.get('/', (req, res) => res.json(routes) )
+const consumer = new Consumer(kafka.kafka, [{topic:  kafka.TOPIC_NEW_CONTENT}], {});
+const producer = new Producer(kafka.kafka);
+
+app.get('/', (req, res) => res.json(routes) );
+
 app.post('/url', (req, res) => {
     const body = req.body;
-
-    //todo: check this is an url!
-    return dispatchUrl(body, res)
-})
+    //todo: check the body!
+    producer.send([{ topic: 'NewUrl', messages: JSON.stringify(body), partition: 0 }], (error, data) => {
+        if(error) { throw error }
+        res.sendStatus(200);
+    });
+});
 
 app.get('/events', (req, res) => {
     res.status(200).set({
         'connection': 'keep-alive',
         'cache-control': 'no-cache',
-        'content-type': 'text/event-stream'
-    })
-    setInterval(() => {
-        const d = (new Date).toISOString();
-        res.write(`data: ${d} \n\n`);
-    }, 5000);
+        'content-type': 'text/event-stream',
+        'X-Accel-Buffering': 'no'
+    });
+    consumer.on('message', message => {
+        res.write(`data: ${message.value}\n\n`);
+    });
 });
 
-app.listen(PORT, () => console.log(`coordinator app listening on port ${PORT}!`))
+kafka.init().then(() => {
+    app.listen(PORT, () => console.log(`coordinator app listening on port ${PORT}!`))
+});
+
