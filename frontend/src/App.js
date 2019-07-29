@@ -3,12 +3,12 @@ import Navbar from './components/Navbar'
 import HelperBar from './components/HelperBar'
 import BuildComponent from './components/BuildComponent';
 import AddControl from "./components/AddControl";
+import eventEmitter from './lib/event-emitter'
 
 import './index.scss';
 
 import {  Section, Container, Columns, Heading } from 'react-bulma-components/lib';
-
-import {coordinator} from "./coordinator";
+import {coordinator, endpoint} from "./coordinator";
 
 export default props => {
 
@@ -20,8 +20,13 @@ export default props => {
             const routes = await coordinator;
             setServices(routes.data);
         }
-
         fetchData()
+
+        const eventSource = new EventSource(`${endpoint}/events`);
+        eventSource.onmessage = msg => {
+            const message = JSON.parse(msg.data);
+            eventEmitter.emit(`content-${message.type}`, message);
+        }
     }, []);
 
   return (
@@ -34,7 +39,6 @@ export default props => {
         </Section>
           <Section>
               <Container >
-
                   <BuildComponent tag="tweets" search={search}/>
               </Container>
           </Section>
