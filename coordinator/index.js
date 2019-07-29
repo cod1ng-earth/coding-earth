@@ -27,33 +27,34 @@ if (config.isValidPlatform()) {
     routes = routesDef(definitions, DEFAULT_HOST, true);
 }
 
-const consumer = new Consumer(kafka.kafka, [{topic:  kafka.TOPIC_NEW_CONTENT}], {});
-const producer = new Producer(kafka.kafka);
-
-app.get('/', (req, res) => res.json(routes) );
-
-app.post('/url', (req, res) => {
-    const body = req.body;
-    //todo: check the body!
-    producer.send([{ topic: 'NewUrl', messages: JSON.stringify(body), partition: 0 }], (error, data) => {
-        if(error) { throw error }
-        res.sendStatus(200);
-    });
-});
-
-app.get('/events', (req, res) => {
-    res.status(200).set({
-        'connection': 'keep-alive',
-        'cache-control': 'no-cache',
-        'content-type': 'text/event-stream',
-        'X-Accel-Buffering': 'no'
-    });
-    consumer.on('message', message => {
-        res.write(`data: ${message.value}\n\n`);
-    });
-});
-
 kafka.init().then(() => {
+
+    const consumer = new Consumer(kafka.kafka, [{topic:  kafka.TOPIC_NEW_CONTENT}], {});
+    const producer = new Producer(kafka.kafka);
+
+    app.get('/', (req, res) => res.json(routes) );
+
+    app.post('/url', (req, res) => {
+        const body = req.body;
+        //todo: check the body!
+        producer.send([{ topic: 'NewUrl', messages: JSON.stringify(body), partition: 0 }], (error, data) => {
+            if(error) { throw error }
+            res.sendStatus(200);
+        });
+    });
+
+    app.get('/events', (req, res) => {
+        res.status(200).set({
+            'connection': 'keep-alive',
+            'cache-control': 'no-cache',
+            'content-type': 'text/event-stream',
+            'X-Accel-Buffering': 'no'
+        });
+        consumer.on('message', message => {
+            res.write(`data: ${message.value}\n\n`);
+        });
+    });
+
     app.listen(PORT, () => console.log(`coordinator app listening on port ${PORT}!`))
 });
 
