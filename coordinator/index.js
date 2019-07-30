@@ -37,10 +37,21 @@ kafka.init().then(() => {
     app.post('/url', (req, res) => {
         const body = req.body;
         //todo: check the body!
+        console.log(body);
         producer.send([{ topic: 'NewUrl', messages: JSON.stringify(body), partition: 0 }], (error, data) => {
-            if(error) { throw error }
+            console.log(data);
+            if(error) {
+                console.error(error);
+                throw error
+            }
             res.sendStatus(200);
         });
+    });
+
+    const openResponses = [];
+    consumer.on('message', message => {
+        console.log(`${message.topic} ${message.offset}`);
+        openResponses.map(res => res.write(`data: ${message.value}\n\n`))
     });
 
     app.get('/events', (req, res) => {
@@ -50,8 +61,15 @@ kafka.init().then(() => {
             'content-type': 'text/event-stream',
             'X-Accel-Buffering': 'no'
         });
-        consumer.on('message', message => {
-            res.write(`data: ${message.value}\n\n`);
+
+        let rand;
+        do { //assign a random request id. These connections are kept alive.
+            rand = Math.floor(Math.random() * 10000000)
+        } while (openResponses[rand] != null);
+
+        openResponses[rand] = res;
+        req.on('close', () => {
+            delete openResponses[rand]
         });
     });
 
