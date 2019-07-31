@@ -12,6 +12,7 @@ web:
 
 relationships:
   kafka: "kafkastreaming:kafka"
+  elasticsearch: "elasticsearch:elasticsearch"
 
 mounts:
   "/run": "shared:files/run"

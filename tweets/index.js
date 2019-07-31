@@ -1,6 +1,7 @@
 require('dotenv').config()
 
-const events = require('./events/events');
+const Actions = require('./actions/index');
+
 const url = require('url')
 const {send} = require('micro')
 

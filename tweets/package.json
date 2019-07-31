@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@elastic/elasticsearch": "^6.8.1",
     "dotenv": "^8.0.0",
     "install": "^0.12.2",
     "kafka-node": "^4.1.3",

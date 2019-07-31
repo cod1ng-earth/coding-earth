@@ -42,7 +42,6 @@ kafka.init().then(() => {
             console.log(data);
             if(error) {
                 console.error(error);
-                throw error
             }
             res.sendStatus(200);
         });
