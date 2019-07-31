@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import componentData from '../componentData'
 import eventEmitter from '../lib/event-emitter'
 
-import { Card, Content } from 'react-bulma-components';
+import { Box, Media, Image, Content } from 'react-bulma-components';
 
 export default class TweetsService extends React.Component {
 
@@ -37,21 +37,26 @@ export default class TweetsService extends React.Component {
         return <div>
             {tweets.length > 0 ?
                 tweets.map(tweet => (
-                    <Card key={tweet.id}>
-                        <Card.Header>
-                            <Card.Header.Title>{tweet.user.screen_name}</Card.Header.Title>
-                        </Card.Header>
-                        <Card.Content>
-                            <Content>
-                                {tweet.full_text}
-                            </Content>
-                        </Card.Content>
-                        <Card.Footer>
-                            <Card.Footer.Item renderAs="a" href={tweet.url}>
-                                visit
-                            </Card.Footer.Item>
-                        </Card.Footer>
-                    </Card>
+                    <Box key={tweet.id}>
+                        <Media>
+                            <Media.Item renderAs="figure" position="left">
+                                <Image renderAs="p" size={64} alt="64x64" src={tweet.user.profile_image_url_https} />
+                            </Media.Item>
+                            <Media.Item>
+                                <Content>
+                                    <p>
+                                        <strong>{tweet.user.real_name}</strong> <small>@{tweet.user.screen_name}</small>
+                                        <br />
+                                        {tweet.full_text}
+                                        <br/>
+                                        <a href={`https://twitter.com/${tweet.user.sceen_name}/status/${tweet.id_str}`}>visit</a>
+                                    </p>
+                                </Content>
+
+                            </Media.Item>
+                        </Media>
+                    </Box>
+
                 ))
 
                 :
