@@ -20,8 +20,16 @@ RUN apk add --no-cache \
 		git \
 		bash \
 		postgresql-client \
+		#openssl-dev cyrus-sasl-dev zstd-dev zstd-static php7-dev gcc g++ make \
 	;
 
+#RUN wget https://github.com/edenhill/librdkafka/archive/v1.1.0.zip \
+#    && unzip v1.1.0.zip \
+#    && cd librdkafka-1.1.0/ \
+#    && ./configure --install-deps \
+#    && make \
+#    && make install \
+#    && cd ..
 
 ARG APCU_VERSION=5.1.12
 RUN set -eux; \
@@ -41,11 +49,13 @@ RUN set -eux; \
 	; \
 	pecl install \
 		apcu-${APCU_VERSION} \
+		rdkafka \
 	; \
 	pecl clear-cache; \
 	docker-php-ext-enable \
 		apcu \
 		opcache \
+		rdkafka \
 	; \
 	\
 	runDeps="$( \

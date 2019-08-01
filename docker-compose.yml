@@ -116,5 +116,8 @@ services:
       context: ./calendar
     volumes:
       - ./calendar:/var/www/app:rw,cached
+    depends_on:
+      - elasticsearch
+
 
 
