@@ -13,7 +13,7 @@ const index = async ({type, url, content}) => {
         })
         return result;
     } catch(e) {
-        logger.error(e);
+        logger.app.error(e);
         return false;
     }
 

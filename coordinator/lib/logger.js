@@ -4,7 +4,12 @@ const expressWinston = require('express-winston');
 module.exports = {
     app: createLogger({
         format:
-            format.json(),
+            format.combine(
+                format.timestamp({
+                    format: 'YYYY-MM-DD HH:mm:ss'
+                }),
+                format.json()
+            ),
         transports: [
             new transports.Console(),
         ]

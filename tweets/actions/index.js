@@ -24,21 +24,21 @@ const startListening = () => {
                 case TOPIC_NEW_CONTENT: index(value); break;
             }
         } catch (e) {
-            logger.error(e)
+            logger.app.error(e)
         }
     });
 
     consumer.on('error', function (error) {
-        logger.error(e)
+        logger.app.error(e)
     });
 
-    logger.info("started listening");
+    logger.app.info("started listening");
 }
 kafka.on("ready", startListening);
-kafka.on("reconnect", ()=> {logger.info(e); consumer.close(startListening) })
-kafka.on("error", (e)=> {logger.error(e); consumer.close(startListening) })
-kafka.on("socket_error", (e)=> {logger.info(e); consumer.close(startListening) })
-kafka.on("close", (e)=> {logger.error(e); consumer.close(startListening) })
+kafka.on("reconnect", ()=> {logger.app.info(e); consumer.close(startListening) })
+kafka.on("error", (e)=> {logger.app.error(e); consumer.close(startListening) })
+kafka.on("socket_error", (e)=> {logger.app.info(e); consumer.close(startListening) })
+kafka.on("close", (e)=> {logger.app.error(e); consumer.close(startListening) })
 
 module.exports = {
     consumer

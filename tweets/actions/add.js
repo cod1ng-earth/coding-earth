@@ -29,7 +29,7 @@ const add = async (value) => {
 
         producer.send([{topic: TOPIC_NEW_CONTENT, messages, partition: 0}], (error, data) => {});
     } catch (e) {
-        logger.error(e);
+        logger.app.error(e);
     }
 
 }

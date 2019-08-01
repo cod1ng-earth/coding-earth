@@ -35,7 +35,7 @@ module.exports = new Promise( (resolve, reject) => {
             return reject(response.body)
         }
         const token = (JSON.parse(body).access_token);
-        logger.info("got a new bearer token")
+        logger.app.info("got a new bearer token")
         const client = new Twitter({
             bearer_token: token
         });

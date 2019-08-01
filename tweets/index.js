@@ -1,26 +1,21 @@
 require('dotenv').config()
+const config = require("platformsh-config").config();
+const express = require('express')
+const cors = require('cors')
 
+const logger = require('./lib/logger')
 const Actions = require('./actions/index');
+const search = require('./routes/search');
 
-const url = require('url')
-const {send} = require('micro')
+const app = express();
+app.use(logger.middleware);
+app.use(cors());
+app.use(express.json());
 
-const routes = {
-    "/": require('./routes/search'),
-};
+const PORT = config.isValidPlatform() ?  config.port : (process.env.PORT || 3000);
 
-module.exports = async (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
-    res.setHeader('Content-Type', 'application/json');
+app.get('/', search);
 
-    const request = url.parse(req.url, true);
-
-    if (!routes[request.pathname]) {
-        return send(res, 404, {error: `${request.pathname} not found`})
-    }
-
-    routes[request.pathname](req, res)
-};
+app.listen(PORT, () => logger.app.info(`tweet app listening on port ${PORT}!`))
 
 

@@ -1,11 +1,5 @@
-const NodeCache = require("node-cache");
 const elastic = require('../lib/elasticsearch');
-const {send} = require('micro')
 const url = require('url')
-
-const cache = new NodeCache({
-    stdTTL: 3600,
-});
 
 module.exports = async (req, res) => {
     const {query} = url.parse(req.url, true)
@@ -35,17 +29,13 @@ module.exports = async (req, res) => {
 
     try {
         const result = await elastic.search(elasticsearchQuery);
-
-        send(res, 200, {
+        res.json({
             tweets: result.body.hits.hits.map(h => h._source)
         })
 
     } catch(e) {
         console.error(e.meta.body.error)
-        send(res, 500, "oh");
+        res.status(500).send({ error: e.meta.body.error })
     }
 
-
-
-    //send(res, 200, resp);
 };
