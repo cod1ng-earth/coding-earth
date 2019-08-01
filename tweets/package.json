@@ -20,7 +20,8 @@
     "npm": "^6.10.2",
     "platformsh-config": "^2.2.5",
     "request": "^2.88.0",
-    "twitter": "^1.7.1"
+    "twitter": "^1.7.1",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "micro-dev": "^3.0.0"

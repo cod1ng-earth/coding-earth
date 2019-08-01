@@ -1,4 +1,6 @@
 const kafka = require('../lib/kafka');
+const logger = require('../lib/logger');
+
 const { Consumer } = require('kafka-node');
 
 const add = require('./add');
@@ -13,7 +15,7 @@ const consumer = new Consumer(kafka, [
     {topic: TOPIC_NEW_CONTENT},
 ], {});
 
-kafka.on("ready", () => {
+const startListening = () => {
     consumer.on('message', async message => {
         try {
             const value = JSON.parse(message.value);
@@ -22,14 +24,21 @@ kafka.on("ready", () => {
                 case TOPIC_NEW_CONTENT: index(value); break;
             }
         } catch (e) {
-            console.error(e);
+            logger.error(e)
         }
     });
 
     consumer.on('error', function (error) {
-        console.error(error);
+        logger.error(e)
     });
-})
+
+    logger.info("started listening");
+}
+kafka.on("ready", startListening);
+kafka.on("reconnect", ()=> {logger.info(e); consumer.close(startListening) })
+kafka.on("error", (e)=> {logger.error(e); consumer.close(startListening) })
+kafka.on("socket_error", (e)=> {logger.info(e); consumer.close(startListening) })
+kafka.on("close", (e)=> {logger.error(e); consumer.close(startListening) })
 
 module.exports = {
     consumer

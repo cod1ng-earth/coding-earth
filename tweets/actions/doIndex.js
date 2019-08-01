@@ -1,9 +1,9 @@
 const elastic = require('../lib/elasticsearch');
+const logger = require('../lib/logger');
 
 const index = async ({type, url, content}) => {
     if (type !== 'tweet')
         return false;
-
     try {
         const result = await elastic.index({
             index: 'tweets',
@@ -13,7 +13,7 @@ const index = async ({type, url, content}) => {
         })
         return result;
     } catch(e) {
-        console.log(e)
+        logger.error(e);
         return false;
     }
 

@@ -4,10 +4,12 @@ const fs = require('fs')
 const YAML = require('yaml')
 const {Consumer, Producer} = require('kafka-node');
 const kafka = require('./lib/kafka')
+const logger = require('./lib/logger')
 
 const {routesDef} = require('./routesDef')
 
 const app = express()
+app.use(logger.middleware);
 
 app.use(cors())
 app.use(express.json())
@@ -37,11 +39,10 @@ kafka.init().then(() => {
     app.post('/url', (req, res) => {
         const body = req.body;
         //todo: check the body!
-        console.log(body);
         producer.send([{ topic: 'NewUrl', messages: JSON.stringify(body), partition: 0 }], (error, data) => {
-            console.log(data);
+            logger.app.debug(data)
             if(error) {
-                console.error(error);
+                log.error.error(error);
             }
             res.sendStatus(200);
         });
@@ -49,7 +50,7 @@ kafka.init().then(() => {
 
     const openResponses = [];
     consumer.on('message', message => {
-        console.log(`${message.topic} ${message.offset}`);
+        logger.app.info(`${message.topic} ${message.offset}`);
         openResponses.map(res => res.write(`data: ${message.value}\n\n`))
     });
 
@@ -68,10 +69,15 @@ kafka.init().then(() => {
 
         openResponses[rand] = res;
         req.on('close', () => {
+            logger.app.info(`${rand} has disconnected`)
             delete openResponses[rand]
         });
     });
 
-    app.listen(PORT, () => console.log(`coordinator app listening on port ${PORT}!`))
+    app.listen(PORT, () => logger.app.info(`coordinator app listening on port ${PORT}!`))
 });
 
+kafka.kafka.on("reconnect", ()=> {logger.app.info(e); })
+kafka.kafka.on("error", (e)=> {logger.app.error("oh", e);  })
+kafka.kafka.on("socket_error", (e)=> {logger.app.error("oh", e); })
+kafka.kafka.on("close", ()=> {logger.app.error("oh", e); })

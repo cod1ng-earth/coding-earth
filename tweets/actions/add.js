@@ -1,5 +1,6 @@
 const { Producer } = require('kafka-node');
 const kafka = require('../lib/kafka');
+const logger = require('../lib/logger');
 
 const Twitter = require('../lib/twitter');
 const TOPIC_NEW_CONTENT = "NewContent";
@@ -13,19 +14,24 @@ const add = async (value) => {
         return false;
     }
     //const userId = matches[1];
-    const twitter = await Twitter;
-    const content = await twitter.get(`statuses/show`, {
-        id: matches[2],
-        tweet_mode: 'extended'
-    });
+    try{
+        const twitter = await Twitter;
+        const content = await twitter.get(`statuses/show`, {
+            id: matches[2],
+            tweet_mode: 'extended'
+        });
 
-    const messages = JSON.stringify({
-        type: "tweet",
-        url: value.url,
-        content
-    });
+        const messages = JSON.stringify({
+            type: "tweet",
+            url: value.url,
+            content
+        });
 
-    producer.send([{topic: TOPIC_NEW_CONTENT, messages, partition: 0}], (error, data) => {});
+        producer.send([{topic: TOPIC_NEW_CONTENT, messages, partition: 0}], (error, data) => {});
+    } catch (e) {
+        logger.error(e);
+    }
+
 }
 
 module.exports = add;
