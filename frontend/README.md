@@ -21,9 +21,9 @@ export default promise;
 A typical coordinator response looks like
 ```json
 {
-    "calendarservice": {
-        "endpoint":"https://calendarservice.devday.tk/",
-        "original_url":"https://calendarservice.{default}/"
+    "calendar": {
+        "endpoint":"https://calendar.coding.earth/",
+        "original_url":"https://calendar.{default}/"
     }
 }
 ```

@@ -41,7 +41,7 @@ You can now cd into an application's folder and start adding features to it or c
 - **coordinator** is responsible for "coordinating" the microservices with the frontend code. It's based on node.js / express.
 - **scaffold** is a React based frontend monolith that requests information about all available microservices from **coordinator**.
 - **rssreader** reads an rss feed every 15 minutes, stores its items in an ElasticSearch index and responds with the latest news. It's built on node.js. 
-- **calendarservice** is a service that yields a list of days of the current month. It's written in PHP using Symfony 4.2
+- **calendar** is a service that yields a list of days of the current month. It's written in PHP using Symfony 4.2
 
 You can access all of these applications on their subdomains of the same name on your environment url.
 

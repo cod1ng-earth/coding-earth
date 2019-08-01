@@ -15,7 +15,7 @@ services:
     depends_on:
       - coordinator
       - rssreader
-      - calendarservice
+      - calendar
       - frontend
       - tweets
 
@@ -111,10 +111,10 @@ services:
     volumes:
       - /var/run/docker.sock
 
-  calendarservice:
+  calendar:
     build:
-      context: ./calendarservice
+      context: ./calendar
     volumes:
-      - ./calendarservice:/var/www/app:rw,cached
+      - ./calendar:/var/www/app:rw,cached
 
 

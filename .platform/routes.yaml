@@ -14,9 +14,9 @@
   type: upstream
   upstream: "rssreader:http"
 
-"https://calendarservice.{default}/":
+"https://calendar.{default}/":
   type: upstream
-  upstream: "calendarservice:http"
+  upstream: "calendar:http"
 
 "https://tweets.{default}/":
   type: upstream

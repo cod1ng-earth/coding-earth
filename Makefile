@@ -20,7 +20,7 @@ HELP_FUN = \
 	print "\n"; }
 
 # Process parameters/options
-CONTAINERS := web elasticsearch zookeper kafka frontend coordinator rssreader  calendarservice
+CONTAINERS := web elasticsearch zookeper kafka frontend coordinator rssreader calendar
 
 help: ##@other Show this help.
 	@perl -e '$(HELP_FUN)' $(MAKEFILE_LIST)
@@ -34,7 +34,7 @@ setup: prepare build-images dependencies ##@setup Create dev enviroment
 .PHONY: setup
 
 dependencies: ##@development install local dependencies
-	$(DOCKER_COMPOSE) run calendarservice composer install
+	$(DOCKER_COMPOSE) run calendar composer install
 	$(DOCKER_COMPOSE) run rssreader npm install
 	$(DOCKER_COMPOSE) run tweets npm install
 	$(DOCKER_COMPOSE) run coordinator npm install

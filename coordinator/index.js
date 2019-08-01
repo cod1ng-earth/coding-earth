@@ -80,4 +80,4 @@ kafka.init().then(() => {
 kafka.kafka.on("reconnect", ()=> {logger.app.info(e); })
 kafka.kafka.on("error", (e)=> {logger.app.error("oh", e);  })
 kafka.kafka.on("socket_error", (e)=> {logger.app.error("oh", e); })
-kafka.kafka.on("close", ()=> {logger.app.error("oh", e); })
+kafka.kafka.on("close", (e)=> {logger.app.error("oh", e); })

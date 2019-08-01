@@ -1,12 +1,12 @@
 import React from 'react'
 import RssReader from './RssReader'
-import CalendarService from './CalendarService'
+import Calendar from './Calendar'
 import TweetsService from './TweetsService'
 import ResponseRenderer from './ResponseRenderer'
 
 const components = {
     "rssreader": RssReader,
-    "calendarservice": CalendarService,
+    "calendar": Calendar,
     "tweets": TweetsService
 };
 

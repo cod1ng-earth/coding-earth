@@ -1,4 +1,4 @@
-name: calendarservice
+name: calendar
 type: php:7.3
 size: S
 

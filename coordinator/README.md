@@ -10,9 +10,9 @@ The coordinator exposes service endpoints so that our frontend can determine ava
     "endpoint": "http://rssreader.cearth.local:8000/",
     "original_url": "https://rssreader.{default}/"
   },
-  "calendarservice": {
-    "endpoint": "http://calendarservice.cearth.local:8000/",
-    "original_url": "https://calendarservice.{default}/"
+  "calendar": {
+    "endpoint": "http://calendar.cearth.local:8000/",
+    "original_url": "https://calendar.{default}/"
   },
   "tweets": {
     "endpoint": "http://tweets.cearth.local:8000/",
