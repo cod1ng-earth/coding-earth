@@ -1,11 +1,11 @@
-const { Producer } = require('kafka-node');
 const kafka = require('../lib/kafka');
 const logger = require('../lib/logger');
 
 const Twitter = require('../lib/twitter');
 const TOPIC_NEW_CONTENT = "NewContent";
 
-const producer = new Producer(kafka);
+const producer = kafka.producer()
+producer.connect();
 
 const add = async (value) => {
     const matches = value.url.match('/*\.twitter\.com/(.*)/status/(.*)');
@@ -26,8 +26,12 @@ const add = async (value) => {
             url: value.url,
             content
         });
-
-        producer.send([{topic: TOPIC_NEW_CONTENT, messages, partition: 0}], (error, data) => {});
+        await producer.send({
+            topic: TOPIC_NEW_CONTENT,
+            messages: [
+                { value: messages },
+            ],
+        })
     } catch (e) {
         logger.app.error(e);
     }

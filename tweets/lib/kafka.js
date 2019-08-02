@@ -1,4 +1,4 @@
-const kafka = require('kafka-node');
+const { Kafka } = require('kafkajs')
 const config = require("platformsh-config").config();
 
 let host;
@@ -9,6 +9,9 @@ try {
     host = process.env.KAFKA_HOST || 'kafka:9092';
 }
 
-const client = new kafka.KafkaClient({kafkaHost: host});
+const client = new Kafka({
+    clientId: 'tweets',
+    brokers: [host]
+})
 
 module.exports = client;

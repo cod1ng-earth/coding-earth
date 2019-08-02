@@ -2,8 +2,8 @@ const express = require('express')
 const cors = require('cors')
 const fs = require('fs')
 const YAML = require('yaml')
-const {Consumer, Producer} = require('kafka-node');
-const kafka = require('./lib/kafka')
+
+const kafkaClient = require('./lib/kafka')
 const logger = require('./lib/logger')
 
 const {routesDef} = require('./routesDef')
@@ -29,30 +29,38 @@ if (config.isValidPlatform()) {
     routes = routesDef(definitions, DEFAULT_HOST, true);
 }
 
-kafka.init().then(() => {
+kafkaClient.init().then( async () => {
+    const kafka = kafkaClient.kafka;
 
-    const consumer = new Consumer(kafka.kafka, [{topic:  kafka.TOPIC_NEW_CONTENT}], {});
-    const producer = new Producer(kafka.kafka);
+    const consumer = kafka.consumer({groupId: 'coordinator-group'})
+    const producer = kafka.producer()
+
+    await consumer.connect()
+    await producer.connect()
+
+    await consumer.subscribe({topic: kafkaClient.TOPIC_NEW_CONTENT})
 
     app.get('/', (req, res) => res.json(routes) );
 
-    app.post('/url', (req, res) => {
+    app.post('/url', async (req, res) => {
         const body = req.body;
         //todo: check the body!
-        producer.send([{ topic: 'NewUrl', messages: JSON.stringify(body), partition: 0 }], (error, data) => {
-            logger.app.debug(data)
-            if (error) {
-                logger.app.error(error);
-            }
-            res.sendStatus(200);
-        });
+        await producer.send({
+            topic: kafkaClient.TOPIC_NEW_URL,
+            messages: [
+                { value:  JSON.stringify(body) },
+            ],
+        })
+        res.sendStatus(200);
     });
 
     const openResponses = [];
-    consumer.on('message', message => {
-        logger.app.info(`${message.topic} ${message.offset}`);
-        openResponses.map(res => res.write(`data: ${message.value}\n\n`))
-    });
+    await consumer.run({
+        eachMessage: async ({ topic, partition, message }) => {
+            logger.app.info(`${message.topic} ${message.offset}`);
+            openResponses.map(res => res.write(`data: ${message.value.toString()}\n\n`))
+        },
+    })
 
     app.get('/events', (req, res) => {
         res.status(200).set({
@@ -67,8 +75,11 @@ kafka.init().then(() => {
             rand = Math.floor(Math.random() * 10000000)
         } while (openResponses[rand] != null);
 
+        const keepAlive = setInterval(() => res.write(`data: ping\n\n`), 20000);
+
         openResponses[rand] = res;
         req.on('close', () => {
+            clearInterval(keepAlive);
             logger.app.info(`${rand} has disconnected`)
             delete openResponses[rand]
         });
@@ -76,8 +87,3 @@ kafka.init().then(() => {
 
     app.listen(PORT, () => logger.app.info(`coordinator app listening on port ${PORT}!`))
 });
-
-kafka.kafka.on("reconnect", ()=> {logger.app.info(e); })
-kafka.kafka.on("error", (e)=> {logger.app.error("oh", e);  })
-kafka.kafka.on("socket_error", (e)=> {logger.app.error("oh", e); })
-kafka.kafka.on("close", (e)=> {logger.app.error("oh", e); })

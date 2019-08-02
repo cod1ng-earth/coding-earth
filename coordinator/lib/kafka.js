@@ -1,5 +1,7 @@
-const kafka = require('kafka-node');
+const { Kafka } = require('kafkajs')
+
 const config = require("platformsh-config").config();
+const logger = require('./logger')
 
 const TOPIC_NEW_URL = "NewUrl";
 const TOPIC_NEW_CONTENT = "NewContent";
@@ -8,17 +10,17 @@ const CLIENT_RESPONSE = "ClientResponse";
 const topics = [
     {
         topic: TOPIC_NEW_URL,
-        partitions: 1,
+        numPartitions: 1,
         replicationFactor: 1
     },
     {
         topic: TOPIC_NEW_CONTENT,
-        partitions: 1,
+        numPartitions: 1,
         replicationFactor: 1
     },
     {
         topic: CLIENT_RESPONSE,
-        partitions: 1,
+        numPartitions: 1,
         replicationFactor: 1
     }
 ];
@@ -31,16 +33,21 @@ try {
     host = process.env.KAFKA_HOST || 'kafka:9092';
 }
 
-const client = new kafka.KafkaClient({kafkaHost: host});
+const client = new Kafka({
+    clientId: 'coordinator',
+    brokers: [host]
+})
 
-const init = () => {
-    return new Promise((resolve, reject) => {
-        client.createTopics(topics, (err, res) => {
-            if (err)
-                console.error(err)
-            resolve(res);
-        })
-    })
+//const client = new kafka.KafkaClient({kafkaHost: host});
+
+const init = async () => {
+    const admin = client.admin()
+
+    await admin.connect()
+    await admin.createTopics({topics})
+    await admin.disconnect()
+
+    return client
 }
 
 module.exports = {
