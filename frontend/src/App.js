@@ -24,6 +24,9 @@ export default props => {
 
         const eventSource = new EventSource(`${endpoint}/events`);
         eventSource.onmessage = msg => {
+            if ('ping' === msg.data)
+                return false;
+
             const message = JSON.parse(msg.data);
             eventEmitter.emit(`content-${message.type}`, message);
         }
