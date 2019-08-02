@@ -2,7 +2,8 @@ MAKE = make --no-print-directory
 DOCKER = docker
 DOCKER_COMPOSE = docker-compose
 UNAME := $(shell uname)
-
+UID := $(shell id -u)
+GID := $(shell id -g)
 # Add the following 'help' target to your Makefile
 # And add help text after each target name starting with '\#\#'
 # A category can be added with @category
@@ -19,25 +20,7 @@ HELP_FUN = \
 	print "\n"; }
 
 # Process parameters/options
-CONTAINERS := web scaffold coordinator rssreader rssreaderelasticsearch calendarservice
-
-ifeq (cli,$(firstword $(MAKECMDGOALS)))
-    ifndef container
-        CONTAINER := coordinator
-    else
-        ifeq ($(filter $(container),$(CONTAINERS)),)
-            $(error Invalid container. $(CONTAINER) does not exist in $(CONTAINERS))
-        endif
-        CONTAINER := $(container)
-    endif
-endif
-
-ifeq (logs,$(firstword $(MAKECMDGOALS)))
-    LOGS_TAIL := 0
-    ifdef tail
-        LOGS_TAIL := $(tail)
-    endif
-endif
+CONTAINERS := web elasticsearch zookeper kafka frontend coordinator rssreader calendar
 
 help: ##@other Show this help.
 	@perl -e '$(HELP_FUN)' $(MAKEFILE_LIST)
@@ -45,18 +28,21 @@ help: ##@other Show this help.
 
 prepare: ##@setup copy env files and build coordinator env
 	cp .env.dist .env
-	cd coordinator && cp .env.dist .env
 .PHONY: prepare
 
-coordinator: ##@setup scan local dirs and create a platform.sh compatible local env in coordinator
-	cd coordinator && npm install && node ./localEnv
-.PHONY: coordinator
-
-setup: prepare build-images start ##@setup Create dev enviroment
+setup: prepare build-images dependencies ##@setup Create dev enviroment
 .PHONY: setup
 
+dependencies: ##@development install local dependencies
+	$(DOCKER_COMPOSE) run calendar composer install
+	$(DOCKER_COMPOSE) run rssreader npm install
+	$(DOCKER_COMPOSE) run tweets npm install
+	$(DOCKER_COMPOSE) run coordinator npm install
+	$(DOCKER_COMPOSE) run frontend yarn install
+.PHONY: dependencies
+
 build-images: ##@setup build docker images
-	$(DOCKER_COMPOSE) build
+	$(DOCKER_COMPOSE) build --build-arg UID=$(UID) --build-arg GID=$(GID)
 .PHONY: build-images
 
 rebuild: ##@setup removes images

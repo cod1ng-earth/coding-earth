@@ -14,8 +14,11 @@
     "atob": "^2.1.2",
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
-    "express": "^4.16.4",
-    "platformsh-config": "^2.2.4",
-    "yaml": "^1.5.1"
+    "express": "^4.17.1",
+    "express-winston": "^3.2.1",
+    "kafkajs": "^1.10.0",
+    "platformsh-config": "^2.2.5",
+    "winston": "^3.2.1",
+    "yaml": "^1.6.0"
   }
 }

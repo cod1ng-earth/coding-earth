@@ -15,35 +15,63 @@ services:
     depends_on:
       - coordinator
       - rssreader
-      - calendarservice
-      - scaffold
+      - calendar
+      - frontend
       - tweets
 
-  scaffold:
+  frontend:
     build:
-      context: ./scaffold
+      context: ./frontend
+      dockerfile: ../docker/nodejs-yarn.dockerfile
+    environment:
+      - SKIP_PREFLIGHT_CHECK=true
+      - REACT_APP_COORDINATOR=coordinator.${DEFAULT_HOST}
     volumes:
-      - ./scaffold:/app:rw,cached
-      - /app/node_modules
+      - ./frontend:/app:rw,cached
 
   coordinator:
     build:
       context: ./coordinator
+      dockerfile: ../docker/nodejs-npm.dockerfile
+    environment:
+      - DEFAULT_HOST=${DEFAULT_HOST}
+      - KAFKA_HOST=kafka:9092
+    command: "npm run dev"
+    depends_on:
+      - kafka
     volumes:
       - ./coordinator:/app:rw,cached
-      - /app/node_modules
+      - ./.platform/routes.yaml:/app/routes.yaml:ro
 
   rssreader:
-    build: ./rssreader
+    build:
+      context: ./rssreader
+      dockerfile: ../docker/nodejs-npm.dockerfile
+    environment:
+      - ELASTICSEARCH_HOST=http://elasticsearch:9200
+    command: "npm run dev"
     volumes:
       - ./rssreader:/app
-      - /app/node_modules
       - ./rssreader/db:/app/db
-     # - ./rssreader/node_modules:/app/node_modules
     depends_on:
-      - rssreaderelasticsearch
+      - elasticsearch
 
-  rssreaderelasticsearch:
+  tweets:
+    build:
+      context: ./tweets
+      dockerfile: ../docker/nodejs-npm.dockerfile
+    command: "npm run start"
+    volumes:
+      - ./tweets:/app
+    environment:
+      - KAFKA_HOST=kafka:9092
+      - ELASTICSEARCH_HOST=http://elasticsearch:9200
+    depends_on:
+      - kafka
+      - coordinator
+      - elasticsearch
+
+  elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.5.4
     environment:
       - node.name=es01
@@ -59,17 +87,38 @@ services:
         hard: -1
     volumes:
       - esdata01:/usr/share/elasticsearch/data
+    ports:
+      - "9288:9200"
+  zookeeper:
+    image: wurstmeister/zookeeper
+    #tmpfs: "/datalog"
+    ports:
+      - "2181:2181"
 
-  calendarservice:
-    build:
-      context: ./calendarservice
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+      - "9092:9092"
+    environment:
+      HOSTNAME_COMMAND: "route -n | awk '/UG[ \t]/{print $$2}'"
+      #KAFKA_ADVERTISED_HOST_NAME: 172.19.0.1
+      #KAFKA_CREATE_TOPICS: "NewUrl:1:1,NewContent:1:1,ClientResponse:1:1"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://_{HOSTNAME_COMMAND}:9092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+    depends_on:
+      - zookeeper
     volumes:
-      - ./calendarservice:/var/www/app:rw,cached
-      - /var/www/app/vendor
+      - /var/run/docker.sock
 
-  tweets:
+  calendar:
     build:
-      context: ./tweets
+      context: ./calendar
     volumes:
-      - ./tweets:/app
-      - /app/node_modules
+      - ./calendar:/var/www/app:rw,cached
+    depends_on:
+      - elasticsearch
+
+
+
