@@ -1,4 +1,4 @@
-const { Kafka } = require('kafkajs')
+const { Kafka, logLevel } = require('kafkajs')
 
 const config = require("platformsh-config").config();
 const logger = require('./logger')
@@ -34,6 +34,7 @@ try {
 }
 
 const client = new Kafka({
+    logLevel: logLevel.INFO,
     clientId: 'coordinator',
     brokers: [host]
 })

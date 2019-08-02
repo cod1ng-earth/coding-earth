@@ -34,6 +34,8 @@ const startListening = async () => {
     logger.app.info("started listening");
 }
 
+startListening();
+
 module.exports = {
     consumer
 };

@@ -45,12 +45,14 @@ kafkaClient.init().then( async () => {
     app.post('/url', async (req, res) => {
         const body = req.body;
         //todo: check the body!
-        await producer.send({
+        const urlRes = await producer.send({
             topic: kafkaClient.TOPIC_NEW_URL,
             messages: [
                 { value:  JSON.stringify(body) },
             ],
         })
+        logger.app.info(urlRes);
+
         res.sendStatus(200);
     });
 
