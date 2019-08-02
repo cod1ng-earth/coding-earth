@@ -1,13 +1,13 @@
 import React from 'react'
 import RssReader from './RssReader'
 import Calendar from './Calendar'
-import TweetsService from './TweetsService'
+import Tweets from './Tweets'
 import ResponseRenderer from './ResponseRenderer'
 
 const components = {
     "rssreader": RssReader,
     "calendar": Calendar,
-    "tweets": TweetsService
+    "tweets": Tweets
 };
 
 export default props => {

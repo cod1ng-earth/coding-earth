@@ -11,7 +11,9 @@ module.exports = {
                 format.json()
             ),
         transports: [
-            new transports.Console(),
+            new transports.Console({
+                level: 'debug'
+            }),
         ]
     }),
     middleware: expressWinston.logger({

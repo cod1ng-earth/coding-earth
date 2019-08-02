@@ -7,6 +7,7 @@ module.exports = async (req, res) => {
     const elasticsearchQuery = query.search && query.search.length > 2 ?
         {
             body: {
+                "from" : 0, "size" : 100,
                 "query": {
                     "match": {
                         "full_text": query.search
@@ -16,6 +17,7 @@ module.exports = async (req, res) => {
         }:
         {
             body: {
+                "from" : 0, "size" : 100,
                 "query" : {
                     "match_all" : {}
                 },

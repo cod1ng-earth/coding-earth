@@ -4,7 +4,7 @@ import eventEmitter from '../lib/event-emitter'
 
 import { Box, Media, Image, Content } from 'react-bulma-components';
 
-export default class TweetsService extends React.Component {
+export default class Tweets extends React.Component {
 
     constructor(props) {
         super(props);
@@ -45,7 +45,11 @@ export default class TweetsService extends React.Component {
                             <Media.Item>
                                 <Content>
                                     <p>
-                                        <strong>{tweet.user.real_name}</strong> <small>@{tweet.user.screen_name}</small>
+                                        <strong>{tweet.user.name}</strong>
+                                        <small>@{tweet.user.screen_name}</small>
+                                        <br/>
+                                        <small>{(new Date(tweet.created_at)).toLocaleString()}</small>
+
                                         <br />
                                         {tweet.full_text}
                                         <br/>

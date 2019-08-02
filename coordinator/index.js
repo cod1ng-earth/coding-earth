@@ -41,8 +41,8 @@ kafka.init().then(() => {
         //todo: check the body!
         producer.send([{ topic: 'NewUrl', messages: JSON.stringify(body), partition: 0 }], (error, data) => {
             logger.app.debug(data)
-            if(error) {
-                log.error.error(error);
+            if (error) {
+                logger.app.error(error);
             }
             res.sendStatus(200);
         });

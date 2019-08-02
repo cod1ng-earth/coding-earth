@@ -17,6 +17,7 @@ const consumer = new Consumer(kafka, [
 
 const startListening = () => {
     consumer.on('message', async message => {
+        logger.app.debug(message);
         try {
             const value = JSON.parse(message.value);
             switch (message.topic) {
