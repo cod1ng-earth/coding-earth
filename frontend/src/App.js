@@ -40,19 +40,19 @@ export default props => {
             <AddControl/>
             </Container>
         </Section>
-          <Section>
-              <Container >
-                  <Columns>
-                      {Object.keys(knownServices).map(k =>
-                          <Columns.Column size="half" key={k}>
-                              <Heading>{k}</Heading>
-                              <BuildComponent tag={k} search={search}/>
-                          </Columns.Column>
-                      )}
-                  </Columns>
+        <Section>
+            <Container >
+                <Columns>
+                    {Object.keys(knownServices).map(k =>
+                        <Columns.Column size="half" key={k}>
+                            <Heading>{k}</Heading>
+                            <BuildComponent tag={k} search={search}/>
+                        </Columns.Column>
+                    )}
+                </Columns>
 
-              </Container>
-          </Section>
+            </Container>
+        </Section>
        <HelperBar services={knownServices}/>
     </div>
   );
