@@ -27,4 +27,4 @@ const doIndex = async ({ type, url, content }) => {
   }
 };
 
-module.exports = findFavicon;
+module.exports = doIndex;
