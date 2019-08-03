@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Navbar from "./components/Navbar";
 import HelperBar from "./components/HelperBar";
 import RabbitHole from "./components/RabbitHole";
@@ -17,9 +17,19 @@ import {
 } from "react-bulma-components/lib";
 import { coordinator, endpoint } from "./coordinator";
 
+export const MainContext = React.createContext({
+  rabbitRun: null,
+  changeRabbitRun: () => {}
+});
+
 export default props => {
   const [knownServices, setServices] = useState({});
   const [search, setSearch] = useState("");
+  const [rabbitRun, setRabbitRun] = useState(false);
+
+  const changeRabbitRun = () => {
+    setRabbitRun(true);
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -39,27 +49,34 @@ export default props => {
 
   return (
     <div>
-      <Navbar onSearch={newSearch => setSearch(newSearch)} />
-      <Rabbit />
-      <RabbitHole />
-      <Section>
-        <Container>
-          <AddControl />
-        </Container>
-      </Section>
-      <Section>
-        <Container>
-          <Columns>
-            {Object.keys(knownServices).map(k => (
-              <Columns.Column size="half" key={k}>
-                <Heading>{k}</Heading>
-                <BuildComponent tag={k} search={search} />
-              </Columns.Column>
-            ))}
-          </Columns>
-        </Container>
-      </Section>
-      <HelperBar services={knownServices} />
+      <MainContext.Provider
+        value={{
+          changeRabbitRun: changeRabbitRun,
+          rabbitRun: rabbitRun
+        }}
+      >
+        <Navbar onSearch={newSearch => setSearch(newSearch)} />
+        <Rabbit />
+        <RabbitHole />
+        <Section>
+          <Container>
+            <AddControl />
+          </Container>
+        </Section>
+        <Section>
+          <Container>
+            <Columns>
+              {Object.keys(knownServices).map(k => (
+                <Columns.Column size="half" key={k}>
+                  <Heading>{k}</Heading>
+                  <BuildComponent tag={k} search={search} />
+                </Columns.Column>
+              ))}
+            </Columns>
+          </Container>
+        </Section>
+        <HelperBar services={knownServices} />
+      </MainContext.Provider>
     </div>
   );
 };

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { ReactComponent as Rabbit } from "./../images/hasi.svg";
-import styled, { keyframes } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
+import { MainContext } from "./../App";
 
 const move = keyframes`
 0% {
@@ -27,8 +28,6 @@ const move = keyframes`
   transform-origin: center;
 }
 `;
-
-
 
 const moveLegsOne = keyframes`
 0% {
@@ -106,42 +105,50 @@ const moveFace = keyframes`
 }
 `;
 
+const moveAnimation = css`
+  animation: ${move} infinite 5s linear;
 
+  #upper-right-leg-sitting,
+  #lower-left-leg-sitting {
+    animation: ${moveLegsOne} infinite 1s linear;
+  }
+
+  #upper-left-leg-sitting,
+  #lower-right-leg-sitting {
+    animation: ${moveLegsTwo} infinite 1s linear;
+  }
+
+  #tail {
+    animation: ${moveTail} infinite 1s linear;
+  }
+`;
 
 const StyledRabbit = styled(Rabbit)`
-height: 85px;
-width: 100px;
-position: absolute;
-top: 145px;
-right: 380px;
-z-index: 1000;
+  height: 85px;
+  width: 100px;
+  position: absolute;
+  top: 145px;
+  right: 380px;
+  z-index: 1000;
   #carrot {
     display: none;
   }
 
-animation: ${move} infinite 5s linear;
+  ${props => (props.running ? moveAnimation : "")};
 
-#upper-right-leg-sitting, #lower-left-leg-sitting {
-  animation: ${moveLegsOne} infinite 1s linear;
+  #left-ear,
+  #right-ear {
+    animation: ${moveEars} infinite 1s linear;
   }
-
-  #upper-left-leg-sitting, #lower-right-leg-sitting {
-    animation: ${moveLegsTwo} infinite 1s linear;
-    }
-
-  #tail {
-       animation: ${moveTail} infinite 1s linear;
-       }
-
-#left-ear, #right-ear {
-  animation: ${moveEars} infinite 1s linear;
-}
-#face, #eyes, #nose {
-  animation: ${moveFace} infinite 1s linear;
-}
-
+  #face,
+  #eyes,
+  #nose {
+    animation: ${moveFace} infinite 1s linear;
+  }
 `;
 
 export default props => {
-  return <StyledRabbit />;
+  const context = useContext(MainContext);
+
+  return <StyledRabbit running={context.rabbitRun} />;
 };
