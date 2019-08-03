@@ -15,12 +15,12 @@ module.exports = async (req, res) => {
     }
   };
 
-  elasticsearchQuery.index = "carrot";
+  elasticsearchQuery.index = "carrots";
 
   try {
     const result = await elastic.search(elasticsearchQuery);
     res.json({
-      tweets: result.body.hits.hits.map(h => h._source)
+      carrots: result
     });
   } catch (e) {
     console.error(e.meta.body.error);
