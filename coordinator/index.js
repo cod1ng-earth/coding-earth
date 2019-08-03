@@ -16,11 +16,12 @@ app.use(express.json())
 
 const config = require("platformsh-config").config();
 
-let PORT, routes;
+let PORT, routes, githubClient;
 
 if (config.isValidPlatform()) {
     PORT = config.port
     routes = routesDef(config.routesDef);
+    githubClientId = config.variables().GITHUB_CLIENT_SECRET;
 } else {
     PORT = process.env.PORT || 3000;
     const DEFAULT_HOST = process.env.DEFAULT_HOST || "cearth.local:8000";
@@ -41,7 +42,7 @@ kafkaClient.init().then( async () => {
     await consumer.subscribe({topic: kafkaClient.TOPIC_NEW_CONTENT})
 
     app.get('/', (req, res) => res.json(routes) );
-
+    
     app.post('/url', async (req, res) => {
         const body = req.body;
         //todo: check the body!

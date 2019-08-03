@@ -13,6 +13,11 @@ export default ({onSearch}) => {
     const [open, setOpen] = useState(false);
     const [search, onSearchChange] = useState("");
     const [showModal, setShowModal] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const onLoggedInChanged = (value) => {
+        setIsLoggedIn(value);
+    };
 
     return <Navbar color="primary" active={open}>
         <Navbar.Brand>
@@ -35,25 +40,27 @@ export default ({onSearch}) => {
                 </Navbar.Item>
                 <Navbar.Item>
                     <div>
-                    <Button onClick={() => setShowModal(true)}>Login</Button>
-                    <Modal 
-                    show={showModal}
-                    closeOnBlur={true}
-                    onClose={() => setShowModal(false)} 
-                    > 
-                    <Modal.Card>
-                        <Modal.Card.Head
-                        showClose={false}
-                    >
-                            <Modal.Card.Title >
-                                Login
-                            </Modal.Card.Title>
-                        </Modal.Card.Head>
-                        <Modal.Card.Body>
-                        <LoginControl></LoginControl>
-                        </Modal.Card.Body>
-                    </Modal.Card>
-                    </Modal>
+                        { !isLoggedIn ? 
+                            <Button color="primary" onClick={() => setShowModal(true)}>Login</Button> : 
+                            <LoginControl onLoggedInChanged={(isLoggedIn) => {onLoggedInChanged(isLoggedIn)}}></LoginControl> }                        
+                        <Modal 
+                            show={showModal}
+                            closeOnBlur={true}
+                            onClose={() => setShowModal(false)} 
+                        > 
+                            <Modal.Card>
+                                <Modal.Card.Head
+                                    showClose={false}
+                                >
+                                    <Modal.Card.Title >
+                                        Login
+                                    </Modal.Card.Title>
+                                </Modal.Card.Head>
+                                <Modal.Card.Body>
+                                    <LoginControl onLoggedInChanged={(isLoggedIn) => {onLoggedInChanged(isLoggedIn)}}></LoginControl>
+                                </Modal.Card.Body>
+                            </Modal.Card>
+                        </Modal>
                     </div>
                 </Navbar.Item>
             </Navbar.Container>

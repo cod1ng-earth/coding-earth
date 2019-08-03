@@ -55,6 +55,7 @@
     "react-bulma-components": "2.3.0",
     "react-dev-utils": "^9.0.0",
     "react-dom": "^16.8.6",
+    "react-github-login": "^1.0.3",
     "react-syntax-highlighter": "^10.2.1",
     "resolve": "1.10.0",
     "sass-loader": "7.1.0",

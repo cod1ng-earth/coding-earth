@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import Button from "react-bulma-components/lib/components/button";
 import * as blockstack from 'blockstack';
+import GitHubLogin from 'react-github-login';
 
 export default class LoginControl extends Component {
     constructor(props) {
         super(props)
 
         let isLoggedIn = this.checkSignedInStatus();
+
+        props.onLoggedInChanged(isLoggedIn);
 
         this.state = {
             isLoggedIn,
@@ -40,9 +43,18 @@ export default class LoginControl extends Component {
     render() {
         let button;
         if (this.state.isLoggedIn) {
-            button = <Button type="primary" onClick={this.handleSignOut}>Logout</Button>;
+            button = <Button color="primary" onClick={this.handleSignOut}>Logout</Button>;
         } else {
-            button = <Button type="primary" onClick={this.handleSignIn}>Login with Blockstack</Button>;
+            button = <div className="login-buttons">
+                <Button className="login-button" color="info" onClick={this.handleSignIn}>
+                    Login with Blockstack
+                </Button>
+                <GitHubLogin 
+                    className="login-button" 
+                    clientId={process.env.REACT_APP_GITHUB_CLIENT_ID} 
+                    buttonText="Login in with GitHub"
+                />
+            </div>;
         }
         return (
             <div>
