@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Button from "react-bulma-components/lib/components/button";
 import * as blockstack from 'blockstack';
 import GitHubLogin from 'react-github-login';
+import { githubClientId } from '..';
 
 export default class LoginControl extends Component {
     constructor(props) {
@@ -51,7 +52,7 @@ export default class LoginControl extends Component {
                 </Button>
                 <GitHubLogin 
                     className="login-button" 
-                    clientId={process.env.REACT_APP_GITHUB_CLIENT_ID} 
+                    clientId={githubClientId} 
                     buttonText="Login in with GitHub"
                 />
             </div>;
