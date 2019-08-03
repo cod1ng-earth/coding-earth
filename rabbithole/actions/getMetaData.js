@@ -3,7 +3,10 @@ const getFavicons = require('get-website-favicon')
 
 const getMetaData = async url => {
   getFavicons(url).then(data => {
-    const iconUrlFavicon = data.icons ? data.icons[0].src : null;
+    let iconUrlFavicon;
+    if(data.icons && data.icons[0] && data.icons[0].src) {
+      iconUrlFavicon = data.icons[0].src;
+    }
     console.log("ICON URL: " + iconUrlFavicon);
     return {
       iconUrlFavicon,
