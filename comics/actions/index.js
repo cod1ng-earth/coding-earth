@@ -17,13 +17,28 @@ const startListening = async () => {
     await consumer.subscribe({topic: TOPIC_NEW_CONTENT})
 
     await consumer.run({
-        eachMessage: async ({ topic, partition, message }) => {
-            logger.app.info(`${topic} ${message.value}`);
+        eachMessage: async ({topic, partition, message}) => {
+            logger.app.info(`comic logger app info ${topic} ${message.value}`);
             try {
                 const value = JSON.parse(message.value);
+
+                if (value.type === 'tweet') {
+                    const expandedURL = value.content.entities.urls && value.content.entities.urls.length > 0 && value.content.entities.urls[0].expanded_url;
+
+                    if (expandedURL) {
+                        const url = value.content.entities.media && value.content.entities.media.length > 0 && value.content.entities.media[0].media_url_https;
+                        add({url, guessedDomain: expandedURL});
+                    }
+
+                    return;
+                }
                 switch (topic) {
-                    case TOPIC_NEW_URL: add(value); break;
-                    case TOPIC_NEW_CONTENT: index(value); break;
+                    case TOPIC_NEW_URL:
+                        add(value);
+                        break;
+                    case TOPIC_NEW_CONTENT:
+                        index(value);
+                        break;
                 }
             } catch (e) {
                 logger.app.error(e)

@@ -1,26 +1,36 @@
-const cheerio = require('cheerio');
-const axios = require('axios');
-
-function isImageURL(url) {
-    return (url.match(/\.(jpeg|jpg|gif|png)$/) != null);
-}
+const logger = require('../lib/logger');
 
 const whiteListDomains = new Map();
-whiteListDomains.set('www.monkeyuser.com', async (url) => {
+whiteListDomains.set('www.monkeyuser.com', async ($) => monkeyUserHandler($));
+whiteListDomains.set('www.commitstrip.com', async ($) => commitStripHandler($));
+whiteListDomains.set('xkcd.com', async ($) => xkcdHandler($));
+whiteListDomains.set('imgs.xkcd.com', async ($) => console.log($));
+whiteListDomains.set('webcomicname.com', async ($) => ohNoHandler($));
+whiteListDomains.set('theohnoshop.com', async ($) => console.log($));
+whiteListDomains.set('turnoff.us', async ($) => turnOffHandler($));
 
-    if (isImageURL(url)) {
-        return url;
-    }
-    const urlResponse = await axios.get(url);
-    const $ = cheerio.load(urlResponse.data);
-    const image = $('.content>p>img');
-    if (image) {
-        console.log('response data image', image.attr('src'));
-        return image.attr('src');
-    }
-    return '';
+async function turnOffHandler($) {
+    const img = $('.post-content>p>img');
+    img.attr('src', 'http://turnoff.us' + img.attr('src'));
+    return img;
+}
 
-    console.log('Monkey user works');
-});
+async function ohNoHandler($) {
+    return $('.tmblr-full>img');
+}
+
+async function xkcdHandler($) {
+    return $('#comic>img');
+}
+
+async function commitStripHandler($) {
+    return $('.entry-content>p>img');
+}
+
+
+async function monkeyUserHandler($) {
+    return $('.content>p>img');
+}
+
 
 module.exports = whiteListDomains;

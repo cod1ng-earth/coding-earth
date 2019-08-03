@@ -19,7 +19,7 @@ export default (props) => {
             method: 'post',
             url: endpoint + "/url",
             data: { url }
-        });
+        }).then(setUrl(""));
         return false
     };
 
