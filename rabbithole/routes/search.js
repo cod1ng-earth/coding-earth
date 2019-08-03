@@ -19,6 +19,7 @@ module.exports = async (req, res) => {
 
   try {
     const result = await elastic.search(elasticsearchQuery);
+    console.log("RESULTS: " + JSON.stringify(result));
     res.json({
       carrots: result
     });

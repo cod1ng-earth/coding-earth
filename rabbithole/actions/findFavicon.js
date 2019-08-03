@@ -13,6 +13,8 @@ const findFavicon = async ({ type, url, content }) => {
             type: 'carrot',
             body: url,
         })
+
+        console.log("Writing index: " + JSON.stringify(result));
         return result;
     } catch(e) {
         logger.app.error(e);
