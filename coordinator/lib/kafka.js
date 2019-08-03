@@ -61,5 +61,6 @@ module.exports = {
     kafka: client,
     init,
     TOPIC_NEW_URL,
-    TOPIC_NEW_CONTENT
+    TOPIC_NEW_CONTENT,
+    TOPIC_NEW_CARROT
 };

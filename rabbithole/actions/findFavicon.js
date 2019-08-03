@@ -14,7 +14,7 @@ const findFavicon = async ({ type, url, content }) => {
       index: "carrots",
       id: Math.round(Math.random() * 10000),
       type: "carrot",
-      body: url
+      body: { url }
     });
 
     console.log("Writing index: " + JSON.stringify(result));
