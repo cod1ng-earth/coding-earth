@@ -2,11 +2,17 @@ import React, { useState } from 'react';
 import { Navbar } from 'react-bulma-components/lib';
 import { Control, Input } from 'react-bulma-components/lib/components/form';
 import Icon from 'react-bulma-components/lib/components/icon';
+import Modal from 'react-bulma-components/lib/components/modal';
+import Section from 'react-bulma-components/lib/components/section';
+import Button from 'react-bulma-components/lib/components/button';
+
+
 import LoginControl from './LoginControl';
 
 export default ({onSearch}) => {
     const [open, setOpen] = useState(false);
     const [search, onSearchChange] = useState("");
+    const [showModal, setShowModal] = useState(false);
 
     return <Navbar color="primary" active={open}>
         <Navbar.Brand>
@@ -28,7 +34,27 @@ export default ({onSearch}) => {
                     </form>
                 </Navbar.Item>
                 <Navbar.Item>
-                    <LoginControl />
+                    <div>
+                    <Button onClick={() => setShowModal(true)}>Login</Button>
+                    <Modal 
+                    show={showModal}
+                    closeOnBlur={true}
+                    onClose={() => setShowModal(false)} 
+                    > 
+                    <Modal.Card>
+                        <Modal.Card.Head
+                        showClose={false}
+                    >
+                            <Modal.Card.Title >
+                                Login
+                            </Modal.Card.Title>
+                        </Modal.Card.Head>
+                        <Modal.Card.Body>
+                        <LoginControl></LoginControl>
+                        </Modal.Card.Body>
+                    </Modal.Card>
+                    </Modal>
+                    </div>
                 </Navbar.Item>
             </Navbar.Container>
         </Navbar.Menu>
