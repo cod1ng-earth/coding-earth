@@ -11,7 +11,7 @@ const getMetaData = async url => {
       });
 
       res.on("end", () => {
-        onsole.log("End of logging");
+        console.log("End of logging");
 
         const dom = new JSDOM(data);
         const doc = dom.window.document;
