@@ -116,7 +116,7 @@ Since we're going to build a lot of small applications that will be bound togeth
 ```
 
 if everything goes well, you should be able to visit `http://cearth.local:8000` (whatever port you chose) and see the freshly built frontend consuming Docker based microservices as exposed by your local coordinator service (`coordinator.cearth.local:8000`)
-
+my second attempt.
 #### Some Docker hints
 - `docker-compose exec <container> sh`: get a shell on a running container
 - `docker-compose restart <container>`
