@@ -15,7 +15,7 @@ app.use(express.json());
 
 const PORT = config.isValidPlatform() ? config.port : process.env.PORT || 3000;
 
-app.get("/", hello);
+app.get("/", search);
 
 app.listen(PORT, () =>
   logger.app.info(`rabbithole app listening on port ${PORT}!`)
