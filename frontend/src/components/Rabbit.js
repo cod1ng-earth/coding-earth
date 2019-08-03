@@ -5,17 +5,12 @@ import styled, { keyframes } from "styled-components";
 const pulse = keyframes``;
 
 const StyledRabbit = styled(Rabbit)`
-  height: 100px;
-  width: 100px;
-  position: absolute;
-  top: 70px;
-  left: 400px;
-  #upper-left-leg-sitting,
-  #upper-right-leg-sitting,
-  #lower-right-leg-sitting,
-  #lower-left-leg-sitting,
-  #carrot,
-  #tail {
+height: 85px;
+width: 100px;
+position: absolute;
+top: 145px;
+left: 100px;
+  #carrot {
     display: none;
   }
 `;
