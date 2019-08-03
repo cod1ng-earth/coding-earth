@@ -1,4 +1,4 @@
-const dontexpose = ['frontend', 'coordinator']
+const dontexpose = ['frontend', 'coordinator','rssreader']
 
 const routesDef = (defs, defaultHost, http = false) => {
     const exposedServices = {};
