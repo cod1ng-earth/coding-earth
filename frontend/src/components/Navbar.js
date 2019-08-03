@@ -1,17 +1,12 @@
 import React, { useState } from 'react';
-import { Navbar, Button } from 'react-bulma-components/lib';
+import { Navbar } from 'react-bulma-components/lib';
 import { Control, Input } from 'react-bulma-components/lib/components/form';
 import Icon from 'react-bulma-components/lib/components/icon';
-import * as blockstack from 'blockstack';
+import LoginControl from './LoginControl';
 
 export default ({onSearch}) => {
     const [open, setOpen] = useState(false);
     const [search, onSearchChange] = useState("");
-
-    const onLoginWithBlockstack = async (evt) => {
-        evt.preventDefault()
-        blockstack.redirectToSignIn()
-    };
 
     return <Navbar color="primary" active={open}>
         <Navbar.Brand>
@@ -33,7 +28,7 @@ export default ({onSearch}) => {
                     </form>
                 </Navbar.Item>
                 <Navbar.Item>
-                    <Button type="primary" onClick={(evt) => {evt.preventDefault(); onLoginWithBlockstack(evt);}}>Login with Blockstack</Button>
+                    <LoginControl />
                 </Navbar.Item>
             </Navbar.Container>
         </Navbar.Menu>
