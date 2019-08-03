@@ -21,6 +21,7 @@ const findFavicon = async ({ type, url, content }) => {
     return result;
   } catch (e) {
     console.log("ups - your carrot got lost");
+    console.log("Error: " + JSON.stringify(e, Object.getOwnPropertyNames(e)));
     logger.app.error(e);
     return false;
   }
