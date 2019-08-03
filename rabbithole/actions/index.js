@@ -2,10 +2,10 @@ const kafka = require("../lib/kafka");
 const logger = require("../lib/logger");
 
 const add = require("./add");
-const index = require("./doIndex");
+const findFavicon= require("./findFavicon");
 
 const TOPIC_NEW_URL = "NewUrl";
-const TOPIC_NEW_CONTENT = "NewContent";
+const TOPIC_NEW_CARROT = "NewCarrot";
 const CLIENT_RESPONSE = "ClientResponse";
 
 const consumer = kafka.consumer({ groupId: "tweets-group" });
@@ -13,7 +13,7 @@ const consumer = kafka.consumer({ groupId: "tweets-group" });
 const startListening = async () => {
   await consumer.connect();
   await consumer.subscribe({ topic: TOPIC_NEW_URL });
-  await consumer.subscribe({ topic: TOPIC_NEW_CONTENT });
+  await consumer.subscribe({ topic: TOPIC_NEW_CARROT });
 
   await consumer.run({
     eachMessage: async ({ topic, partition, message }) => {
@@ -24,8 +24,8 @@ const startListening = async () => {
           case TOPIC_NEW_URL:
             add(value);
             break;
-          case TOPIC_NEW_CONTENT:
-            index(value);
+          case TOPIC_NEW_CARROT:
+            findFavicon(value);
             break;
         }
       } catch (e) {

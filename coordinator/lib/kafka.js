@@ -5,6 +5,7 @@ const logger = require('./logger')
 
 const TOPIC_NEW_URL = "NewUrl";
 const TOPIC_NEW_CONTENT = "NewContent";
+const TOPIC_NEW_CARROT = "NewCarrot";
 const CLIENT_RESPONSE = "ClientResponse";
 
 const topics = [
@@ -15,6 +16,11 @@ const topics = [
     },
     {
         topic: TOPIC_NEW_CONTENT,
+        numPartitions: 1,
+        replicationFactor: 1
+    },
+    {
+        topic: TOPIC_NEW_CARROT,
         numPartitions: 1,
         replicationFactor: 1
     },
