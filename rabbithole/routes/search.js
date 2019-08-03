@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
     }
   };
 
-  elasticsearchQuery.index = "carrots";
+  elasticsearchQuery.index = "carrot";
 
   try {
     const result = await elastic.search(elasticsearchQuery);
