@@ -8,8 +8,6 @@ import * as serviceWorker from "./serviceWorker";
 
 //import 'react-bulma-components/dist/react-bulma-components.min.css';
 
-ReactDOM.render(<App />, document.getElementById("root"));
-
 ReactDOM.render(
   <BrowserRouter>
     <Routes />
