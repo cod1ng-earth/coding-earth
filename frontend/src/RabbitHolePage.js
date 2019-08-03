@@ -25,5 +25,9 @@ export default props => {
     };
   }, []);
 
-  return <div>Rabbit hole</div>;
+  return (
+    <div style={{ backgroundColor: "#1b1464", height: "100vh", color: "#FFF" }}>
+      Rabbit hole
+    </div>
+  );
 };
