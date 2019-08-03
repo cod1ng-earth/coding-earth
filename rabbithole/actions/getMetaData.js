@@ -4,10 +4,15 @@ const getFavicons = require('get-website-favicon')
 
 const getMetaData = async url => {
 
+  getFavicons(url).then(data => {
+    console.log("ICON DATA 1: " + JSON.stringify(data));
+    const iconUrl = data.icons[0].src;
+    console.log("ICON URL 1: " + iconUrl);
+  });
+
   getFavicons('github.com').then(data => {
-    console.log("ICON DATA: " + JSON.stringify(data));
-    const iconUrl = data.icons[0].url;
-    console.log("ICON URL: " + iconUrl);
+    const iconUrl = data.icons[0].src;
+    console.log("ICON URL github: " + iconUrl);
   });
 
   // https
