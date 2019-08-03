@@ -1,6 +1,8 @@
 const kafka = require("../lib/kafka");
 const logger = require("../lib/logger");
 
+const getMetaData = require("./getMetaData");
+
 const TOPIC_NEW_CARROT = "NewCarrot";
 
 const producer = kafka.producer();
@@ -11,6 +13,8 @@ const add = async value => {
   console.log(`${value.url} goes into the rabbithole`);
 
   try {
+    await getMetaData(value.url);
+
     const messages = JSON.stringify({
       type: "carrot",
       url: value.url

@@ -1,7 +1,7 @@
 const elastic = require("../lib/elasticsearch");
 const logger = require("../lib/logger");
 
-const findFavicon = async ({ type, url, content }) => {
+const doIndex = async ({ type, url, content }) => {
   console.log("Got Type " + type + " with URL " + url);
 
   if (type !== "carrot") {
