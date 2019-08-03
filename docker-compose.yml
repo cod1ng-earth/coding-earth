@@ -122,3 +122,11 @@ services:
 
 
 
+
+  rabbithole:
+    build:
+      context: ./rabbithole
+      dockerfile: ../docker/nodejs-npm.dockerfile
+    volumes:
+      - ./rabbithole:/app
+

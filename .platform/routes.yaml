@@ -21,3 +21,7 @@
 "https://tweets.{default}/":
   type: upstream
   upstream: "tweets:http"
+
+"https://rabbithole.{default}/":
+  type: upstream
+  upstream: "rabbithole:http"
