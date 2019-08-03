@@ -14,7 +14,8 @@ const StyledRabbit = styled(Rabbit)`
   #upper-right-leg-sitting,
   #lower-right-leg-sitting,
   #lower-left-leg-sitting,
-  #carrot {
+  #carrot,
+  #tail {
     display: none;
   }
 `;
