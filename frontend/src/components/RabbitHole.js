@@ -16,6 +16,17 @@ const pulse = keyframes`
 }
 `;
 
+const rotation = keyframes`
+0% {
+    transform: rotate(0deg);
+    transform-origin: center;
+}
+100% {
+    transform: rotate(360deg);
+    transform-origin: center;
+}
+`;
+
 const StyledRabbitHole = styled(RabbitHole)`
   height: 300px;
   width: 300px;
@@ -23,7 +34,16 @@ const StyledRabbitHole = styled(RabbitHole)`
   top: 50px;
   right: 100px;
   #outer-sparkle {
-    animation: ${pulse} infinite 4s linear;
+    animation: ${rotation} infinite 25s linear;
+  }
+  #spiral {
+    animation: ${rotation} infinite 5s linear;
+  }
+  #inner-sparkle {
+    animation: ${rotation} infinite 9s linear;
+  }
+  #weed {
+    animation: ${rotation} infinite 15s linear;
   }
 `;
 
