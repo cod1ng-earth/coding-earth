@@ -15,9 +15,9 @@ const getMetaData = async url => {
 
         const dom = new JSDOM(data);
         const doc = dom.window.document;
-        console.log('queryselector1: ' + doc.querySelector("link")); 
-        console.log('queryselector2: ' + doc.querySelector('[type="image/x-icon"]')); 
-        console.log('elemByAttr: ' + doc.findElementByAttribute("type", "image/x-icon")); 
+        console.log('queryselector1: ' + JSON.stringify(doc.querySelector("link"))); 
+        console.log('queryselector2: ' + JSON.stringify(doc.querySelector('[type="image/x-icon"]'))); 
+       // console.log('elemByAttr: ' + doc.findElementByAttribute("type", "image/x-icon")); 
       });
     })
     .on("error", err => {
