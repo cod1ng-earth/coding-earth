@@ -6,7 +6,7 @@ import * as serviceWorker from './serviceWorker';
 
 //import 'react-bulma-components/dist/react-bulma-components.min.css';
 
-export const githubClientId = process.env.REACT_APP_REACT_APP_GITHUB_CLIENT_ID;
+export const githubClientId = process.env.REACT_APP_GITHUB_CLIENT_ID;
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
