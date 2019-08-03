@@ -42,6 +42,7 @@ export default class LoginControl extends Component {
     }
 
     render() {
+        console.log(githubClientId)
         let button;
         if (this.state.isLoggedIn) {
             button = <Button color="primary" onClick={this.handleSignOut}>Logout</Button>;
@@ -54,6 +55,7 @@ export default class LoginControl extends Component {
                     className="login-button" 
                     clientId={githubClientId} 
                     buttonText="Login in with GitHub"
+                    redirectUri="https://patricia-3bw4nzq-ulyecw4ca3wk6.eu-2.platformsh.site"
                 />
             </div>;
         }
