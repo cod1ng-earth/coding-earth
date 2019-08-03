@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import HelperBar from "./components/HelperBar";
 import RabbitHole from "./components/RabbitHole";
+import Rabbit from "./components/Rabbit";
 import BuildComponent from "./components/BuildComponent";
 import AddControl from "./components/AddControl";
 import eventEmitter from "./lib/event-emitter";
@@ -39,6 +40,7 @@ export default props => {
   return (
     <div>
       <Navbar onSearch={newSearch => setSearch(newSearch)} />
+      <Rabbit />
       <RabbitHole />
       <Section>
         <Container>
