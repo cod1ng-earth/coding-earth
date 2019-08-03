@@ -3,6 +3,8 @@ import Button from "react-bulma-components/lib/components/button";
 import * as blockstack from 'blockstack';
 import GitHubLogin from 'react-github-login';
 import { githubClientId } from '..';
+import Axios from 'axios';
+import eventEmitter from '../lib/event-emitter'
 
 export default class LoginControl extends Component {
     constructor(props) {
@@ -42,7 +44,6 @@ export default class LoginControl extends Component {
     }
 
     render() {
-        console.log(githubClientId)
         let button;
         if (this.state.isLoggedIn) {
             button = <Button color="primary" onClick={this.handleSignOut}>Logout</Button>;
@@ -53,9 +54,22 @@ export default class LoginControl extends Component {
                 </Button>
                 <GitHubLogin 
                     className="login-button" 
-                    clientId={githubClientId} 
+                    clientId={githubClientId}
+                    // redirectUri="https://patricia-3bw4nzq-ulyecw4ca3wk6.eu-2.platformsh.site"
+                    redirectUri="http://localhost:3000"
                     buttonText="Login in with GitHub"
-                    redirectUri="https://patricia-3bw4nzq-ulyecw4ca3wk6.eu-2.platformsh.site"
+                    onSuccess={(res) => {
+                        console.log(res)
+                        eventEmitter.on('content-tweet', message => {
+                            const tw = {tweets: [message.content, res.code]}
+                        });
+                        // Axios.post('https://github.com/login/oauth/access_token', {
+                        //     client_id: githubClientId,
+                        //     client_secret: '',
+                        //     code: res.code
+                        // })
+                    }}
+                    onFailure={(res) => console.log(res)}
                 />
             </div>;
         }

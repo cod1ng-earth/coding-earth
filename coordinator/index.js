@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const fs = require('fs')
 const YAML = require('yaml')
+const url = require('url')
 
 const kafkaClient = require('./lib/kafka')
 const logger = require('./lib/logger')
@@ -42,6 +43,18 @@ kafkaClient.init().then( async () => {
     await consumer.subscribe({topic: kafkaClient.TOPIC_NEW_CONTENT})
 
     app.get('/', (req, res) => res.json(routes) );
+
+    // app.get('/', async (req, res) => {
+    //     const {query} = url.parse(req.url, true)
+
+    //     logger.app.info(query.code)
+    //     app.post('https://github.com/login/oauth/access_token', async (req, res) => {
+    //         const body = req.body;
+
+    //         logger.app.info(body)
+
+    //     })
+    // })
     
     app.post('/url', async (req, res) => {
         const body = req.body;
