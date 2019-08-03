@@ -25,7 +25,7 @@ services:
       dockerfile: ../docker/nodejs-yarn.dockerfile
     environment:
       - SKIP_PREFLIGHT_CHECK=true
-      - REACT_APP_COORDINATOR=coordinator.${DEFAULT_HOST}
+      - REACT_APP_COORDINATOR=//coordinator.${DEFAULT_HOST}
     volumes:
       - ./frontend:/app:rw,cached
 
