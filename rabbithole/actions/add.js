@@ -13,11 +13,11 @@ const add = async value => {
   console.log(`${value.url} goes into the rabbithole`);
 
   try {
-    await getMetaData(value.url);
+    const { iconUrlFavicon } = await getMetaData(value.url);
 
     const messages = JSON.stringify({
       type: "carrot",
-      url: value.url
+      url: iconUrlFavicon
     });
 
     await producer.send({
