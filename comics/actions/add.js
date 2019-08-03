@@ -22,19 +22,26 @@ const add = async (value) => {
     }
 
     if (whiteListDomains.has(domain)) {
+
+        const imageUrl =  await whiteListDomains.get(domain)(url);
+        if (!imageUrl) {
+            logger.app.info('no valid image found');
+            return null;
+        }
+        console.log('image url to comic is ', imageUrl);
         const messages = JSON.stringify({
             type: "comics",
             url,
-            content: { url}
+            content: {url: imageUrl}
         });
 
-       const data = await producer.send({
+        const data = await producer.send({
             topic: TOPIC_NEW_CONTENT,
             messages: [
                 {value: messages},
             ],
         });
-       logger.app.info(data);
+        logger.app.info(data);
 
     } else {
         console.log('INVALID DOMAIN');
