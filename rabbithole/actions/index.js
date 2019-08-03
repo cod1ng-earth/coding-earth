@@ -8,7 +8,7 @@ const TOPIC_NEW_URL = "NewUrl";
 const TOPIC_NEW_CARROT = "NewCarrot";
 const CLIENT_RESPONSE = "ClientResponse";
 
-const consumer = kafka.consumer({ groupId: "tweets-group" });
+const consumer = kafka.consumer({ groupId: "carrots-group" });
 
 const startListening = async () => {
   await consumer.connect();
