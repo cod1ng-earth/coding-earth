@@ -1,4 +1,5 @@
 const https = require("https");
+const { JSDOM } = require("jsdom");
 
 const getMetaData = async url => {
   https
@@ -10,7 +11,13 @@ const getMetaData = async url => {
       });
 
       res.on("end", () => {
-        console.log(data);
+        onsole.log("End of logging");
+
+        const dom = new JSDOM(data);
+        const doc = dom.window.document;
+        console.log('queryselector1: ' + doc.querySelector("link")); 
+        console.log('queryselector2: ' + doc.querySelector('[type="image/x-icon"]')); 
+        console.log('elemByAttr: ' + doc.findElementByAttribute("type", "image/x-icon")); 
       });
     })
     .on("error", err => {
