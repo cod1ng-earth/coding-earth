@@ -9,6 +9,7 @@ const findFavicon = async ({ type, url, content }) => {
     return false;
   }
   try {
+    console.log("writing to elastic search...");
     const result = await elastic.index({
       index: "carrots",
       id: Math.round(Math.random() * 10000),
@@ -19,6 +20,7 @@ const findFavicon = async ({ type, url, content }) => {
     console.log("Writing index: " + JSON.stringify(result));
     return result;
   } catch (e) {
+    console.log("ups - your carrot got lost");
     logger.app.error(e);
     return false;
   }
