@@ -1,7 +1,7 @@
 const kafka = require("../lib/kafka");
 const logger = require("../lib/logger");
 
-const TOPIC_NEW_CARROT= "NewCarrot";
+const TOPIC_NEW_CARROT = "NewCarrot";
 
 const producer = kafka.producer();
 producer.connect();
@@ -15,7 +15,6 @@ const add = async value => {
       type: "carrot",
       url: value.url
     });
-    console.log("type: " + messages);
 
     await producer.send({
       topic: TOPIC_NEW_CARROT,

@@ -2,7 +2,7 @@ const kafka = require("../lib/kafka");
 const logger = require("../lib/logger");
 
 const add = require("./add");
-const findFavicon= require("./findFavicon");
+const findFavicon = require("./findFavicon");
 
 const TOPIC_NEW_URL = "NewUrl";
 const TOPIC_NEW_CARROT = "NewCarrot";
@@ -25,6 +25,7 @@ const startListening = async () => {
             add(value);
             break;
           case TOPIC_NEW_CARROT:
+            console.log("switch - case: NEW CARROT");
             findFavicon(value);
             break;
         }
