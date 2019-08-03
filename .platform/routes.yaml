@@ -21,3 +21,7 @@
 "https://tweets.{default}/":
   type: upstream
   upstream: "tweets:http"
+
+"https://letsdopython.{default}/":
+  type: upstream
+  upstream: "letsdopython:http"
