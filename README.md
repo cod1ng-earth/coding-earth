@@ -1,8 +1,8 @@
 # hub.coding.earth 
 
-The coding.earth hub is a site that aggregates meaningful content for developers. It's composed of small services that respond with pieces of content. The hub website stitches them together using a monolithic frontend application. 
+The coding.earth hub is a place to aggregate meaningful content for developers. It's composed of small services that respond with pieces of content. The hub website stitches them together using a monolithic frontend application. 
 
-Running the whole thing locally isn't the simplest thing to do. While we've added Dockerfiles for local development we recommend to use [platform.sh](platform.sh)'s great multi-environment PaaS to contribute. 
+The hub is deployed on [platform.sh](platform.sh), so if you want to hack on it, we recommend forking an  environment over there. You can also run the whole thing locally on Docker, but be prepared to look into its guts if something goes wrong.  
 
 # Requirements
 ## the **absolutely minimal** requirements
@@ -13,47 +13,48 @@ Running the whole thing locally isn't the simplest thing to do. While we've adde
 
 with that setup you can write code locally, fork and push to your very own platform.sh environment and run it there. 
 
-## the **minimal** requirements
-It's taking some time until platform.sh has built and released your code, therefore we suggest to at least install your micro application's language stack locally. Depending on the code you plan to write that could be Ruby, Python, node.js or PHP, composer but also Java and Go are supported. You don't have to install MySQL, Redis or Elasticsearch locally because platform.sh allows you to tunnel to your environments' resources via SSH. We definitely recommend installing **node.js** locally because our tooling relies on it:
+## the **slightly higher minimal** requirements
+It's taking some time until platform.sh has built and released your code, therefore we suggest to at least install your micro application's language stack locally. Depending on the code you plan to write that could be Ruby, Python, node.js, PHP, Java or Go. You don't have to install MySQL, Redis or Elasticsearch locally because platform.sh allows you to tunnel to your environments' resources via SSH (try `platform tunnel:open` ). We definitely recommend installing **node.js** locally because the central coordinator component is built on it:
 
 - [nodejs](https://nodejs.org/en/) (if you want to avoid littering your local machine set it up using [nvm](https://github.com/nvm-sh/nvm))
 
-If you want to work on the **frontend code** (the `scaffolding` app), checkout the README.md in the `scaffolding` directory. You'll only need node / yarn and an environment. There's no need for a full setup on your local machine as long as you can connect to a working coordinator (you can event use the master environment on https://coordinator.coding.earth).
+If you want to work on the **frontend code** (the `frontend` app), checkout the README.md in the `frontend` directory. You'll only need node / yarn to build and serve it. You can simply connect it to a working coordinator (but try to avoid writing onto our master environment https://coordinator.coding.earth).
 
 # Getting started 
 Follow the instructions on platform.sh's [Getting Started](https://docs.platform.sh/gettingstarted/tools.html) page. They boil down to authenticating with platform.sh using the CLI client (`platform`) and adding your public SSH key to the project (`platform ssh-key:add`).
 
-Get the project's sources from platform.sh (it's a `git clone` under the hood)
+Get the project's sources from platform.sh (it's a `git clone` under the hood):
 
 `platform get <platform project id>`
 
-The default branch that's checked out is unsurprisingly `master`. You should use that as starting point for your own environment. You can fork your own branch / environment with
+The default branch that's checked out is unsurprisingly `master`. You should use that as starting point for your own environment. Fork your own branch / environment with
 
 `platform branch <a good name>`
 
-This will create a branch, pushes it to platform.sh and triggers a deployment of your new environment. When forking an environment, platform.sh creates a **complete** (!) clone of it, all its apps and its dependencies and exposes it as new environment to the web. 
+This will create a branch, push it to platform.sh and trigger a full deployment of your new environment. When forking an environment, platform.sh creates a **complete** (!) clone of it, all its apps and its dependencies and exposes it as new environment to the web. 
 
-You can now cd into an application's folder and start adding features to it or create a new one. Every time you `platform push`, new commits your environment will be updated.
+You can now cd into an application's folder and start adding features to it or create a new one. Every time you `platform push` new commits, your environment will be rebuilt.
 
 ### Access the running applications
-`platform url` displays a list of available endpoints. There are 2 fundamental and 2 demo apps available as of May 24th:
+`platform url` displays a list of available endpoints. There are 2 fundamental and 2 demo apps available:
 
-- **coordinator** is responsible for "coordinating" the microservices with the frontend code. It's based on node.js / express.
-- **scaffold** is a React based frontend monolith that requests information about all available microservices from **coordinator**.
-- **rssreader** reads an rss feed every 15 minutes, stores its items in an ElasticSearch index and responds with the latest news. It's built on node.js. 
-- **calendar** is a service that yields a list of days of the current month. It's written in PHP using Symfony 4.2
+- **coordinator** is responsible for "coordinating" the microservices with the frontend code. It's based on node.js / express. Also acts as common gateway of input requests.
+- **frontend** is a React based frontend monolith that requests information about all available microservices from **coordinator**.
+- **tweets** listens on Kafka for messages on topic `NewUrl` . If it's a tweet/status, gets its data from the official Twitter API and dispatches a `NewContent` message. Listens on itself for it and indexes it into Elasticsearch.  
+- **calendar** is a service that you can query with dateranges for a list of events. Support several "backends", currently only a github based conference list is available. Written in PHP using Symfony 4.2
+- (there still is a sample **rssreader** app that demonstrates cron, sqlite / file system and Elasticsearch usage but it's not operational. Built on node.js)
 
-You can access all of these applications on their subdomains of the same name on your environment url.
+If you're doing local development, you can access all these applications on their respective subdomains of the same name on your environment url. E.g. `tweets.cearth.local:8000`. 
 
 ### Make a change and deploy
 Lets try to change an existing service. First, create a new environment:
 
-`platform branch messagerss` (use any branch name you like)
+`platform branch <xyz>-rss` (use any branch name you like)
 
-While platform.sh builds your clone of the master branch you can already start hacking:
+While platform.sh starts building your clone of master you can already start hacking:
 
-- open `rssreader/index.js`
-- add another field in its output (e.g. a string message): 
+- open `rssreader/routes/search.js`
+- add another field to its output (e.g. a string message): 
 
 ```js
 const response = {
@@ -63,8 +64,6 @@ const response = {
 ``` 
 
 and commit it (use your IDE or `git commit -am "added message"`). Now you're ready to push that change with `platform push`. Platform.sh will only rebuild the rssreader app since nothing else has changed. With `platform url` you can display the individual URLs of your environment and access your very own version of the rssreader application. 
-
-**NOTICE** if you see a big fat security warning, that's because LetsEncrypt certificates need some time to propagate. Try to find the "Accept the risk" button (it's your code!) and proceed.
 
 ### Run an application locally with tethered resources
 If you try to run the rssreader application locally (`npm run start`) it will fail since you most likely don't have Elasticsearch installed locally. The good news: you can simply connect your locally built application to the remote Elasticsearch instance that platform.sh has provisioned for your environment: 
@@ -100,26 +99,23 @@ platform build
 This will install dependencies and build all applications **locally** on your machine and symlink them into a new `_www` folder. NOTICE: Symfony's base requirements quite likely already break this default build (since it might miss the php-xml package, that you can install on Ubuntu with `apt-get install php-xml`). If you want, you can start fixing that, but it's much nicer to run them on Docker instead.
 
 ## Run everything locally with Docker
-If you just want to hack on the microservices or the frontend, you can safely ignore all of the .env, localEnv, Dockerfile, docker-compose.yml files and the web folder (it's a local reverse proxy).*
+**If you just want to hack on the microservices or the frontend, you can safely ignore all of the .env, localEnv, Dockerfile, docker-compose.yml files and the web folder.**
 
-Since we're going to build a lot of small applications that will be bound together in a monolithic frontend, it's not really feasible to launch them one by one, remember ports and configure them accordingly. That's why we have prepared a docker environment that should enable you to run **everything** locally inside Docker containers. You'll also need a local *node* installation from here on. 
+Since we're going to build a lot of small applications that will be bound together in a monolithic frontend, it's not really feasible to launch them one by one, remember ports and configure them accordingly. That's why we have prepared a docker environment that should enable you to run everything locally inside docker containers. You'll also need a local *node* installation from here on. 
 
 ### Use the Makefile
-Given you're running some Linux or BSD (macOS) machine, check that you can run `make` or install it (`sudo apt install make`)
-
-- On Linux you can't simply mount a service on port 80 without being root, so first copy the `.env.dist` file in the project root to an `.env` file and change the port (or leave it as 8000)
-- `make prepare` creates environment files in the coordinator directory. By default everything will run on `devday.local`. If you want to change that, edit the generated `coordinator/.env` file's `DEFAULT_HOST` entry now. 
-- `make coordinator` does quite frankly what platform.sh is doing remotely: it scans directories for platform.app.yamls and generates routing information available to all other applications. We're exposing that (as platform.sh does) as b64 encoded env var `$PLATFORM_ROUTES`
-- `make start` pulls images, installs dependencies and starts all services by calling `docker-compose up`. On a fresh setup this takes around 10 minutes.
+- Given you're running some Linux or BSD (macOS) machine, check that you can run `make` or install it (`sudo apt install make`)
+- `make prepare` creates local environment files in your root directory (`.env`). It e.g. contains port and default domain configuration picked up by docker; by default everything will run on `cearth.local`. If you want to change that, edit the generated `.env` file's `DEFAULT_HOST` entry now. On Linux you can't simply mount a service on port 80 without being root, that's why our default is 8000
+- `make setup` pulls images, installs dependencies and starts all services by calling `docker-compose up`. On a fresh setup this takes around 10 minutes.
 - add localhost aliases for all services to your `/etc/hosts` file. At the time of writing this would look like:
 ```text
-127.0.0.1 devday.local
-127.0.0.1 coordinator.devday.local
-127.0.0.1 frontend.devday.local
-127.0.0.1 rssreader.devday.local
+127.0.0.1 cearth.local
+127.0.0.1 coordinator.cearth.local
+127.0.0.1 frontend.cearth.local
+127.0.0.1 rssreader.cearth.local
 ```
 
-if everything goes well, you should be able to visit `http://devday.local:8000` (whatever port you chose) and see the freshly built frontend consuming Docker based microservices as exposed by your local coordinator service (`coordinator.devday.local:8000`)
+if everything goes well, you should be able to visit `http://cearth.local:8000` (whatever port you chose) and see the freshly built frontend consuming Docker based microservices as exposed by your local coordinator service (`coordinator.cearth.local:8000`)
 
 #### Some Docker hints
 - `docker-compose exec <container> sh`: get a shell on a running container
@@ -128,7 +124,7 @@ if everything goes well, you should be able to visit `http://devday.local:8000` 
 make sure to also check the `Makefile` for more insights.
 
 # Frontend development
-please check the README.md in `./scaffold`
+please check the README.md in `./frontend`
 
 # Troubleshooting
 
