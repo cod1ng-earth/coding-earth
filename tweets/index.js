@@ -6,6 +6,7 @@ const cors = require('cors')
 const logger = require('./lib/logger')
 const Actions = require('./actions/index');
 const search = require('./routes/search');
+const hello = require('./routes/hello');
 
 const app = express();
 app.use(logger.middleware);
@@ -15,6 +16,7 @@ app.use(express.json());
 const PORT = config.isValidPlatform() ?  config.port : (process.env.PORT || 3000);
 
 app.get('/', search);
+app.get('/hello', hello);
 
 app.listen(PORT, () => logger.app.info(`tweet app listening on port ${PORT}!`))
 
