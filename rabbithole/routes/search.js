@@ -10,8 +10,7 @@ module.exports = async (req, res) => {
       size: 100,
       query: {
         match_all: {}
-      },
-      sort: [{ created_at: { order: "desc" } }]
+      }
     }
   };
 
