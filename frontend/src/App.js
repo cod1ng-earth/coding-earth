@@ -42,7 +42,15 @@ export default props => {
         </Section>
           <Section>
               <Container >
-                  <BuildComponent tag="tweets" search={search}/>
+                  <Columns>
+                      {Object.keys(knownServices).map(k =>
+                          <Columns.Column size="half" key={k}>
+                              <Heading>{k}</Heading>
+                              <BuildComponent tag={k} search={search}/>
+                          </Columns.Column>
+                      )}
+                  </Columns>
+
               </Container>
           </Section>
        <HelperBar services={knownServices}/>
@@ -51,12 +59,5 @@ export default props => {
 }
 
 /*
-<Columns>
-                      {Object.keys(knownServices).map(k =>
-                      <Columns.Column size="half" key={k}>
-                          <Heading>{k}</Heading>
-                          <BuildComponent tag={k} search={search}/>
-                      </Columns.Column>
-                      )}
-                  </Columns>
+
  */
