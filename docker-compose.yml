@@ -122,3 +122,11 @@ services:
 
 
 
+
+  comics:
+    build:
+      context: ./comics
+      dockerfile: ../docker/nodejs-npm.dockerfile
+    volumes:
+      - ./comics:/app
+
