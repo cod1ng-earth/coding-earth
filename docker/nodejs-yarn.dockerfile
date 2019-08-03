@@ -13,12 +13,12 @@ COPY yarn.lock ./
 RUN yarn install
 COPY . ./
 
-RUN addgroup -S --gid "$GID" appgroup \
-    && adduser -S appuser -G appgroup \
+RUN egrep -i ":$GID:" /etc/passwd &>/dev/null || addgroup -S --gid "$GID" appgroup
+RUN egrep -i ":$UID:" /etc/passwd &>/dev/null || adduser -S appuser -G appgroup \
     --uid "$UID" \
     --disabled-password
 
-RUN chown -R appuser:appgroup /app
+RUN chown -R $UID:$GID /app
 USER $UID:$GID
 
 CMD yarn run start

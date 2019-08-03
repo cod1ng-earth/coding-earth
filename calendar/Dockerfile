@@ -94,14 +94,13 @@ RUN set -eux; \
 	composer dump-autoload --classmap-authoritative; \
 	composer run-script post-install-cmd;
 
-RUN addgroup -S --gid "$GID" appgroup \
-    && adduser -S appuser -G appgroup \
+RUN egrep -i ":$GID:" /etc/passwd &>/dev/null || addgroup -S --gid "$GID" appgroup
+RUN egrep -i ":$UID:" /etc/passwd &>/dev/null || adduser -S appuser -G appgroup \
     --uid "$UID" \
     --disabled-password
 
-
-RUN chown -R appuser:appgroup ${APP_PATH}; \
-    chown -R appuser:appgroup ${APP_PATH}/var; \
+RUN chown -R $UID:$GID ${APP_PATH}; \
+    chown -R $UID:$GID ${APP_PATH}/var; \
 	chmod +x bin/console; sync
 
 #VOLUME ${APP_PATH}
