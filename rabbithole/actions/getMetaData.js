@@ -18,7 +18,7 @@ const getMetaData = async url => {
         const linkElement = doc.querySelector('[type="image/x-icon"]');
         console.log('queryselector1: ' + JSON.stringify(doc.querySelector("link"))); 
         console.log('queryselector2: ' + JSON.stringify(linkElement)); 
-        console.log(dom.nodeLocation(linkElement)); 
+        // console.log(dom.nodeLocation(linkElement)); 
         console.log('queryselector3: ' + linkElement.href); 
        // console.log('elemByAttr: ' + doc.findElementByAttribute("type", "image/x-icon")); 
       });
