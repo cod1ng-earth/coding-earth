@@ -1,7 +1,6 @@
 const kafka = require("../lib/kafka");
 const logger = require("../lib/logger");
 
-const Twitter = require("../lib/twitter");
 const TOPIC_NEW_CONTENT = "NewContent";
 
 const producer = kafka.producer();
@@ -9,6 +8,7 @@ producer.connect();
 
 const add = async value => {
   const matches = value.url.match("/*.twitter.com/(.*)/status/(.*)");
+
   if (matches) {
     console.log(`${value.url} is a tweet`);
     return false;
@@ -21,6 +21,7 @@ const add = async value => {
       type: "carrot",
       url: value.url
     });
+    console.log("type:" + messages.type);
     await producer.send({
       topic: TOPIC_NEW_CONTENT,
       messages: [{ value: messages }]
