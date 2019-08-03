@@ -13,7 +13,9 @@ const add = async value => {
     console.log(`${value.url} is a tweet`);
     return false;
   }
-  //const userId = matches[1];
+
+  console.log(`${value.url} goes into the rabbithole`);
+
   try {
     const messages = JSON.stringify({
       type: "carrot",
