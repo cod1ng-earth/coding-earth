@@ -2,6 +2,8 @@
 
 The coding.earth hub is a place to aggregate meaningful content for developers. It's composed of small services that respond with pieces of content. The hub website stitches them together using a monolithic frontend application. 
 
+Robert says hello 
+
 The hub is deployed on [platform.sh](platform.sh), so if you want to hack on it, we recommend forking an  environment over there. You can also run the whole thing locally on Docker, but be prepared to look into its guts if something goes wrong.  
 
 # Requirements
