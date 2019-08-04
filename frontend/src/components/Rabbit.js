@@ -163,7 +163,7 @@ const moveFace = keyframes`
 
 
 const moveAnimation = css`
-  animation: ${move} 5s linear;
+  animation: ${move} 5s linear forwards;
 
   #upper-right-leg-sitting,
   #lower-left-leg-sitting {
