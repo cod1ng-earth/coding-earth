@@ -4,7 +4,6 @@ import * as blockstack from 'blockstack';
 import GitHubLogin from 'react-github-login';
 import { githubClientId } from '..';
 import Axios from 'axios';
-import eventEmitter from '../lib/event-emitter'
 
 export default class LoginControl extends Component {
     constructor(props) {
@@ -59,15 +58,10 @@ export default class LoginControl extends Component {
                     redirectUri="http://localhost:3000"
                     buttonText="Login in with GitHub"
                     onSuccess={(res) => {
-                        console.log(res)
-                        eventEmitter.on('content-tweet', message => {
-                            const tw = {tweets: [message.content, res.code]}
-                        });
-                        // Axios.post('https://github.com/login/oauth/access_token', {
-                        //     client_id: githubClientId,
-                        //     client_secret: '',
-                        //     code: res.code
-                        // })
+                        console.log(res)                        
+                        Axios.post(process.env.REACT_APP_COORDINATOR + '/github', {
+                            code: res.code
+                        })
                     }}
                     onFailure={(res) => console.log(res)}
                 />

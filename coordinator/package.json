@@ -18,6 +18,7 @@
     "express-winston": "^3.2.1",
     "kafkajs": "^1.10.0",
     "platformsh-config": "^2.2.5",
+    "request": "^2.88.0",
     "winston": "^3.2.1",
     "yaml": "^1.6.0"
   }
