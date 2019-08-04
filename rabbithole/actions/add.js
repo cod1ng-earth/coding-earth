@@ -20,7 +20,7 @@ const add = async value => {
 
   console.log(`is a url: ${validUrl}. is a twitter url: ${isTwitterUrl}`);
 
-  if (validUrl && isTwitterUrl == null) {
+  if (validUrl && !isTwitterUrl) {
     try {
       const { iconUrlFavicon } = await getMetaData(value.url);
 

@@ -11,14 +11,14 @@ const openHole = keyframes`
 
 }
 
-25%
+15%
  {
   transform: scaleX(1);
   transform-origin: center;
 
 }
 
-75%
+85%
 {
  transform: scaleX(1);
  transform-origin: center;
@@ -32,31 +32,31 @@ const openHole = keyframes`
 
 `;
 
-const appendRabbit = keyframes`
-0% {
-opacity: 0;
-
-
-}
-
-25%
- {
-opacity: 0;
-
-}
-
-75%
-{
-opacity: 1;
-
-}
-
-100% {
-  opacity: 1;
-
-}
-
-`;
+// const appendRabbit = keyframes`
+// 0% {
+// opacity: 0;
+//
+//
+// }
+//
+// 25%
+//  {
+// opacity: 0;
+//
+// }
+//
+// 75%
+// {
+// opacity: 1;
+//
+// }
+//
+// 100% {
+//   opacity: 1;
+//
+// }
+//
+// `;
 
 const move = keyframes`
 0% {
@@ -185,6 +185,9 @@ const moveAnimation = css`
 
 `;
 
+
+
+
 const StyledRabbit = styled(Rabbit)`
   height: 85px;
   width: 100px;
@@ -195,7 +198,7 @@ const StyledRabbit = styled(Rabbit)`
   #carrot {
     display: none;
   }
-    animation: ${appendRabbit} 1.5s linear;
+
 
   ${props => (props.running ? moveAnimation : "")};
 
@@ -217,24 +220,25 @@ const StyledRabbit = styled(Rabbit)`
 
 
 
-const StyledHole = styled(AppearHole)`
-  height: 130px;
-  width: 100px;
-  position: absolute;
-  top: 125px;
-  right: 380px;
-  z-index: 1000;
-
-  animation: ${openHole} 1.5s linear forwards;
-
-
-
-`;
+// const StyledHole = styled(AppearHole)`
+//   height: 100px;
+//   width: 100px;
+//   position: absolute;
+//   top: 145px;
+//   right: 380px;
+//   z-index: 1000;
+//
+//   animation: ${openHole} 1.5s linear forwards;
+//
+//
+//
+//
+// `;
 
 
 
 export default props => {
   const context = useContext(MainContext);
 
-  return <div> <StyledHole/><StyledRabbit running={context.rabbitRun} /></div>;
+  return <div> <StyledRabbit running={context.rabbitRun} /></div>;
 };
