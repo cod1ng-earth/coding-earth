@@ -26,6 +26,8 @@ const add = async value => {
         favicon: iconUrlFavicon
       });
 
+      console.log("new messages: " + messages);
+
       await producer.send({
         topic: TOPIC_NEW_CARROT,
         messages: [{ value: messages }]
