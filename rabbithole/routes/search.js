@@ -19,13 +19,13 @@ module.exports = async (req, res) => {
   try {
     const result = await elastic.search(elasticsearchQuery);
     /* clear ealstic search */
-    result.body.hits.hits.forEach(record => {
-      elastic.delete({
-        index: "carrots",
-        type: "carrot",
-        id: record._id
-      });
-    });
+    // result.body.hits.hits.forEach(record => {
+    //   elastic.delete({
+    //     index: "carrots",
+    //     type: "carrot",
+    //     id: record._id
+    //   });
+    // });
 
     res.json({
       carrots: result.body.hits.hits
