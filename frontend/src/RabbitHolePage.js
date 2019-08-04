@@ -74,7 +74,7 @@ export default class RabbitHolePage extends React.Component {
             }}>WELCOME TO THE RABBIT HOLE</p>
           </div>
 
-          <a href="">
+          <a href="http://www.nyan.cat/" rel="noopener noreferrer" target="_blank">
             <div
               style={{
                 width: "250px",
