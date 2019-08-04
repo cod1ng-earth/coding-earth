@@ -1,8 +1,10 @@
 const elastic = require("../lib/elasticsearch");
 const logger = require("../lib/logger");
 
-const doIndex = async ({ type, url, content }) => {
-  console.log("Got Type " + type + " with URL " + url);
+const doIndex = async ({ type, url, favicon }) => {
+  console.log(
+    "Got Type " + type + " with URL " + url + "and favicon" + favicon
+  );
 
   if (type !== "carrot") {
     console.log(type + " is not a carrot");
@@ -14,7 +16,7 @@ const doIndex = async ({ type, url, content }) => {
       index: "carrots",
       id: Math.round(Math.random() * 10000),
       type: "carrot",
-      body: { url }
+      body: { url, favicon }
     });
 
     console.log("Writing index: " + JSON.stringify(result));
