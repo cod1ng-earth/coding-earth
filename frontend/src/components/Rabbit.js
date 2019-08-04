@@ -1,7 +1,62 @@
 import React, { useContext } from "react";
 import { ReactComponent as Rabbit } from "./../images/hasi.svg";
+import { ReactComponent as AppearHole } from "./../images/appear-hole.svg";
 import styled, { css, keyframes } from "styled-components";
 import { MainContext } from "./../App";
+
+const openHole = keyframes`
+0% {
+  transform: scaleX(0);
+  transform-origin: center;
+
+}
+
+25%
+ {
+  transform: scaleX(1);
+  transform-origin: center;
+
+}
+
+75%
+{
+ transform: scaleX(1);
+ transform-origin: center;
+
+}
+
+100% {  transform: scaleX(0);
+  transform-origin: center;
+
+}
+
+`;
+
+const appendRabbit = keyframes`
+0% {
+opacity: 0;
+
+
+}
+
+25%
+ {
+opacity: 0;
+
+}
+
+75%
+{
+opacity: 1;
+
+}
+
+100% {
+  opacity: 1;
+
+}
+
+`;
 
 const move = keyframes`
 0% {
@@ -105,22 +160,29 @@ const moveFace = keyframes`
 }
 `;
 
+
+
 const moveAnimation = css`
-  animation: ${move} infinite 5s linear;
+  animation: ${move} 5s linear;
 
   #upper-right-leg-sitting,
   #lower-left-leg-sitting {
-    animation: ${moveLegsOne} infinite 1s linear;
+    animation: ${moveLegsOne} 1s linear;
   }
 
   #upper-left-leg-sitting,
   #lower-right-leg-sitting {
-    animation: ${moveLegsTwo} infinite 1s linear;
+    animation: ${moveLegsTwo} 1s linear;
   }
 
   #tail {
-    animation: ${moveTail} infinite 1s linear;
+    animation: ${moveTail}  1s linear;
   }
+  #carrot {
+  display: block;
+
+}
+
 `;
 
 const StyledRabbit = styled(Rabbit)`
@@ -133,6 +195,7 @@ const StyledRabbit = styled(Rabbit)`
   #carrot {
     display: none;
   }
+    animation: ${appendRabbit} 1.5s linear;
 
   ${props => (props.running ? moveAnimation : "")};
 
@@ -142,13 +205,36 @@ const StyledRabbit = styled(Rabbit)`
   }
   #face,
   #eyes,
-  #nose {
+  #nose,
+  #carrot {
     animation: ${moveFace} infinite 1s linear;
   }
+
+
+
+
 `;
+
+
+
+const StyledHole = styled(AppearHole)`
+  height: 130px;
+  width: 100px;
+  position: absolute;
+  top: 125px;
+  right: 380px;
+  z-index: 1000;
+
+  animation: ${openHole} 1.5s linear forwards;
+
+
+
+`;
+
+
 
 export default props => {
   const context = useContext(MainContext);
 
-  return <StyledRabbit running={context.rabbitRun} />;
+  return <div> <StyledHole/><StyledRabbit running={context.rabbitRun} /></div>;
 };
