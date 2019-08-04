@@ -35,3 +35,9 @@ disk: 128
 web:
     commands:
         start: flask run
+
+workers:
+    queue:
+      commands:
+        start: |
+          python kafkaworker.py

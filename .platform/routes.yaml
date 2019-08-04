@@ -22,6 +22,6 @@
   type: upstream
   upstream: "tweets:http"
 
-"https://letsdopython.{default}/":
+"https://youtube.{default}/":
   type: upstream
-  upstream: "letsdopython:http"
+  upstream: "youtube:http"
