@@ -66,15 +66,7 @@ export default class RabbitHolePage extends React.Component {
 
   render() {
     return (
-      <div
-        style={{
-          backgroundColor: "#310f3f",
-          height: "100%",
-          minHeight: "500px",
-          color: "#FFF",
-          padding: "20px"
-        }}
-      >
+
         <div
           style={{
             backgroundColor: "#310f3f",
@@ -86,17 +78,27 @@ export default class RabbitHolePage extends React.Component {
         >
           <div
             style={{
-              margin: "0 auto"
+              margin: "0 auto",
+              marginTop:"40px"
             }}
           >
-            <p style={{}}>WELCOME TO THE RABBIT HOLE</p>
+            <p style={{
+              fontSize:"30px",
+              fontWeight:"bold",
+              textAlign:"center",
+              letterSpacing:"2px",
+              color:"#e5d3ed"
+            }}>WELCOME TO THE RABBIT HOLE</p>
           </div>
 
           <a href="">
             <div
               style={{
-                width: "20%",
-                margin: "0 auto"
+                width: "250px",
+                position:"absolute",
+                left:"50%",
+                top:"200px",
+                marginLeft:"-125px"
               }}
             >
               <Fortuneteller />
@@ -128,7 +130,7 @@ export default class RabbitHolePage extends React.Component {
               position: "absolute",
               width: "250px",
               right: "-70px",
-              top: "800px"
+              top: "600px"
             }}
           >
             <Card />
@@ -155,7 +157,7 @@ export default class RabbitHolePage extends React.Component {
           >
             <Rabbit />
           </div>
-        </div>
+
         <CarrotBin carrots={this.state.carrots} />
       </div>
     );
