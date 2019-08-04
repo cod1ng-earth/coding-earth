@@ -1,6 +1,6 @@
 const getFavicons = require("get-website-favicon");
 
-const getMetaData = async url => {
+const getMetaData = url => {
   getFavicons(url)
     .then(data => {
       let iconUrlFavicon;
