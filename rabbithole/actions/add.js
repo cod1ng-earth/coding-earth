@@ -15,10 +15,12 @@ const add = async value => {
   const validUrl = value.url.match(
     /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
   );
-  const isTwitterUrl = value.url.match("/*.twitter.com(.*)");
+  var regexTwitter = RegExp('twitter','g');
+  const isTwitterUrl = regexTwitter.test(value.url);
+
   console.log(`is a url: ${validUrl}. is a twitter url: ${isTwitterUrl}`);
 
-  if (validUrl && !isTwitterUrl) {
+  if (validUrl && isTwitterUrl == null) {
     try {
       const { iconUrlFavicon } = await getMetaData(value.url);
 
