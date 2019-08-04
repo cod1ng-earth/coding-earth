@@ -1,81 +1,85 @@
-import React, {useEffect, useState} from 'react'
-import Navbar from './components/Navbar'
-import HelperBar from './components/HelperBar'
-import BuildComponent from './components/BuildComponent';
+import React, { useState, useEffect, useContext } from "react";
+import Navbar from "./components/Navbar";
+import HelperBar from "./components/HelperBar";
+import RabbitHole from "./components/RabbitHole";
+import Rabbit from "./components/Rabbit";
+import BuildComponent from "./components/BuildComponent";
 import AddControl from "./components/AddControl";
-import eventEmitter from './lib/event-emitter'
+import eventEmitter from "./lib/event-emitter";
 
-import './index.scss';
+import "./index.scss";
 
-import {Columns, Container, Heading, Section} from 'react-bulma-components/lib';
-import {coordinator, endpoint} from "./coordinator";
+import {
+  Section,
+  Container,
+  Columns,
+  Heading
+} from "react-bulma-components/lib";
+import { coordinator, endpoint } from "./coordinator";
+
+export const MainContext = React.createContext({
+  rabbitRun: null,
+  changeRabbitRun: () => {}
+});
 
 export default props => {
+  const [knownServices, setServices] = useState({});
+  const [search, setSearch] = useState("");
+  const [rabbitRun, setRabbitRun] = useState(false);
 
-    const [knownServices, setServices] = useState({});
-    const [search, setSearch] = useState("")
+  const changeRabbitRun = () => {
+    setRabbitRun(true);
+  };
 
-    useEffect(() => {
-        async function fetchData() {
-            const routes = await coordinator;
-            setServices(routes.data);
-        }
+  useEffect(() => {
+    async function fetchData() {
+      const routes = await coordinator;
+      setServices(routes.data);
+    }
+    fetchData();
 
-        fetchData()
+    const eventSource = new EventSource(`${endpoint}/events`);
+    eventSource.onmessage = msg => {
+      if ("ping" === msg.data) return false;
 
-        const eventSource = new EventSource(`${endpoint}/events`);
-        eventSource.onmessage = msg => {
-            if ('ping' === msg.data)
-                return false;
+      const message = JSON.parse(msg.data);
+      eventEmitter.emit(`content-${message.type}`, message);
+    };
+  }, []);
 
-            const message = JSON.parse(msg.data);
-            eventEmitter.emit(`content-${message.type}`, message);
-        }
-    }, []);
-
-    return (
-        <div>
-            <Navbar onSearch={newSearch => setSearch(newSearch)}/>
-            <Section>
-                <Container>
-                    <AddControl/>
-                </Container>
-            </Section>
-            <Section>
-                <Container>
-                    <Columns>
-                        <Columns.Column size="half" key='comics'>
-                            <Heading>Comics</Heading>
-                            <BuildComponent tag='comics' search={search}/>
-                        </Columns.Column>
-
-                        <Columns.Column size="half" key='tweets'>
-                            <Heading>Tweets</Heading>
-                            <BuildComponent tag='tweets' search={search}/>
-                        </Columns.Column>
-                    </Columns>
-                </Container>
-            </Section>
-
-            <Section>
-                <Container>
-                    <Columns>
-                        {Object.keys(knownServices)
-                            .filter(service => service!=='tweets' && service!=='comics')
-                            .map(k =>
-                            <Columns.Column size="half" key={k}>
-                                <Heading>{k}</Heading>
-                                <BuildComponent tag={k} search={search}/>
-                            </Columns.Column>
-                        )}
-                    </Columns>
-
-                </Container>
-            </Section>
-            <HelperBar services={knownServices}/>
-        </div>
-    );
-}
+  return (
+    <div>
+      <MainContext.Provider
+        value={{
+          changeRabbitRun: changeRabbitRun,
+          rabbitRun: rabbitRun
+        }}
+      >
+        <Navbar onSearch={newSearch => setSearch(newSearch)} />
+        <Rabbit />
+        <RabbitHole />
+        <Section>
+          <Container>
+            <AddControl />
+          </Container>
+        </Section>
+        <Section>
+          <Container>
+            <Columns>
+              {Object.keys(knownServices).map(k => (
+                <Columns.Column size="half" key={k}>
+                  <Heading>{k}</Heading>
+                  <BuildComponent tag={k} search={search} />
+                </Columns.Column>
+              ))}
+            </Columns>
+          </Container>
+        </Section>
+        <HelperBar services={knownServices} />
+      </MainContext.Provider>
+    </div>
+  );
+};
 
 /*
 

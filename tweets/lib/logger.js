@@ -8,7 +8,6 @@ module.exports = {
                 format.timestamp({
                     format: 'YYYY-MM-DD HH:mm:ss'
                 }),
-                format.json()
             ),
         transports: [
             new transports.Console({
