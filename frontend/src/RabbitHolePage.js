@@ -49,15 +49,7 @@ export default class RabbitHolePage extends React.Component {
 
   render() {
     return (
-      <div
-        style={{
-          backgroundColor: "#310f3f",
-          height: "100%",
-          minHeight: "500px",
-          color: "#FFF",
-          padding: "20px"
-        }}
-      >
+
         <div
           style={{
             backgroundColor: "#310f3f",
@@ -138,7 +130,7 @@ export default class RabbitHolePage extends React.Component {
           >
             <Rabbit />
           </div>
-        </div>
+
         <CarrotBin carrots={this.state.carrots} />
       </div>
     );
