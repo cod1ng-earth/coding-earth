@@ -17,7 +17,7 @@ if config.is_valid_platform():
     port = int(config.port)
     esCredentials = config.credentials('elasticsearch')
     print(esCredentials)
-    esHost = "http://" + esCredentials.host + ":" + esCredentials.port
+    esHost = "http://" + esCredentials['host'] + ":" + esCredentials['port']
 else:
     port = int(os.getenv('PORT', 3000))
     esHost = os.getenv('ELASTICSEARCH_HOST', 'http://localhost:9288')

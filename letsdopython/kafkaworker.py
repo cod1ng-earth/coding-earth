@@ -22,8 +22,8 @@ if config.is_valid_platform():
     googleApiKey = config.variable('GOOGLE_API_KEY')
     kafkaCredentials = config.credentials('kafka')
     esCredentials = config.credentials('elasticsearch')
-    esHost = "http://" + esCredentials.host + ":" + esCredentials.port
-    brokers = kafkaCredentials.host + ":" + kafkaCredentials.port
+    esHost = "http://" + esCredentials['host'] + ":" + esCredentials['port']
+    brokers = kafkaCredentials['host'] + ":" + kafkaCredentials['port']
 else:
     port = int(os.getenv('PORT', 3000))
     brokers = os.getenv('KAFKA_HOST', 'localhost:9092')
