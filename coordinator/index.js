@@ -54,7 +54,6 @@ kafkaClient.init().then( async () => {
         //     if (error || response.statusCode >= 400) {
         //         return reject(response.body)
         //     }
-
         //     // const token = (JSON.parse(body).access_token);
         //     // logger.app.info("got a new bearer token")
         //     // const client = new Twitter({
