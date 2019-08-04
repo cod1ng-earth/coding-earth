@@ -6,7 +6,6 @@ const Request = require('request')
 
 const kafkaClient = require('./lib/kafka')
 const logger = require('./lib/logger')
-const githubLogin = require('./lib/github')
 
 const {routesDef} = require('./routesDef')
 
@@ -18,7 +17,7 @@ app.use(express.json())
 
 const config = require("platformsh-config").config();
 
-let PORT, routes, githubClient;
+let PORT, routes, githubClientId, githubClientSecret;
 
 if (config.isValidPlatform()) {
     PORT = config.port
@@ -55,6 +54,7 @@ kafkaClient.init().then( async () => {
         //     if (error || response.statusCode >= 400) {
         //         return reject(response.body)
         //     }
+
         //     // const token = (JSON.parse(body).access_token);
         //     // logger.app.info("got a new bearer token")
         //     // const client = new Twitter({
