@@ -7,6 +7,10 @@ verify_ssl = true
 flask = "*"
 gevent = "*"
 platformshconfig = "~=2.0"
+google-api-python-client = "*"
+google-auth-oauthlib = "*"
+google-auth-httplib2 = "*"
+elasticsearch = "*"
 
 [requires]
 python_version = "3.7"

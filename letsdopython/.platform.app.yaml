@@ -14,6 +14,10 @@ dependencies:
     python3:
        pipenv: "2018.11.26"
 
+relationships:
+    kafka: "kafkastreaming:kafka"
+    elasticsearch: "elasticsearch:elasticsearch"
+
 # The hooks executed at various points in the lifecycle of the application.
 hooks:
     build: |
