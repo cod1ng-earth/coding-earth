@@ -12,6 +12,7 @@ google-auth-oauthlib = "*"
 google-auth-httplib2 = "*"
 elasticsearch = "*"
 flask-cors = "*"
+kafka-python = "*"
 
 [requires]
 python_version = "3.7"
