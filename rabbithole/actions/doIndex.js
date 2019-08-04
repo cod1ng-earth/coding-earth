@@ -6,6 +6,11 @@ const doIndex = async ({ type, url, favicon }) => {
     "Got Type " + type + " with URL " + url + "and favicon" + favicon
   );
 
+  // delete ES data
+  await elastic.deleteByQuery({
+    index: "carrots"
+  });
+
   if (type !== "carrot") {
     console.log(type + " is not a carrot");
     return false;
