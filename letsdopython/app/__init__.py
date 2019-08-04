@@ -15,8 +15,8 @@ config = Config()
 
 if config.is_valid_platform():
     port = int(config.port)
-    googleApiKey = config.variable('GOOGLE_API_KEY')
     esCredentials = config.credentials('elasticsearch')
+    print(esCredentials)
     esHost = "http://" + esCredentials.host + ":" + esCredentials.port
 else:
     port = int(os.getenv('PORT', 3000))
@@ -24,11 +24,12 @@ else:
 
 app = Flask(__name__)
 
+
 @app.route('/')
 @app.route('/index')
 def index():
     return "Hello, World yay!"
-    
+
 
 if __name__ == "app":
     http_server = gevent.pywsgi.WSGIServer(('127.0.0.1', port), app)
