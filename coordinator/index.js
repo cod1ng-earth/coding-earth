@@ -2,7 +2,6 @@ const express = require('express')
 const cors = require('cors')
 const fs = require('fs')
 const YAML = require('yaml')
-const url = require('url')
 const Request = require('request')
 
 const kafkaClient = require('./lib/kafka')
@@ -48,29 +47,33 @@ kafkaClient.init().then( async () => {
     app.get('/', (req, res) => res.json(routes) );
 
     app.post('/github', async (req, res) => {
-        Request.post('https://github.com/login/oauth/access_token', {
-             client_id: githubClientId,
-             client_secret: githubClientSecret,
-             code: req.code
-        }, (error, response, body) => {
-            if (error || response.statusCode >= 400) {
-                return reject(response.body)
-            }
-            const token = (JSON.parse(body).access_token);
-            logger.app.info("got a new bearer token")
-            // const client = new Twitter({
-            //     bearer_token: token
-            // });
-            // resolve(client);
-        });
-        // Request({
-        //     method: 'POST',
-        //     uri: 'https://github.com/login/oauth/access_token',
-        //     body: code,
-        //     headers: {
-        //         'Content-Type': 'application/json'
+        // Request.post('https://github.com/login/oauth/access_token', {
+        //      client_id: githubClientId,
+        //      client_secret: githubClientSecret,
+        //      code: req.code
+        // }, (error, response, body) => {
+        //     if (error || response.statusCode >= 400) {
+        //         return reject(response.body)
         //     }
+        //     // const token = (JSON.parse(body).access_token);
+        //     // logger.app.info("got a new bearer token")
+        //     // const client = new Twitter({
+        //     //     bearer_token: token
+        //     // });
+        //     // resolve(client);
         // });
+        Request({
+            method: 'POST',
+            uri: 'https://github.com/login/oauth/access_token',
+            body: {
+                client_id: githubClientId,
+                client_secret: githubClientSecret,
+                code: req.code
+            },
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
     })
     
     app.post('/url', async (req, res) => {
