@@ -1,0 +1,11 @@
+{
+  "mappings": {
+    "_doc": {
+      "properties": {
+        "url": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -18,7 +18,7 @@ const startListening = async () => {
 
     await consumer.run({
         eachMessage: async ({ topic, partition, message }) => {
-            logger.app.info(`${topic} ${message.value}`);
+            logger.app.info(`ajit twitter ${topic} ${message.value}`);
             try {
                 const value = JSON.parse(message.value);
                 switch (topic) {
