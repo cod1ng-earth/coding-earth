@@ -8,13 +8,23 @@ import { ReactComponent as Watch } from "./images/watch.svg";
 import { ReactComponent as Rabbit } from "./images/hasi-holesite.svg";
 
 import { coordinator, endpoint } from "./coordinator";
+import componentData from "./componentData";
 
 const CarrotBin = props => {
   console.log(props.carrots);
-  const carrots = props.carrots.map(carrot => {
+  const carrots = props.carrots.map((carrot, key) => {
     return (
-      <li class="carrot" key={carrot.url} style={{ padding: "40px" }}>
-        <a href="{carrot.url}" target="_blank">
+      <li
+        class="carrot"
+        key={carrot.url}
+        style={{
+          position: "absolute",
+          top: key * 40 + "px",
+          left: Math.floor(Math.random() * Math.floor(1000)) + "px",
+          padding: "20px"
+        }}
+      >
+        <a href={carrot.url} target="_blank">
           <img
             style={{ backgroundColor: "#fff", borderRadius: "50%" }}
             src={carrot.favicon}
@@ -34,7 +44,14 @@ export default class RabbitHolePage extends React.Component {
     };
   }
 
+  _fetch() {
+    componentData("rabbithole", content =>
+      this.setState({ carrots: content.carrots.map(carrot => carrot._source) })
+    );
+  }
+
   componentDidMount() {
+    this._fetch();
     const eventSource = new EventSource(`${endpoint}/events`);
     eventSource.onmessage = msg => {
       if ("ping" === msg.data) return false;
