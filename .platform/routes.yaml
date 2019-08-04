@@ -25,3 +25,6 @@
 "https://comics.{default}/":
   type: upstream
   upstream: "comics:http"
+"https://letsdopython.{default}/":
+  type: upstream
+  upstream: "letsdopython:http"
