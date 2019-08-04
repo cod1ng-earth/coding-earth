@@ -1,22 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar } from 'react-bulma-components/lib';
 import { Control, Input } from 'react-bulma-components/lib/components/form';
 import Icon from 'react-bulma-components/lib/components/icon';
 import Modal from 'react-bulma-components/lib/components/modal';
-import Section from 'react-bulma-components/lib/components/section';
 import Button from 'react-bulma-components/lib/components/button';
 
-
 import LoginControl from './LoginControl';
+import { UserSession, Person } from "blockstack/lib";
 
 export default ({onSearch}) => {
     const [open, setOpen] = useState(false);
     const [search, onSearchChange] = useState("");
     const [showModal, setShowModal] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    // const [profile, setProfile] = useState("");
 
-    const onLoggedInChanged = (value) => {
-        setIsLoggedIn(value);
+    useEffect(() => {
+        const checkSignedInStatus = () => {
+            let userSession = new UserSession();
+            if (userSession.isUserSignedIn()) {
+                setIsLoggedIn(true);
+                // const userData = blockstack.loadUserData();
+                // showProfile(userData.profile);
+            } else if (userSession.isSignInPending()) {
+                userSession.handlePendingSignIn().then(userData => {
+                    window.location = window.location.origin;
+                    // showProfile(userData.profile);
+                });
+                setIsLoggedIn(false)
+            }
+        };
+        checkSignedInStatus();
+    });
+
+
+    const showProfile = () => {
+        let userSession = new UserSession();
+        const userData = userSession.loadUserData();
+        let person = new Person(userData.profile);
+        return <span><strong>Hi {person.givenName()}!</strong></span>;
     };
 
     return <Navbar color="primary" active={open}>
@@ -38,16 +60,20 @@ export default ({onSearch}) => {
                         </Control>
                     </form>
                 </Navbar.Item>
+                <Navbar.Item renderAs="span">
+                    { isLoggedIn ? showProfile() : '' }
+                </Navbar.Item>
                 <Navbar.Item>
                     <div>
-                        { !isLoggedIn ? 
-                            <Button color="primary" onClick={() => setShowModal(true)}>Login</Button> : 
-                            <LoginControl onLoggedInChanged={(isLoggedIn) => {onLoggedInChanged(isLoggedIn)}}></LoginControl> }                        
-                        <Modal 
+                        { !isLoggedIn ?
+                            <Button color="primary" onClick={() => setShowModal(true)}>Login</Button> :
+                            <LoginControl isLoggedIn={isLoggedIn} />
+                        }
+                        <Modal
                             show={showModal}
                             closeOnBlur={true}
-                            onClose={() => setShowModal(false)} 
-                        > 
+                            onClose={() => setShowModal(false)}
+                        >
                             <Modal.Card>
                                 <Modal.Card.Head
                                     showClose={false}
@@ -57,7 +83,7 @@ export default ({onSearch}) => {
                                     </Modal.Card.Title>
                                 </Modal.Card.Head>
                                 <Modal.Card.Body>
-                                    <LoginControl onLoggedInChanged={(isLoggedIn) => {onLoggedInChanged(isLoggedIn)}}></LoginControl>
+                                    <LoginControl isLoggedIn={isLoggedIn} />
                                 </Modal.Card.Body>
                             </Modal.Card>
                         </Modal>

@@ -3,33 +3,15 @@ import Button from "react-bulma-components/lib/components/button";
 import * as blockstack from 'blockstack';
 import GitHubLogin from 'react-github-login';
 import { githubClientId } from '..';
-import Axios from 'axios';
+import axios from 'axios';
+import {endpoint} from "../coordinator";
 
 export default class LoginControl extends Component {
     constructor(props) {
         super(props)
 
-        let isLoggedIn = this.checkSignedInStatus();
-
-        props.onLoggedInChanged(isLoggedIn);
-
-        this.state = {
-            isLoggedIn,
-        }
-
         this.handleSignIn = this.handleSignIn.bind(this)
         this.handleSignOut = this.handleSignOut.bind(this)
-    }
-
-    checkSignedInStatus() {
-        if (blockstack.isUserSignedIn()) {
-            return true;
-        } else if (blockstack.isSignInPending()) {
-            blockstack.handlePendingSignIn().then(function(userData) {
-                window.location = window.location.origin;
-            })
-            return false;
-        }
     }
 
     handleSignIn(event) {
@@ -44,7 +26,7 @@ export default class LoginControl extends Component {
 
     render() {
         let button;
-        if (this.state.isLoggedIn) {
+        if (this.props.isLoggedIn) {
             button = <Button color="primary" onClick={this.handleSignOut}>Logout</Button>;
         } else {
             button = <div className="login-buttons">
@@ -58,10 +40,15 @@ export default class LoginControl extends Component {
                     redirectUri="http://localhost:3000"
                     buttonText="Login in with GitHub"
                     onSuccess={(res) => {
-                        console.log(res)                        
-                        Axios.post(process.env.REACT_APP_COORDINATOR + '/github', {
-                            code: res.code
-                        })
+                        axios({
+                            method: 'post',
+                            url: endpoint + "/github",
+                            data: { code: res.code },
+                            headers: {
+                                'Content-Type': 'application/json;charset=UTF-8',
+                                "Access-Control-Allow-Origin": "*",
+                            }
+                        });
                     }}
                     onFailure={(res) => console.log(res)}
                 />
