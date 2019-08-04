@@ -98,32 +98,16 @@ export default class RabbitHolePage extends React.Component {
           href="http://www.nyan.cat/"
           rel="noopener noreferrer"
           target="_blank"
+          style={{
+            width: "250px",
+            position: "absolute",
+            left: "50%",
+            top: "200px",
+            marginLeft: "-125px",
+            display: "block"
+          }}
         >
-          <div
-            style={{
-              width: "250px",
-              position: "absolute",
-              left: "50%",
-              top: "200px",
-              marginLeft: "-125px"
-            }}
-          >
-            <Fortuneteller />
-          </div>
-        </a>
-
-        <a href="">
-          <div
-            style={{
-              width: "250px",
-              position: "absolute",
-              left: "50%",
-              top: "200px",
-              marginLeft: "-125px"
-            }}
-          >
-            <Fortuneteller />
-          </div>
+          <Fortuneteller />
         </a>
 
         <div
