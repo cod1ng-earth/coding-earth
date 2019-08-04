@@ -20,6 +20,8 @@ const add = async value => {
     try {
       const { iconUrlFavicon } = await getMetaData(value.url);
 
+      console.log("favicon: " + iconUrlFavicon);
+
       const messages = JSON.stringify({
         type: "carrot",
         url: value.url,
