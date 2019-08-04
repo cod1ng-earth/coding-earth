@@ -5,6 +5,7 @@ import logging
 
 from elasticsearch import Elasticsearch
 from flask import Flask
+from flask_cors import CORS
 from platformshconfig import Config
 
 #logging.basicConfig(level=logging.DEBUG) 
@@ -23,6 +24,7 @@ else:
     esHost = os.getenv('ELASTICSEARCH_HOST', 'http://localhost:9288')
 
 app = Flask(__name__)
+CORS(app)
 
 elasticsearch = Elasticsearch(esHost)
 
