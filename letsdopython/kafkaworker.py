@@ -18,7 +18,6 @@ logger = logging.getLogger(__name__)
 config = Config()
 
 if config.is_valid_platform():
-    port = int(config.port)
     googleApiKey = config.variable('GOOGLE_API_KEY')
     kafkaCredentials = config.credentials('kafka')
     esCredentials = config.credentials('elasticsearch')
