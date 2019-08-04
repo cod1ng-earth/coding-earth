@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
 import eventEmitter from "./lib/event-emitter";
+import { ReactComponent as Fortuneteller } from "./images/fortuneteller.svg";
+import { ReactComponent as Funghi } from "./images/funghi1.svg";
+import { ReactComponent as Funghi2 } from "./images/funghi2.svg";
+import { ReactComponent as Card } from "./images/card.svg";
+import { ReactComponent as Watch } from "./images/watch.svg";
 
 import { coordinator, endpoint } from "./coordinator";
 
@@ -9,7 +14,6 @@ export default props => {
   useEffect(() => {
     async function fetchData() {
       const routes = await coordinator;
-      console.log(routes.data);
       setServices(routes.data);
     }
     fetchData();
@@ -26,8 +30,20 @@ export default props => {
   }, []);
 
   return (
-    <div style={{ backgroundColor: "#1b1464", height: "100vh", color: "#FFF" }}>
-      Rabbit hole
+    <div
+      style={{
+        backgroundColor: "#310f3f",
+        height: "100%",
+        minHeight: "500px",
+        color: "#FFF",
+        padding: "20px"
+      }}
+    >
+      <Fortuneteller />
+      <Funghi />
+      <Funghi2 />
+      <Card />
+      <Watch />
     </div>
   );
 };
