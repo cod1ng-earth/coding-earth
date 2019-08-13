@@ -42,6 +42,7 @@ kafkaClient.init().then( async () => {
     await producer.connect()
 
     await consumer.subscribe({topic: kafkaClient.TOPIC_NEW_CONTENT})
+    await consumer.subscribe({topic: kafkaClient.TOPIC_NEW_CARROT})
 
     app.get('/', (req, res) => res.json(routes) );
 

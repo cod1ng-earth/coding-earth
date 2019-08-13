@@ -21,3 +21,14 @@
 "https://tweets.{default}/":
   type: upstream
   upstream: "tweets:http"
+
+"https://comics.{default}/":
+  type: upstream
+  upstream: "comics:http"
+"https://letsdopython.{default}/":
+  type: upstream
+  upstream: "letsdopython:http"
+
+"https://rabbithole.{default}/":
+  type: upstream
+  upstream: "rabbithole:http"

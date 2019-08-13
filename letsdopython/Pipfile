@@ -1,0 +1,20 @@
+[[source]]
+url = "https://pypi.org/simple"
+name = "pypi"
+verify_ssl = true
+
+[packages]
+flask = "*"
+gevent = "*"
+platformshconfig = "~=2.0"
+google-api-python-client = "*"
+google-auth-oauthlib = "*"
+google-auth-httplib2 = "*"
+elasticsearch = "*"
+flask-cors = "*"
+kafka-python = "*"
+
+[requires]
+python_version = "3.7"
+
+[dev-packages]

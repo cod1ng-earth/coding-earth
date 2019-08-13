@@ -1,7 +1,7 @@
 # Frontend development
 For the "scaffold" we decided to go with React based frontend because... React. It's based on Create React App so you can build and start it locally using `yarn run start`. If you never used it before, we've left their original README below.
 
-If you simply want to work on the frontend and do not care about how the microservices work but directly want to connect your current platform.sh's environment, simply create a  copy the `scaffold/.env.dist` file to a `.env` file and change the `REACT_APP_COORDINATOR` to your current environment's coordinator URL. You can also simply connect it to the production application: `REACT_APP_COORDINATOR=https://coordinator.devday.tk` 
+If you simply want to work on the frontend and do not care about how the microservices work but directly want to connect your current platform.sh's environment, simply create a copy the `frontend/.env.dist` file to a `.env` file and change the `REACT_APP_COORDINATOR` to your current environment's coordinator URL. You can also simply connect it to the production application: `REACT_APP_COORDINATOR=https://coordinator.devday.tk`
 
 If you're running this as part of the full Docker setup,`yarn run start` is called in dev mode behind the scenes upon the container startup, including full HMR capabilities. 
 
