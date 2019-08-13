@@ -16,13 +16,15 @@ export default props => {
 
   const doSubmit = async evt => {
     evt.preventDefault();
-    const res = await axios({
+    await axios({
       method: "post",
       url: endpoint + "/url",
       data: { url }
-    }).then(setUrl(""));
+    })
 
-    context.changeRabbitRun();
+    setUrl("");
+
+    context.changeRabbitRun(); 
     return false;
   };
 

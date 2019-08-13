@@ -1,7 +1,5 @@
-import React, {useEffect, useState} from 'react'
-
+import React from 'react'
 import {Navbar} from 'react-bulma-components/lib';
-import {endpoint} from '../coordinator';
 
 export default function (props) {
 

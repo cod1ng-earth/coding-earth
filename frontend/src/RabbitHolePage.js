@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import eventEmitter from "./lib/event-emitter";
 import { ReactComponent as Fortuneteller } from "./images/fortuneteller.svg";
 import { ReactComponent as Funghi } from "./images/funghi1.svg";
@@ -7,11 +7,11 @@ import { ReactComponent as Card } from "./images/card.svg";
 import { ReactComponent as Watch } from "./images/watch.svg";
 import { ReactComponent as Rabbit } from "./images/hasi-holesite.svg";
 
-import { coordinator, endpoint } from "./coordinator";
+import { endpoint } from "./coordinator";
 import componentData from "./componentData";
 
 const CarrotBin = props => {
-  console.log(props.carrots);
+
   const carrots = props.carrots.map((carrot, key) => {
     return (
       <li

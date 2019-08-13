@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import componentData from '../componentData'
 import eventEmitter from '../lib/event-emitter'
 
@@ -22,7 +22,7 @@ export default class Tweets extends React.Component {
     componentDidMount() {
         this._fetch( this.props.search );
         eventEmitter.on('content-tweet', message => {
-            const tw = this.setState({tweets: [message.content, ...this.state.tweets]});
+            this.setState({tweets: [message.content, ...this.state.tweets]});
         });
     }
 

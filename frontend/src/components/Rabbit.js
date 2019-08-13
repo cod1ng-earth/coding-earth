@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { ReactComponent as Rabbit } from "./../images/hasi.svg";
-import { ReactComponent as AppearHole } from "./../images/appear-hole.svg";
 import styled, { css, keyframes } from "styled-components";
 import { MainContext } from "./../App";
 
