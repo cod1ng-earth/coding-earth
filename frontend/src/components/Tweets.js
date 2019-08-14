@@ -40,7 +40,7 @@ export default class Tweets extends React.Component {
                     <Box key={tweet.id}>
                         <Media>
                             <Media.Item renderAs="figure" position="left">
-                                <Image renderAs="p" size={64} alt="64x64" src={tweet.user.profile_image_url_https} />
+                                <Image  size={64} alt="64x64" src={tweet.user.profile_image_url_https} />
                             </Media.Item>
                             <Media.Item>
                                 <Content>

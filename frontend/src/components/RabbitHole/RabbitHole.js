@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ReactComponent as RabbitHole } from "./../images/rabbit-hole.svg";
+import { ReactComponent as RabbitHole } from "./images/rabbit-hole.svg";
 import styled, { keyframes } from "styled-components";
 
 const pulse = keyframes`
@@ -28,11 +28,10 @@ const rotation = keyframes`
 `;
 
 const StyledRabbitHole = styled(RabbitHole)`
-  height: 300px;
-  width: 300px;
+  width: 80px;
   position: absolute;
-  top: 50px;
-  right: 100px;
+  top: -20px;
+  right: 10px;
   #outer-sparkle {
     animation: ${rotation} infinite 25s linear;
   }

@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
-import { MainContext } from "./../App";
 
 import {
   Field,
@@ -12,7 +11,6 @@ import { endpoint } from "../coordinator";
 
 export default props => {
   const [url, setUrl] = useState("");
-  const context = useContext(MainContext);
 
   const doSubmit = async evt => {
     evt.preventDefault();
@@ -23,8 +21,6 @@ export default props => {
     })
 
     setUrl("");
-
-    context.changeRabbitRun(); 
     return false;
   };
 

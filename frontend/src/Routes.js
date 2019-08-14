@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch, Route } from "react-router";
 import App from "./App";
-import RabbitHolePage from "./RabbitHolePage";
+import RabbitHolePage from "./components/RabbitHole/Page";
 
 const Routes = () => (
   <Switch>

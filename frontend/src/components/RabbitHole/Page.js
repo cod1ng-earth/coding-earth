@@ -1,5 +1,5 @@
 import React from "react";
-import eventEmitter from "./lib/event-emitter";
+
 import { ReactComponent as Fortuneteller } from "./images/fortuneteller.svg";
 import { ReactComponent as Funghi } from "./images/funghi1.svg";
 import { ReactComponent as Funghi2 } from "./images/funghi2.svg";
@@ -7,8 +7,9 @@ import { ReactComponent as Card } from "./images/card.svg";
 import { ReactComponent as Watch } from "./images/watch.svg";
 import { ReactComponent as Rabbit } from "./images/hasi-holesite.svg";
 
-import { endpoint } from "./coordinator";
-import componentData from "./componentData";
+import { endpoint } from "../../coordinator";
+import componentData from "../../componentData";
+import eventEmitter from "../../lib/event-emitter";
 
 const CarrotBin = props => {
 
@@ -36,7 +37,7 @@ const CarrotBin = props => {
   return <ul>{carrots}</ul>;
 };
 
-export default class RabbitHolePage extends React.Component {
+export default class Page extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -52,16 +53,15 @@ export default class RabbitHolePage extends React.Component {
 
   componentDidMount() {
     this._fetch();
-    const eventSource = new EventSource(`${endpoint}/events`);
-    eventSource.onmessage = msg => {
-      if ("ping" === msg.data) return false;
+    eventEmitter.on('content-tweet', message => {
+        const carrot = JSON.parse(message.content);
 
-      const carrot = JSON.parse(msg.data);
+        let carrots = this.state.carrots;
+        carrots.push(carrot);
+        this.setState({ carrots: carrots });
+    });
 
-      let carrots = this.state.carrots;
-      carrots.push(carrot);
-      this.setState({ carrots: carrots });
-    };
+
   }
 
   render() {
