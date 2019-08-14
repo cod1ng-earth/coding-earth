@@ -12,7 +12,7 @@ app.use(logger.middleware);
 app.use(cors());
 app.use(express.json());
 
-const PORT = config.isValidPlatform() ?  config.port : (process.env.PORT || 3001);
+const PORT = config.isValidPlatform() ?  config.port : (process.env.PORT || 3000);
 
 app.get('/', search);
 

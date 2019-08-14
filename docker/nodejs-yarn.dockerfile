@@ -8,11 +8,6 @@ RUN npm install -g yarn
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 
-COPY package*.json ./
-COPY yarn.lock ./
-RUN yarn install
-COPY . ./
-
 RUN egrep -i ":$GID:" /etc/passwd &>/dev/null || addgroup -S --gid "$GID" appgroup
 RUN egrep -i ":$UID:" /etc/passwd &>/dev/null || adduser -S appuser -G appgroup \
     --uid "$UID" \
@@ -21,4 +16,4 @@ RUN egrep -i ":$UID:" /etc/passwd &>/dev/null || adduser -S appuser -G appgroup 
 RUN chown -R $UID:$GID /app
 USER $UID:$GID
 
-CMD yarn run start
+CMD yarn install && yarn start

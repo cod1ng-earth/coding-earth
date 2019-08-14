@@ -8,10 +8,6 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 RUN apk update && apk add python make g++
 
-COPY package*.json ./
-RUN npm install
-COPY . ./
-
 RUN egrep -i ":$GID:" /etc/passwd &>/dev/null || addgroup -S --gid "$GID" appgroup
 RUN egrep -i ":$UID:" /etc/passwd &>/dev/null || adduser -S appuser -G appgroup \
     --uid "$UID" \
@@ -20,4 +16,4 @@ RUN egrep -i ":$UID:" /etc/passwd &>/dev/null || adduser -S appuser -G appgroup 
 RUN chown -R $UID:$GID /app
 USER $UID:$GID
 
-CMD npm run start
+CMD npm install && npm run start

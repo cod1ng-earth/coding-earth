@@ -19,58 +19,6 @@ services:
       - frontend
       - tweets
 
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: ../docker/nodejs-yarn.dockerfile
-    environment:
-      - SKIP_PREFLIGHT_CHECK=true
-      - REACT_APP_COORDINATOR=//coordinator.${DEFAULT_HOST}
-    volumes:
-      - ./frontend:/app:rw,cached
-
-  coordinator:
-    build:
-      context: ./coordinator
-      dockerfile: ../docker/nodejs-npm.dockerfile
-    environment:
-      - DEFAULT_HOST=${DEFAULT_HOST}
-      - KAFKA_HOST=kafka:9092
-    command: "npm run dev"
-    depends_on:
-      - kafka
-    volumes:
-      - ./coordinator:/app:rw,cached
-      - ./.platform/routes.yaml:/app/routes.yaml:ro
-
-  rssreader:
-    build:
-      context: ./rssreader
-      dockerfile: ../docker/nodejs-npm.dockerfile
-    environment:
-      - ELASTICSEARCH_HOST=http://elasticsearch:9200
-    command: "npm run dev"
-    volumes:
-      - ./rssreader:/app
-      - ./rssreader/db:/app/db
-    depends_on:
-      - elasticsearch
-
-  tweets:
-    build:
-      context: ./tweets
-      dockerfile: ../docker/nodejs-npm.dockerfile
-    command: "npm run start"
-    volumes:
-      - ./tweets:/app
-    environment:
-      - KAFKA_HOST=kafka:9092
-      - ELASTICSEARCH_HOST=http://elasticsearch:9200
-    depends_on:
-      - kafka
-      - coordinator
-      - elasticsearch
-
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.5.4
     environment:
@@ -112,29 +60,76 @@ services:
     volumes:
       - /var/run/docker.sock
 
+  frontend:
+    image: node-yarn
+    build:
+      context: ./frontend
+      dockerfile: ../docker/nodejs-yarn.dockerfile
+    environment:
+      - SKIP_PREFLIGHT_CHECK=true
+      - REACT_APP_COORDINATOR=//coordinator.${DEFAULT_HOST}
+    volumes:
+      - ./frontend:/app:rw,cached
+
+  coordinator:
+    image: node-npm
+    build:
+      context: ./coordinator
+      dockerfile: ../docker/nodejs-npm.dockerfile
+    environment:
+      - DEFAULT_HOST=${DEFAULT_HOST}
+      - KAFKA_HOST=kafka:9092
+    depends_on:
+      - kafka
+    volumes:
+      - ./coordinator:/app:rw,cached
+      - ./.platform/routes.yaml:/app/routes.yaml:ro
+
   calendar:
     build:
       context: ./calendar
+      dockerfile: ../docker/php.dockerfile
     volumes:
       - ./calendar:/var/www/app:rw,cached
     depends_on:
       - elasticsearch
+      - kafka
 
+  rssreader:
+    image: node-npm
+    environment:
+      - ELASTICSEARCH_HOST=http://elasticsearch:9200
+    volumes:
+      - ./rssreader:/app
+      - ./rssreader/db:/app/db
+    depends_on:
+      - elasticsearch
 
-
+  tweets:
+    image: node-npm
+    volumes:
+      - ./tweets:/app
+    environment:
+      - KAFKA_HOST=kafka:9092
+      - ELASTICSEARCH_HOST=http://elasticsearch:9200
+    depends_on:
+      - kafka
+      - coordinator
+      - elasticsearch
 
   comics:
-    build:
-      context: ./comics
-      dockerfile: ../docker/nodejs-npm.dockerfile
+    image: node-npm
     volumes:
       - ./comics:/app
-
+    depends_on:
+      - elasticsearch
+      - kafka
 
   rabbithole:
-    build:
-      context: ./rabbithole
-      dockerfile: ../docker/nodejs-npm.dockerfile
+    image: node-npm
     volumes:
       - ./rabbithole:/app
+    depends_on:
+      - elasticsearch
+      - kafka
 
