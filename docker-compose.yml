@@ -95,7 +95,17 @@ services:
       - elasticsearch
       - kafka
 
-#these projects *reuse* the built images.
+  videos:
+    image: ce-python
+    build:
+      context: ./videos
+      dockerfile: ../docker/python.dockerfile
+    volumes:
+      - ./videos:/app
+    ports:
+      - "3001:3000"
+
+  #these projects *reuse* the built images.
   rssreader:
     image: node-npm
     environment:
@@ -133,4 +143,3 @@ services:
     depends_on:
       - elasticsearch
       - kafka
-

@@ -25,9 +25,9 @@ if config.is_valid_platform():
     brokers = kafkaCredentials['host'] + ":" + str(kafkaCredentials['port'])
 else:
     port = int(os.getenv('PORT', 3000))
-    brokers = os.getenv('KAFKA_HOST', 'localhost:9092')
-    esHost = os.getenv('ELASTICSEARCH_HOST', 'http://localhost:9288')
-    googleApiKey = os.getenv('GOOGLE_API_KEY', 'AIzaSyCqiSZ1H8qMXN5cgiACGt4WHvcuZFHAsHc')
+    brokers = os.getenv('KAFKA_HOST', 'kafka:9092')
+    esHost = os.getenv('ELASTICSEARCH_HOST', 'http://localhost:9200')
+    googleApiKey = os.getenv('GOOGLE_API_KEY', '')
     
 consumer = KafkaConsumer('NewUrl',  bootstrap_servers=[brokers])
 producer = KafkaProducer(bootstrap_servers=[brokers], value_serializer=lambda v: json.dumps(v).encode('utf-8'))

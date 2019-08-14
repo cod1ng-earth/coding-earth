@@ -1,10 +1,4 @@
-# This file describes an application. You can have multiple applications
-# in the same project.
-#
-# See https://docs.platform.sh/user_guide/reference/platform-app-yaml.html
-
-# The name of this app. Must be unique within a project.
-name: letsdopython
+name: videos
 
 # The runtime the application uses.
 type: "python:3.7"
