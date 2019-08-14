@@ -30,7 +30,7 @@ prepare: ##@setup copy env files and build coordinator env
 	cp .env.dist .env
 .PHONY: prepare
 
-setup: prepare build-images dependencies ##@setup Create dev enviroment
+setup: build-images dependencies ##@setup Create dev enviroment
 .PHONY: setup
 
 dependencies: ##@development install local dependencies

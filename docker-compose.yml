@@ -95,6 +95,7 @@ services:
       - elasticsearch
       - kafka
 
+#these projects *reuse* the built images.
   rssreader:
     image: node-npm
     environment:

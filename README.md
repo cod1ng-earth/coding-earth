@@ -117,7 +117,7 @@ Since we're going to build a lot of small applications that will be bound togeth
 ### Use the Makefile
 
 - Given you're running some Linux or BSD (macOS) machine, check that you can run `make` or install it (`sudo apt install make`)
-- `make prepare` creates local environment files in your root directory (`.env`). It e.g. contains port and default domain configuration picked up by docker; by default everything will run on `cearth.local`. If you want to change that, edit the generated `.env` file's `DEFAULT_HOST` entry now. On Linux you can't simply mount a service on port 80 without being root, that's why our default is 8000
+- `make prepare` copies local environment files in your root directory (`.env`). It e.g. contains port and default domain configuration picked up by docker; by default everything will run on `cearth.local:8000`. If you want to change that, edit the `.env` file's `DEFAULT_HOST` entry in your root folder. On Linux you can't simply mount a service on port 80 without being root, that's why our default is 8000
 - `make setup` pulls images, installs dependencies and starts all services by calling `docker-compose up`. On a fresh setup this takes around 10 minutes.
 - add localhost aliases for all services to your `/etc/hosts` file. At the time of writing this would look like:
 
@@ -167,4 +167,9 @@ Uhoh, you ran out of system resources (node_modules, Visual Studio and Docker to
 
 `ip route show default | awk '/default/ {print $3}'`
 
-#### rabbit hole
+#### I have to be root to execute this
+
+On Linux boxes docker is operating as root. We actually added local users in all dockerfiles that should map to your local user UID/GID, so root issues shouldn't occur at all! If you're not using our Makefile you must ensure to hand over your local UID/GID as **build arguments** to the docker image builder. When using `docker-compose` that can be achieved like (you can find your local user and group id by simply executing `id`):
+
+`docker-compose build --build-arg UID=1001 --build-arg GID=1001`
+
