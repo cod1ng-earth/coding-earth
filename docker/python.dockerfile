@@ -20,4 +20,4 @@ RUN adduser --system --uid $UID --gid $GID --disabled-password appuser
 RUN chown -R $UID:$GID /app
 USER $UID:$GID
 
-CMD ["python", "web.py"]
+CMD ["python", "app.py"]

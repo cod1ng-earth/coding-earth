@@ -18,7 +18,7 @@ disk: 128
 
 web:
     commands:
-        start: FLASK_APP=web.py flask run
+        start: python app.py
 
 workers:
     queue:

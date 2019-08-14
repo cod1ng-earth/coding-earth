@@ -44,7 +44,7 @@ def hello():
     return esHost
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=port, debug = True)
+    app.run(host="0.0.0.0", port=port, debug = False)
     #http_server = gevent.pywsgi.WSGIServer(('127.0.0.1', port), app)
     #http_server.serve_forever()
 
