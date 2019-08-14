@@ -102,8 +102,18 @@ services:
       dockerfile: ../docker/python.dockerfile
     volumes:
       - ./videos:/app
-    ports:
-      - "3001:3000"
+    environment:
+      - KAFKA_HOST=kafka:9092
+      - ELASTICSEARCH_HOST=http://elasticsearch:9200
+
+  videos_worker:
+    image: ce-python
+    volumes:
+      - ./videos:/app
+    environment:
+      - KAFKA_HOST=kafka:9092
+      - ELASTICSEARCH_HOST=http://elasticsearch:9200
+    command: "python kafkaworker.py"
 
   #these projects *reuse* the built images.
   rssreader:
