@@ -1,6 +1,4 @@
 name: videos
-
-# The runtime the application uses.
 type: "python:3.7"
 
 # The build-time dependencies of the app.
@@ -12,23 +10,15 @@ relationships:
     kafka: "kafkastreaming:kafka"
     elasticsearch: "elasticsearch:elasticsearch"
 
-# The hooks executed at various points in the lifecycle of the application.
 hooks:
     build: |
       pipenv install --system --deploy
 
-# The size of the persistent disk of the application (in MB).
 disk: 128
-# The relationships of the application with services or other applications.
-#
-# The left-hand side is the name of the relationship as it will be exposed
-# to the application in the PLATFORM_RELATIONSHIPS variable. The right-hand
-# side is in the form `<service name>:<endpoint name>`.
 
-# The configuration of app when it is exposed to the web.
 web:
     commands:
-        start: flask run
+        start: FLASK_APP=web.py flask run
 
 workers:
     queue:
