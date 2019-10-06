@@ -21,13 +21,12 @@ function extractImageSrc(image) {
     if (image) {
         try {
             const src = image.attr('src');
-            console.log('response data image', image.attr('src'));
-            return {url: image.attr('src'), tags: []};
+            return { url: image.attr('src'), tags: [] };
         } catch (e) {
             logger.app.error('Error with image', e);
         }
     }
-    return {url: '', tags: ''};
+    return { url: '', tags: '' };
 
 }
 
@@ -44,7 +43,6 @@ const add = async (value) => {
     }
 
     if (!domain) {
-        console.log('NOT FUNNY');
         return false;
     }
 
@@ -71,13 +69,13 @@ const add = async (value) => {
         const messages = JSON.stringify({
             type: "comics",
             url,
-            content: {url: imageData.url}
+            content: { url: imageData.url }
         });
 
         const data = await producer.send({
             topic: TOPIC_NEW_CONTENT,
             messages: [
-                {value: messages},
+                { value: messages },
             ],
         });
         logger.app.info(data);

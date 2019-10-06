@@ -14,10 +14,7 @@ services:
       - ./web/conf.d:/etc/nginx/conf.d:rw,cached
     depends_on:
       - coordinator
-      - rssreader
-      - calendar
       - frontend
-      - tweets
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.5.4
@@ -37,24 +34,34 @@ services:
       - esdata01:/usr/share/elasticsearch/data
     ports:
       - "9288:9200"
+
   zookeeper:
     image: wurstmeister/zookeeper
     #tmpfs: "/datalog"
     ports:
       - "2181:2181"
+  
+  kafdrop:
+    image: obsidiandynamics/kafdrop
+    ports: 
+      - "9099:9000"
+    environment:
+      - KAFKA_BROKERCONNECT=kafka:9092
+      - JVM_OPTS=-Xms32M -Xmx64M
+      - SERVER_SERVLET_CONTEXTPATH=/
+    depends_on:
+      - kafka
 
   kafka:
     image: wurstmeister/kafka
     ports:
-      - "9092:9092"
+      - 9092
     environment:
       HOSTNAME_COMMAND: "route -n | awk '/UG[ \t]/{print $$2}'"
-      #KAFKA_ADVERTISED_HOST_NAME: 172.19.0.1
-      #KAFKA_CREATE_TOPICS: "NewUrl:1:1,NewContent:1:1,ClientResponse:1:1"
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_CREATE_TOPICS: "NewUrl:1:1"
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://_{HOSTNAME_COMMAND}:9092
-      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://${HOSTNAME}:9092
+      KAFKA_LISTENERS: PLAINTEXT://${HOSTNAME}:9092
     depends_on:
       - zookeeper
     volumes:
@@ -106,6 +113,7 @@ services:
       - KAFKA_HOST=kafka:9092
       - ELASTICSEARCH_HOST=http://elasticsearch:9200
 
+#these projects *reuse* the built images.
   videos_worker:
     image: ce-python
     volumes:
@@ -115,7 +123,6 @@ services:
       - ELASTICSEARCH_HOST=http://elasticsearch:9200
     command: "python kafkaworker.py"
 
-  #these projects *reuse* the built images.
   rssreader:
     image: node-npm
     environment:

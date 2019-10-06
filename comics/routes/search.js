@@ -2,16 +2,13 @@ const elastic = require('../lib/elasticsearch');
 const url = require('url')
 
 module.exports = async (req, res) => {
-    const {query} = url.parse(req.url, true)
-
-    console.log('request',req);
-    console.log('response',res);
+    const { query } = url.parse(req.url, true)
 
     const elasticsearchQuery = {
         body: {
-            "from" : 0, "size" : 100,
-            "query" : {
-                "match_all" : {}
+            "from": 0, "size": 100,
+            "query": {
+                "match_all": {}
             }
         }
     };
@@ -24,7 +21,7 @@ module.exports = async (req, res) => {
             comics: result.body.hits.hits.map(h => h._source)
         })
 
-    } catch(e) {
+    } catch (e) {
         console.error(e.meta.body.error)
         res.status(500).send({ error: e.meta.body.error })
     }
