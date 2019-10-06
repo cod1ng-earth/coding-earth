@@ -7,11 +7,13 @@ import googleapiclient.discovery
 import googleapiclient.errors
 import logging
 
+from dotenv import load_dotenv
 from kafka import KafkaConsumer, KafkaProducer
 from elasticsearch import Elasticsearch
 from platformshconfig import Config
 
-#logging.basicConfig(level=logging.DEBUG) 
+load_dotenv(verbose=True)
+logging.basicConfig(level=logging.INFO)
 
 logger = logging.getLogger(__name__)
 
@@ -25,11 +27,11 @@ if config.is_valid_platform():
     brokers = kafkaCredentials['host'] + ":" + str(kafkaCredentials['port'])
 else:
     port = int(os.getenv('PORT', 3000))
-    brokers = os.getenv('KAFKA_HOST', 'localhost:9092')
-    esHost = os.getenv('ELASTICSEARCH_HOST', 'http://localhost:9288')
-    googleApiKey = os.getenv('GOOGLE_API_KEY', 'AIzaSyCqiSZ1H8qMXN5cgiACGt4WHvcuZFHAsHc')
+    brokers = os.getenv('KAFKA_HOST', 'kafka:9092')
+    esHost = os.getenv('ELASTICSEARCH_HOST', 'http://localhost:9200')
+    googleApiKey = os.getenv('GOOGLE_API_KEY', '')
     
-consumer = KafkaConsumer('NewUrl',  bootstrap_servers=[brokers])
+consumer = KafkaConsumer('NewUrl',  group_id='videos-group',  bootstrap_servers=[brokers])
 producer = KafkaProducer(bootstrap_servers=[brokers], value_serializer=lambda v: json.dumps(v).encode('utf-8'))
 
 pattern = re.compile("(.*)\.youtube\.com\/watch\?v=(.*)")

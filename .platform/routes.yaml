@@ -25,9 +25,10 @@
 "https://comics.{default}/":
   type: upstream
   upstream: "comics:http"
-"https://letsdopython.{default}/":
+
+"https://videos.{default}/":
   type: upstream
-  upstream: "letsdopython:http"
+  upstream: "videos:http"
 
 "https://rabbithole.{default}/":
   type: upstream

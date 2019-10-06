@@ -13,63 +13,7 @@ services:
     volumes:
       - ./web/conf.d:/etc/nginx/conf.d:rw,cached
     depends_on:
-      - coordinator
-      - rssreader
-      - calendar
       - frontend
-      - tweets
-
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: ../docker/nodejs-yarn.dockerfile
-    environment:
-      - SKIP_PREFLIGHT_CHECK=true
-      - REACT_APP_COORDINATOR=//coordinator.${DEFAULT_HOST}
-    volumes:
-      - ./frontend:/app:rw,cached
-
-  coordinator:
-    build:
-      context: ./coordinator
-      dockerfile: ../docker/nodejs-npm.dockerfile
-    environment:
-      - DEFAULT_HOST=${DEFAULT_HOST}
-      - KAFKA_HOST=kafka:9092
-    command: "npm run dev"
-    depends_on:
-      - kafka
-    volumes:
-      - ./coordinator:/app:rw,cached
-      - ./.platform/routes.yaml:/app/routes.yaml:ro
-
-  rssreader:
-    build:
-      context: ./rssreader
-      dockerfile: ../docker/nodejs-npm.dockerfile
-    environment:
-      - ELASTICSEARCH_HOST=http://elasticsearch:9200
-    command: "npm run dev"
-    volumes:
-      - ./rssreader:/app
-      - ./rssreader/db:/app/db
-    depends_on:
-      - elasticsearch
-
-  tweets:
-    build:
-      context: ./tweets
-      dockerfile: ../docker/nodejs-npm.dockerfile
-    command: "npm run start"
-    volumes:
-      - ./tweets:/app
-    environment:
-      - KAFKA_HOST=kafka:9092
-      - ELASTICSEARCH_HOST=http://elasticsearch:9200
-    depends_on:
-      - kafka
-      - coordinator
-      - elasticsearch
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.5.4
@@ -89,52 +33,131 @@ services:
       - esdata01:/usr/share/elasticsearch/data
     ports:
       - "9288:9200"
+
   zookeeper:
     image: wurstmeister/zookeeper
     #tmpfs: "/datalog"
     ports:
       - "2181:2181"
+  
+  kafdrop:
+    image: obsidiandynamics/kafdrop
+    ports: 
+      - "9099:9000"
+    environment:
+      - KAFKA_BROKERCONNECT=kafka:9092
+      - JVM_OPTS=-Xms32M -Xmx64M
+      - SERVER_SERVLET_CONTEXTPATH=/
+    depends_on:
+      - kafka
 
   kafka:
     image: wurstmeister/kafka
     ports:
-      - "9092:9092"
+      - 9092
     environment:
       HOSTNAME_COMMAND: "route -n | awk '/UG[ \t]/{print $$2}'"
-      #KAFKA_ADVERTISED_HOST_NAME: 172.19.0.1
-      #KAFKA_CREATE_TOPICS: "NewUrl:1:1,NewContent:1:1,ClientResponse:1:1"
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_CREATE_TOPICS: "NewUrl:1:1"
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://_{HOSTNAME_COMMAND}:9092
-      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://:9092
+      KAFKA_LISTENERS: PLAINTEXT://:9092
     depends_on:
       - zookeeper
     volumes:
       - /var/run/docker.sock
 
+  frontend:
+    image: node-yarn
+    build:
+      context: ./frontend
+      dockerfile: ../docker/nodejs-yarn.dockerfile
+    environment:
+      - SKIP_PREFLIGHT_CHECK=true
+      - REACT_APP_COORDINATOR=//coordinator.${DEFAULT_HOST}
+    depends_on:
+      - coordinator
+    volumes:
+      - ./frontend:/app:rw,cached
+
+  coordinator:
+    image: node-npm
+    build:
+      context: ./coordinator
+      dockerfile: ../docker/nodejs-npm.dockerfile
+    environment:
+      - DEFAULT_HOST=${DEFAULT_HOST}
+      - KAFKA_HOST=kafka:9092
+    depends_on:
+      - kafka
+    volumes:
+      - ./coordinator:/app:rw,cached
+      - ./.platform/routes.yaml:/app/routes.yaml:ro
+
   calendar:
     build:
       context: ./calendar
+      dockerfile: ../docker/php.dockerfile
     volumes:
       - ./calendar:/var/www/app:rw,cached
     depends_on:
       - elasticsearch
+      - kafka
 
+  videos:
+    image: ce-python
+    build:
+      context: ./videos
+      dockerfile: ../docker/python.dockerfile
+    volumes:
+      - ./videos:/app
+    environment:
+      - KAFKA_HOST=kafka:9092
+      - ELASTICSEARCH_HOST=http://elasticsearch:9200
 
+#these projects *reuse* the built images.
+  videos_worker:
+    image: ce-python
+    volumes:
+      - ./videos:/app
+    environment:
+      - KAFKA_HOST=kafka:9092
+      - ELASTICSEARCH_HOST=http://elasticsearch:9200
+    command: "python kafkaworker.py"
 
+  rssreader:
+    image: node-npm
+    environment:
+      - ELASTICSEARCH_HOST=http://elasticsearch:9200
+    volumes:
+      - ./rssreader:/app
+      - ./rssreader/db:/app/db
+    depends_on:
+      - elasticsearch
+
+  tweets:
+    image: node-npm
+    volumes:
+      - ./tweets:/app
+    environment:
+      - KAFKA_HOST=kafka:9092
+      - ELASTICSEARCH_HOST=http://elasticsearch:9200
+    depends_on:
+      - kafka
+      - coordinator
+      - elasticsearch
 
   comics:
-    build:
-      context: ./comics
-      dockerfile: ../docker/nodejs-npm.dockerfile
+    image: node-npm
     volumes:
       - ./comics:/app
-
+    depends_on:
+      - elasticsearch
+      - kafka
 
   rabbithole:
-    build:
-      context: ./rabbithole
-      dockerfile: ../docker/nodejs-npm.dockerfile
+    image: node-npm
     volumes:
       - ./rabbithole:/app
-
+    depends_on:
+      - elasticsearch
+      - kafka

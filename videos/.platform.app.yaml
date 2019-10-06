@@ -1,0 +1,27 @@
+name: videos
+type: "python:3.7"
+
+# The build-time dependencies of the app.
+dependencies:
+    python3:
+       pipenv: "2018.11.26"
+
+relationships:
+    kafka: "kafkastreaming:kafka"
+    elasticsearch: "elasticsearch:elasticsearch"
+
+hooks:
+    build: |
+      pipenv install --system --deploy
+
+disk: 128
+
+web:
+    commands:
+        start: python app.py
+
+workers:
+    queue:
+      commands:
+        start: |
+          python kafkaworker.py

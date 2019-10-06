@@ -20,7 +20,7 @@ HELP_FUN = \
 	print "\n"; }
 
 # Process parameters/options
-CONTAINERS := web elasticsearch zookeper kafka frontend coordinator rssreader calendar
+CONTAINERS := web elasticsearch zookeper kafka frontend coordinator rssreader calendar comics rabbithole
 
 help: ##@other Show this help.
 	@perl -e '$(HELP_FUN)' $(MAKEFILE_LIST)
@@ -30,15 +30,18 @@ prepare: ##@setup copy env files and build coordinator env
 	cp .env.dist .env
 .PHONY: prepare
 
-setup: prepare build-images dependencies ##@setup Create dev enviroment
+setup: build-images dependencies ##@setup Create dev enviroment
 .PHONY: setup
 
 dependencies: ##@development install local dependencies
 	$(DOCKER_COMPOSE) run calendar composer install
 	$(DOCKER_COMPOSE) run rssreader npm install
 	$(DOCKER_COMPOSE) run tweets npm install
+	$(DOCKER_COMPOSE) run rabbithole npm install
+	$(DOCKER_COMPOSE) run comics npm install
 	$(DOCKER_COMPOSE) run coordinator npm install
 	$(DOCKER_COMPOSE) run frontend yarn install
+
 .PHONY: dependencies
 
 build-images: ##@setup build docker images

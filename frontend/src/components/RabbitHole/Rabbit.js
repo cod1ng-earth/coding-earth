@@ -1,13 +1,12 @@
-import React, { useContext } from "react";
-import { ReactComponent as Rabbit } from "./../images/hasi.svg";
+import React from "react";
+import { ReactComponent as Rabbit } from "./images/hasi.svg";
 import styled, { css, keyframes } from "styled-components";
-import { MainContext } from "./../App";
+
 
 const openHole = keyframes`
 0% {
   transform: scaleX(0);
   transform-origin: center;
-
 }
 
 15%
@@ -28,57 +27,28 @@ const openHole = keyframes`
   transform-origin: center;
 
 }
-
 `;
-
-// const appendRabbit = keyframes`
-// 0% {
-// opacity: 0;
-//
-//
-// }
-//
-// 25%
-//  {
-// opacity: 0;
-//
-// }
-//
-// 75%
-// {
-// opacity: 1;
-//
-// }
-//
-// 100% {
-//   opacity: 1;
-//
-// }
-//
-// `;
 
 const move = keyframes`
 0% {
-
   transform: translate(0px, 0px) rotate(0deg) scaleX(1) scaleY(1);
   transform-origin: center;
 }
 
 15% {
-
-  transform: translate(110px, -20px) rotate(0deg) scaleX(1) scaleY(1);
+  transform: translate(10vw, -20px) rotate(0deg) scaleX(1) scaleY(1);
   transform-origin: center;
 }
 
 25% {
 
-  transform: translate(180px, 0px) rotate(0deg) scaleX(1) scaleY(1);
+  transform: translate(18vw, 0px) rotate(0deg) scaleX(1) scaleY(1);
   transform-origin: center;
 }
 
 100% {
 
-  transform: translate(180px, 0px) rotate(720deg) scaleX(0) scaleY(0);
+  transform: translate(18vw, -20px) rotate(720deg) scaleX(0) scaleY(0);
   transform-origin: center;
 }
 `;
@@ -159,8 +129,6 @@ const moveFace = keyframes`
 }
 `;
 
-
-
 const moveAnimation = css`
   animation: ${move} 5s linear forwards;
 
@@ -178,26 +146,19 @@ const moveAnimation = css`
     animation: ${moveTail}  1s linear;
   }
   #carrot {
-  display: block;
-
-}
-
+    display: block;
+  }
 `;
 
-
-
-
 const StyledRabbit = styled(Rabbit)`
-  height: 85px;
-  width: 100px;
+  width: 40px;
   position: absolute;
-  top: 145px;
-  right: 380px;
+  bottom: 10px;
+  right: 20vw;
   z-index: 1000;
   #carrot {
     display: none;
   }
-
 
   ${props => (props.running ? moveAnimation : "")};
 
@@ -211,33 +172,12 @@ const StyledRabbit = styled(Rabbit)`
   #carrot {
     animation: ${moveFace} infinite 1s linear;
   }
-
-
-
-
 `;
 
-
-
-// const StyledHole = styled(AppearHole)`
-//   height: 100px;
-//   width: 100px;
-//   position: absolute;
-//   top: 145px;
-//   right: 380px;
-//   z-index: 1000;
-//
-//   animation: ${openHole} 1.5s linear forwards;
-//
-//
-//
-//
-// `;
-
-
-
 export default props => {
-  const context = useContext(MainContext);
-
-  return <div> <StyledRabbit running={context.rabbitRun} /></div>;
+  return (
+      <div>
+          <StyledRabbit running={props.running} />
+      </div>
+  );
 };
