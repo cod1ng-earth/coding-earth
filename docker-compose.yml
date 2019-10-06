@@ -13,7 +13,6 @@ services:
     volumes:
       - ./web/conf.d:/etc/nginx/conf.d:rw,cached
     depends_on:
-      - coordinator
       - frontend
 
   elasticsearch:
@@ -75,6 +74,8 @@ services:
     environment:
       - SKIP_PREFLIGHT_CHECK=true
       - REACT_APP_COORDINATOR=//coordinator.${DEFAULT_HOST}
+    depends_on:
+      - coordinator
     volumes:
       - ./frontend:/app:rw,cached
 
