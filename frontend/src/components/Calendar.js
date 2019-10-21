@@ -127,15 +127,15 @@ export default props => {
 
     return (
         <Box fill>
-            <Box  direction="row" justify="between">
+            <Box  direction="row" justify="between" height="xxsmall" margin={{bottom: "medium"}}>
                 <Button onClick={() => setMonth(dfns.subMonths(month, 1))} label="prev" />
                 <Heading size={4}>{dfns.format(month, "MMMM YYYY")}</Heading>
                 <Button onClick={() => setMonth(dfns.addMonths(month, 1))} label="next" />
             </Box>
 
-            <Box>
+
             <Calendar active={active} setActive={setActive} events={events} month={month}  />
-            </Box>
+
             {events.map( (ev, i) => {
                 if (active && !dfns.isSameDay(active, ev.start))
                     return
