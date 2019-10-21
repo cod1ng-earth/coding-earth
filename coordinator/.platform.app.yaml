@@ -9,7 +9,6 @@ dependencies:
 web:
   commands:
     start: "PM2_HOME=$PLATFORM_APP_DIR/run pm2 start index.js --no-daemon"
-    #in this setup you will find your application stdout and stderr in /app/run/logs
   locations:
     "/public":
       passthru: false
@@ -18,7 +17,6 @@ web:
         Access-Control-Allow-Origin: "*"
         Access-Control-Allow-Methods: "GET, POST, PUT, DELETE, PATCH, OPTIONS"
         Access-Control-Allow-Headers: "X-Requested-With, content-type, Authorization"
-      # Whether to allow files not matching a rule or not.
       allow: true
       rules:
         \.(css|js|gif|jpe?g|png|ttf|eot|woff2?|otf|html|ico|svg|json?)$:

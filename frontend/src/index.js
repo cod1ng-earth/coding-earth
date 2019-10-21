@@ -1,18 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
-import "./index.scss";
 import Routes from "./Routes";
 import * as serviceWorker from "./serviceWorker";
-
-//import 'react-bulma-components/dist/react-bulma-components.min.css';
 
 export const githubClientId = process.env.REACT_APP_GITHUB_CLIENT_ID;
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Routes />
-  </BrowserRouter>,
+    <Routes />,
   document.getElementById("root")
 );
 // If you want your app to work offline and load faster, you can change

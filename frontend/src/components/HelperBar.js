@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {Navbar, Button} from 'react-bulma-components/lib';
+import {Box, Button, Image, Paragraph, Text} from 'grommet'
 import RabbitHole from "./RabbitHole/RabbitHole";
 import Rabbit from "./RabbitHole/Rabbit";
 import eventEmitter from "../lib/event-emitter";
@@ -24,22 +24,30 @@ export default class HelperBar extends React.Component {
     }
 
     render() {
-        return <Navbar
-            color="black"
-            fixed="bottom"
-        >
-            <Rabbit running={this.state.running} />
-            <RabbitHole />
-
-            <Navbar.Menu>
-                <Navbar.Container>
-                    <Button onClick={this.run}>run</Button>
+        return (
+        <Box justify="between" >
+            <Box justify="between" direction="row" background="dark-1">
+                <Box direction="row">
+                    <Button onClick={this.run} label="run" />
                     {Object.keys(this.props.services).map(k =>
-                        <Navbar.Item href="#" key={k}>{k}</Navbar.Item>
+                        (
+                            <Button hoverIndicator={true} href="#" fill="vertical">
+                                <Box align="center" justify="center" pad={{ "vertical": "small", "horizontal": "medium" }} direction="row" gap="small" fill="vertical">
+                                    <Text weight="bold" size="large">
+                                        {k}
+                                    </Text>
+                                </Box>
+                            </Button>
+                        )
                     )}
-                </Navbar.Container>
-            </Navbar.Menu>
-        </Navbar>
-    }
 
+                </Box>
+                <Box style={{position: 'relative'}}>
+                    <Rabbit running={this.state.running} />
+                    <RabbitHole />
+                </Box>
+            </Box>
+        </Box>
+        )
+    }
 }

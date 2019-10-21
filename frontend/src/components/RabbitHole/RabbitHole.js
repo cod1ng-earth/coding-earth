@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link } from "@reach/router";
 import { ReactComponent as RabbitHole } from "./images/rabbit-hole.svg";
 import styled, { keyframes } from "styled-components";
 
@@ -47,11 +47,12 @@ const StyledRabbitHole = styled(RabbitHole)`
 `;
 
 export default props => {
+    //
   return (
     <div className="">
-      <Link to="/rabbithole">
+        <Link to="/rabbithole">
         <StyledRabbitHole />
-      </Link>
+        </Link>
     </div>
   );
 };

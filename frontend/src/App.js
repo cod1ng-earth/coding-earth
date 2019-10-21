@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "./components/Navbar";
+import { grommet, Grommet, Box, Heading, Grid } from 'grommet'
+
+import AppHeader from './components/AppHeader'
 import HelperBar from "./components/HelperBar";
 
 import BuildComponent from "./components/BuildComponent";
-import AddControl from "./components/AddControl";
+import Sidebar from './components/Sidebar';
+
+
 import eventEmitter from "./lib/event-emitter";
 
-import "./index.scss";
-
-import {  Section, Container, Columns, Heading } from 'react-bulma-components/lib';
 import {coordinator, endpoint} from "./coordinator";
 
 export default props => {
   const [knownServices, setServices] = useState({});
   const [search, setSearch] = useState("");
-
 
   useEffect(() => {
     async function fetchData() {
@@ -32,32 +32,21 @@ export default props => {
     };
   }, []);
 
-  return (
-    <div>
-
-      <Navbar onSearch={newSearch => setSearch(newSearch)} />
-
-      <Section>
-        <Container>
-          <AddControl />
-        </Container>
-      </Section>
-
-      <Section>
-        <Container>
-          <Columns>
+  return <Grommet theme={grommet}>
+        <AppHeader onSearch={newSearch => setSearch(newSearch)} />
+        <Box direction="row" >
+          <Sidebar />
+          <Box margin="small" fill>
             {Object.keys(knownServices).map(k => (
-              <Columns.Column size="half" key={k}>
-                <Heading>{k}</Heading>
-                <BuildComponent tag={k} search={search} />
-              </Columns.Column>
+                <Box key={k}>
+                  <Heading margin={{vertical: "medium"}}>{k}</Heading>
+                  <BuildComponent tag={k} search={search} />
+                </Box>
             ))}
-          </Columns>
-        </Container>
-      </Section>
+          </Box>
 
-      <HelperBar services={knownServices} />
+        </Box>
+    <HelperBar  services={knownServices} />
+      </Grommet>
 
-    </div>
-  );
 };

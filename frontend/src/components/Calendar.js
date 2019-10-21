@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
 import componentData from "../componentData";
-import { Table, Heading, Level, Button } from 'react-bulma-components'
+
 import classnames from 'classnames'
 import dfns from 'date-fns'
-import {Box, Content, Media, Tag, Columns} from "react-bulma-components/dist";
 import truncate from "../lib/truncate";
+import { Box, Button, Grid, Heading, Table, TableCell as TD, TableRow as TR, TableHeader, TableBody } from 'grommet'
 
 function calendar(first) {
     const last = dfns.endOfMonth(first)
@@ -40,7 +40,7 @@ function daysWithEvents(events) {
 const Day = ({day, month, active, events, onSelect}) => {
     const types = events.map(e => e.type);
 
-    return  <td onClick={() => { return events.length === 0 ? false : onSelect(day) } } className={classnames({
+    return  <TD onClick={() => { return events.length === 0 ? false : onSelect(day) } } pad={{horizontal: "medium", vertical:"large"}} className={classnames({
         day: true,
         'light': !dfns.isSameMonth(day, month) || events.length === 0,
         'today': dfns.isToday(day),
@@ -49,7 +49,7 @@ const Day = ({day, month, active, events, onSelect}) => {
         'active': active,
     })}>
         {dfns.format(day, 'D')}
-    </td>
+    </TD>
 }
 
 const Calendar = ({month, events, setActive, active}) => {
@@ -57,16 +57,16 @@ const Calendar = ({month, events, setActive, active}) => {
     const cal = calendar(month)
     const eventDays = daysWithEvents(events)
 
-    return <Table striped={false} bordered={true}>
-        <thead>
-        <tr>
-            {cal[0].map((day, i) => <th key={`d-${i}`}>{dfns.format(day, 'dd')}</th>)}
-        </tr>
-        </thead>
-        <tbody>
+    return <Table fill>
+        <TableHeader>
+        <TR>
+            {cal[0].map((day, i) => <TD key={`d-${i}`}>{dfns.format(day, 'dd')}</TD>)}
+        </TR>
+        </TableHeader>
+        <TableBody>
         {cal.map(
             week => (
-                <tr key={`w-${dfns.getISOWeek(week[0])}`}>
+                <TR key={`w-${dfns.getISOWeek(week[0])}`}>
                     {week.map(day => {
                         const activeDay = dfns.isSameDay(day, active)
                         const dd = dfns.format(day, "MM-DD")
@@ -76,33 +76,30 @@ const Calendar = ({month, events, setActive, active}) => {
                                     day={day}
                                     month={month}/>
                     })}
-                </tr>
+                </TR>
             ))
         }
-        </tbody>
+        </TableBody>
     </Table>
 }
 
 
 const Event = (evt) => {
 
-    return <Box className="event-detail">
-        <Media>
-            <Media.Item>
-                <Heading size={6}>{evt.summary}</Heading>
-                <Heading subtitle size={6}>
+    return <Box >
+
+                <Heading level={5}>{evt.summary}</Heading>
+                <Heading level={6}>
                     {evt.start.toLocaleDateString() } - {evt.end.toLocaleDateString()} <br />
                     <small>{evt.location}</small> <br />
                     <a href={evt.url} target="_blank">{evt.url}</a>
                 </Heading>
 
-                <Content>
+                <p>
                     {evt.description && truncate(evt.description, 400)}
-                </Content>
-                <Tag className={`event-${evt.type}`}>{evt.type}</Tag>
-                {evt.tags.map(t => <Tag key={t}>{t}</Tag>)}
-            </Media.Item>
-        </Media>
+                </p>
+                <p className={`event-${evt.type}`}>{evt.type}</p>
+                {evt.tags.map(t => <p key={t}>{t}</p>)}
     </Box>
 }
 
@@ -129,29 +126,16 @@ export default props => {
     }, [month, props.search]);
 
     return (
-        <div className="calendar">
-            <Level >
-                <Level.Side align="left">
-                    <Level.Item>
-                        <Button onClick={() => setMonth(dfns.subMonths(month, 1))}>prev</Button>
-                    </Level.Item>
-                </Level.Side>
-                <Level.Item>
-                    <Heading size={4}>{dfns.format(month, "MMMM YYYY")}</Heading>
-                </Level.Item>
-                <Level.Side align="right">
-                <Level.Item>
-                    <Button onClick={() => setMonth(dfns.addMonths(month, 1))}>next</Button>
-                </Level.Item>
-                </Level.Side>
-            </Level>
+        <Box fill>
+            <Box  direction="row" justify="between">
+                <Button onClick={() => setMonth(dfns.subMonths(month, 1))} label="prev" />
+                <Heading size={4}>{dfns.format(month, "MMMM YYYY")}</Heading>
+                <Button onClick={() => setMonth(dfns.addMonths(month, 1))} label="next" />
+            </Box>
 
-            <Columns>
-                <Columns.Column>
-                    <Calendar active={active} setActive={setActive} events={events} month={month}  />
-                </Columns.Column>
-            </Columns>
-
+            <Box>
+            <Calendar active={active} setActive={setActive} events={events} month={month}  />
+            </Box>
             {events.map( (ev, i) => {
                 if (active && !dfns.isSameDay(active, ev.start))
                     return
@@ -159,6 +143,6 @@ export default props => {
                     return <Event key={`evt-${i}`} {...ev} />
             })}
 
-        </div>
+        </Box>
     );
 }

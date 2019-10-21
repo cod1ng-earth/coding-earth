@@ -20,7 +20,8 @@ HELP_FUN = \
 	print "\n"; }
 
 # Process parameters/options
-CONTAINERS := web elasticsearch zookeper kafka frontend coordinator rssreader calendar comics rabbithole
+CONTAINERS := web elasticsearch zookeper kafka frontend coordinator calendar
+# rssreader videos comics rabbithole
 
 help: ##@other Show this help.
 	@perl -e '$(HELP_FUN)' $(MAKEFILE_LIST)

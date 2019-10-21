@@ -1,13 +1,13 @@
 import React from "react";
-import { Switch, Route } from "react-router";
+import { Router } from "@reach/router";
 import App from "./App";
 import RabbitHolePage from "./components/RabbitHole/Page";
 
 const Routes = () => (
-  <Switch>
-    <Route exact path="/" component={App} />
-    <Route exact path="/rabbithole" component={RabbitHolePage} />
-  </Switch>
+  <Router>
+    <App path="/" />
+    <RabbitHolePage path="/rabbithole"  />
+  </Router>
 );
 
 export default Routes;

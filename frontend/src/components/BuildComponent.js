@@ -6,10 +6,10 @@ import ResponseRenderer from './ResponseRenderer'
 import Comics from './Comics';
 
 const components = {
-    "rssreader": RssReader,
+    //"rssreader": RssReader,
     "calendar": Calendar,
     "tweets": Tweets,
-    "comics": Comics
+    //"comics": Comics
 };
 
 export default props => {

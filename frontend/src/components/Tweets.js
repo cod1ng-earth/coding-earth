@@ -1,8 +1,7 @@
 import React from 'react';
 import componentData from '../componentData'
 import eventEmitter from '../lib/event-emitter'
-
-import { Box, Media, Image, Content } from 'react-bulma-components';
+import { Box, Button, Image, Paragraph } from 'grommet'
 
 export default class Tweets extends React.Component {
 
@@ -33,38 +32,28 @@ export default class Tweets extends React.Component {
     }
 
     render() {
-        const tweets = this.state.tweets;
         return <div>
-            {tweets.length > 0 ?
-                tweets.map(tweet => (
-                    <Box key={tweet.id}>
-                        <Media>
-                            <Media.Item renderAs="figure" position="left">
-                                <Image  size={64} alt="64x64" src={tweet.user.profile_image_url_https} />
-                            </Media.Item>
-                            <Media.Item>
-                                <Content>
-                                    <p>
-                                        <strong>{tweet.user.name}</strong>
-                                        <small>@{tweet.user.screen_name}</small>
-                                        <br/>
-                                        <small>{(new Date(tweet.created_at)).toLocaleString()}</small>
+            {this.state.tweets.length === 0 ?  <p>no tweets found</p> :
+                this.state.tweets.map(tweet => (
+                    <Box key={tweet.id} direction="row" justify="start"  gap="medium" elevation="small" pad="medium" margin={{vertical: "medium"}} fill>
+                        <Box  width="small" >
+                            <Image  src={tweet.user.profile_image_url_https}  width={90}/>
+                        </Box>
+                        <Box fill>
+                            <Paragraph fill>
+                                <strong>{tweet.user.name}</strong>
+                                <small>@{tweet.user.screen_name}</small>
+                                <br/>
+                                <small>{(new Date(tweet.created_at)).toLocaleString()}</small>
 
-                                        <br />
-                                        {tweet.full_text}
-                                        <br/>
-                                        <a href={`https://twitter.com/${tweet.user.sceen_name}/status/${tweet.id_str}`}>visit</a>
-                                    </p>
-                                </Content>
-
-                            </Media.Item>
-                        </Media>
+                                <br />
+                                {tweet.full_text}
+                                <br/>
+                                <a href={`https://twitter.com/${tweet.user.sceen_name}/status/${tweet.id_str}`}>visit</a>
+                            </Paragraph>
+                        </Box>
                     </Box>
-
                 ))
-
-                :
-                <p>no tweets found</p>
             }
         </div>
     }
