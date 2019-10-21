@@ -72,7 +72,6 @@ services:
       context: ./frontend
       dockerfile: ../docker/nodejs-yarn.dockerfile
     environment:
-      - SKIP_PREFLIGHT_CHECK=true
       - REACT_APP_COORDINATOR=//coordinator.${DEFAULT_HOST}
     depends_on:
       - coordinator

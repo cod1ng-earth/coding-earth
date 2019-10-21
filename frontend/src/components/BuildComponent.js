@@ -1,5 +1,5 @@
 import React from 'react'
-import RssReader from './RssReader'
+//import RssReader from './RssReader'
 import Calendar from './Calendar'
 import Tweets from './Tweets'
 import ResponseRenderer from './ResponseRenderer'
