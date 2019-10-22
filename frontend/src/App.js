@@ -35,7 +35,7 @@ export default props => {
     };
   }, []);
 
-  return <Grommet theme={grommet}>
+  return <Grommet theme={grommet} full>
     <AppHeader onSearch={newSearch => setSearch(newSearch)} />
     <Box direction="row" >
       <Sidebar services={knownServices} />

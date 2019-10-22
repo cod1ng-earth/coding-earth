@@ -4,13 +4,15 @@ import Calendar from '../pages/Calendar'
 import Tweets from '../pages/Tweets'
 import ResponseRenderer from './ResponseRenderer'
 import Comics from '../pages/Comics';
+import Videos from '../pages/Videos';
 import { Box, Heading } from 'grommet'
 
 const components = {
     //"rssreader": RssReader,
     "calendar": Calendar,
     "tweets": Tweets,
-    "comics": Comics
+    "comics": Comics,
+    "videos": Videos
 };
 
 export default props => {

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import componentData from '../componentData';
 import eventEmitter from '../lib/event-emitter';
 import Slider from "react-slick";
+import { Box } from 'grommet'
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -44,7 +45,7 @@ export default class Comics extends Component {
         const { comics, initialSlide } = this.state;
         return (
             this.state.comics.length > 0 ?
-                <div>
+                <Box width="medium">
                     <Slider {...settings} initialSlide={initialSlide}>
                         {
                             comics.map(comic => (
@@ -53,7 +54,7 @@ export default class Comics extends Component {
                             ))
                         }
                     </Slider>
-                </div>
+                </Box>
                 : <p>No Comics. Add Something Funny :) </p>
         )
     }
