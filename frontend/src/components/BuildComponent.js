@@ -1,9 +1,10 @@
 import React from 'react'
 //import RssReader from './RssReader'
-import Calendar from './Calendar'
-import Tweets from './Tweets'
+import Calendar from '../pages/Calendar'
+import Tweets from '../pages/Tweets'
 import ResponseRenderer from './ResponseRenderer'
 import Comics from './Comics';
+import { Box, Heading } from 'grommet'
 
 const components = {
     //"rssreader": RssReader,
@@ -13,6 +14,9 @@ const components = {
 };
 
 export default props => {
-    const TagName = components[props.tag] || ResponseRenderer
-    return <TagName {...props} />
+    const TagName = components[props.component] || ResponseRenderer
+    return <Box>
+        <Heading margin={{ vertical: "medium" }}>{props.component}</Heading>
+        <TagName {...props} />
+    </Box>
 }

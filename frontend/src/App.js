@@ -10,7 +10,10 @@ import Sidebar from './components/Sidebar';
 
 import eventEmitter from "./lib/event-emitter";
 
-import {coordinator, endpoint} from "./coordinator";
+import { coordinator, endpoint } from "./coordinator";
+import { Router } from "@reach/router";
+
+const Home = () => (<div>home</div>)
 
 export default props => {
   const [knownServices, setServices] = useState({});
@@ -33,20 +36,20 @@ export default props => {
   }, []);
 
   return <Grommet theme={grommet}>
-        <AppHeader onSearch={newSearch => setSearch(newSearch)} />
-        <Box direction="row" >
-          <Sidebar />
-          <Box margin="small" fill>
-            {Object.keys(knownServices).map(k => (
-                <Box key={k}>
-                  <Heading margin={{vertical: "medium"}}>{k}</Heading>
-                  <BuildComponent tag={k} search={search} />
-                </Box>
-            ))}
-          </Box>
+    <AppHeader onSearch={newSearch => setSearch(newSearch)} />
+    <Box direction="row" >
+      <Sidebar services={knownServices} />
+      <Box margin="small" fill>
+        <Router>
+          <Home path="/" />
 
-        </Box>
-    <HelperBar  services={knownServices} />
-      </Grommet>
+          <BuildComponent path={`/:component`} search={search} />
+
+        </Router>
+      </Box>
+
+    </Box>
+    <HelperBar services={knownServices} />
+  </Grommet>
 
 };

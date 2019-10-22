@@ -160,3 +160,7 @@ services:
     depends_on:
       - elasticsearch
       - kafka
+
+#networks:
+#  default:
+    #name: the_fucking_db_has_the_same_ip

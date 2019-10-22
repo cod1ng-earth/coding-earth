@@ -16,7 +16,7 @@ function calendar(first) {
         firstMonday = dfns.subDays(firstMonday, 1)
     }
     while (!dfns.isSunday(lastSunday)) {
-        lastSunday = dfns.addDays(lastSunday,1)
+        lastSunday = dfns.addDays(lastSunday, 1)
     }
 
     const allDays = dfns.eachDay(firstMonday, lastSunday)
@@ -37,10 +37,10 @@ function daysWithEvents(events) {
     return days
 }
 
-const Day = ({day, month, active, events, onSelect}) => {
+const Day = ({ day, month, active, events, onSelect }) => {
     const types = events.map(e => e.type);
 
-    return  <TD onClick={() => { return events.length === 0 ? false : onSelect(day) } } pad={{horizontal: "medium", vertical:"large"}} className={classnames({
+    return <TD onClick={() => { return events.length === 0 ? false : onSelect(day) }} pad={{ horizontal: "medium", vertical: "large" }} className={classnames({
         day: true,
         'light': !dfns.isSameMonth(day, month) || events.length === 0,
         'today': dfns.isToday(day),
@@ -52,33 +52,33 @@ const Day = ({day, month, active, events, onSelect}) => {
     </TD>
 }
 
-const Calendar = ({month, events, setActive, active}) => {
+const Calendar = ({ month, events, setActive, active }) => {
 
     const cal = calendar(month)
     const eventDays = daysWithEvents(events)
 
     return <Table fill>
         <TableHeader>
-        <TR>
-            {cal[0].map((day, i) => <TD key={`d-${i}`}>{dfns.format(day, 'dd')}</TD>)}
-        </TR>
+            <TR>
+                {cal[0].map((day, i) => <TD key={`d-${i}`}>{dfns.format(day, 'dd')}</TD>)}
+            </TR>
         </TableHeader>
         <TableBody>
-        {cal.map(
-            week => (
-                <TR key={`w-${dfns.getISOWeek(week[0])}`}>
-                    {week.map(day => {
-                        const activeDay = dfns.isSameDay(day, active)
-                        const dd = dfns.format(day, "MM-DD")
-                        return <Day key={dd} events={eventDays[dd] || []}
-                                    onSelect={selected => setActive(activeDay ? null : selected)}
-                                    active={activeDay}
-                                    day={day}
-                                    month={month}/>
-                    })}
-                </TR>
-            ))
-        }
+            {cal.map(
+                week => (
+                    <TR key={`w-${dfns.getISOWeek(week[0])}`}>
+                        {week.map(day => {
+                            const activeDay = dfns.isSameDay(day, active)
+                            const dd = dfns.format(day, "MM-DD")
+                            return <Day key={dd} events={eventDays[dd] || []}
+                                onSelect={selected => setActive(activeDay ? null : selected)}
+                                active={activeDay}
+                                day={day}
+                                month={month} />
+                        })}
+                    </TR>
+                ))
+            }
         </TableBody>
     </Table>
 }
@@ -88,18 +88,18 @@ const Event = (evt) => {
 
     return <Box >
 
-                <Heading level={5}>{evt.summary}</Heading>
-                <Heading level={6}>
-                    {evt.start.toLocaleDateString() } - {evt.end.toLocaleDateString()} <br />
-                    <small>{evt.location}</small> <br />
-                    <a href={evt.url} target="_blank">{evt.url}</a>
-                </Heading>
+        <Heading level={5}>{evt.summary}</Heading>
+        <Heading level={6}>
+            {evt.start.toLocaleDateString()} - {evt.end.toLocaleDateString()} <br />
+            <small>{evt.location}</small> <br />
+            <a href={evt.url} target="_blank">{evt.url}</a>
+        </Heading>
 
-                <p>
-                    {evt.description && truncate(evt.description, 400)}
-                </p>
-                <p className={`event-${evt.type}`}>{evt.type}</p>
-                {evt.tags.map(t => <p key={t}>{t}</p>)}
+        <p>
+            {evt.description && truncate(evt.description, 400)}
+        </p>
+        <p className={`event-${evt.type}`}>{evt.type}</p>
+        {evt.tags.map(t => <p key={t}>{t}</p>)}
     </Box>
 }
 
@@ -111,8 +111,8 @@ export default props => {
     const [month, setMonth] = useState(first);
     const [active, setActive] = useState(null)
 
-    useEffect( () => {
-        componentData(props.tag, (evts) => {
+    useEffect(() => {
+        componentData(props.component, (evts) => {
             setEvents(evts.map(evt => ({
                 ...evt,
                 start: new Date(evt.start),
@@ -123,20 +123,20 @@ export default props => {
             from: dfns.format(month, 'YYYY-MM-DD'),
             to: dfns.format(dfns.addMonths(month, 1), 'YYYY-MM-DD')
         })
-    }, [month, props.search]);
+    }, [month, props.component, props.search]);
 
     return (
         <Box fill>
-            <Box  direction="row" justify="between" height="xxsmall" margin={{bottom: "medium"}}>
+            <Box direction="row" justify="between" height="xxsmall" margin={{ bottom: "medium" }}>
                 <Button onClick={() => setMonth(dfns.subMonths(month, 1))} label="prev" />
                 <Heading size={4}>{dfns.format(month, "MMMM YYYY")}</Heading>
                 <Button onClick={() => setMonth(dfns.addMonths(month, 1))} label="next" />
             </Box>
 
 
-            <Calendar active={active} setActive={setActive} events={events} month={month}  />
+            <Calendar active={active} setActive={setActive} events={events} month={month} />
 
-            {events.map( (ev, i) => {
+            {events.map((ev, i) => {
                 if (active && !dfns.isSameDay(active, ev.start))
                     return
                 else
