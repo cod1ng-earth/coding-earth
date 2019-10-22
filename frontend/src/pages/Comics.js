@@ -1,8 +1,7 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import componentData from '../componentData';
 import eventEmitter from '../lib/event-emitter';
 import Slider from "react-slick";
-
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -28,28 +27,28 @@ export default class Comics extends Component {
 
     _fetch(search) {
         componentData(
-            this.props.tag,
-            content => this.setState({comics: content.comics})
+            this.props.component,
+            content => this.setState({ comics: content.comics })
         );
     }
 
     componentDidMount() {
         this._fetch(this.props.search);
         eventEmitter.on('content-comics', message => {
-            const tw = this.setState({comics: [message.content, ...this.state.comics], initialSlide: 0});
+            const tw = this.setState({ comics: [message.content, ...this.state.comics], initialSlide: 0 });
         });
     }
 
 
     render() {
-        const {comics, initialSlide} = this.state;
+        const { comics, initialSlide } = this.state;
         return (
             this.state.comics.length > 0 ?
                 <div>
                     <Slider {...settings} initialSlide={initialSlide}>
                         {
                             comics.map(comic => (
-                                <img src={comic.url} key={comic.url}/>
+                                <img src={comic.url} key={comic.url} />
 
                             ))
                         }

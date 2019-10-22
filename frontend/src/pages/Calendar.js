@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from 'react';
 
 import componentData from "../componentData";
-
-import classnames from 'classnames'
+import styled from 'styled-components'
 import dfns from 'date-fns'
-import truncate from "../lib/truncate";
-import { Box, Button, Grid, Heading, Table, TableCell as TD, TableRow as TR, TableHeader, TableBody } from 'grommet'
+import Event from '../components/Calendar/Event'
+
+import { Box, Button, Grid, Heading, Table, TableCell as TD, TableRow as TR, TableHeader, TableBody, Text, ThemeContext } from 'grommet'
+
+const TDay = styled(Box)`
+    background: ${props => props.styl.active ? 'rgba(0,0,255,.07)' : ''};
+    color: ${props => props.styl.light ? "#CCC" : props.styl.active ? '#1f24cc' : ''};
+    text-decoration: ${props => props.styl.today ? "underline" : "none"};
+    box-shadow: ${props => props.styl.active ? 'rgba(0,0,0,.25) 1px 1px 3px -1px inset' : props.styl.eventConference ? '#0fd9a3 0 -6px 0 0 inset' : 'none'};
+    font-weight: ${props => props.styl.today ? 'bold' : ''};
+    border-bottom: ${props => props.styl.eventMeetup ? '3px solid #F54261' : ''};
+`
 
 function calendar(first) {
     const last = dfns.endOfMonth(first)
@@ -39,17 +48,18 @@ function daysWithEvents(events) {
 
 const Day = ({ day, month, active, events, onSelect }) => {
     const types = events.map(e => e.type);
-
-    return <TD onClick={() => { return events.length === 0 ? false : onSelect(day) }} pad={{ horizontal: "medium", vertical: "large" }} className={classnames({
-        day: true,
-        'light': !dfns.isSameMonth(day, month) || events.length === 0,
-        'today': dfns.isToday(day),
-        'event-meetup': types.includes('meetup'),
-        'event-conference': types.includes('conference'),
-        'active': active,
-    })}>
-        {dfns.format(day, 'D')}
-    </TD>
+    const styles = {
+        light: !dfns.isSameMonth(day, month) || events.length === 0,
+        today: dfns.isToday(day),
+        eventMeetup: types.includes('meetup'),
+        eventConference: types.includes('conference'),
+        active: active
+    }
+    return <TD onClick={() => { return events.length === 0 ? false : onSelect(day) }} pad="none">
+        <TDay fill styl={styles} height="medium" pad="medium" align="center">
+            {dfns.format(day, 'D')}
+        </TDay>
+    </TD >
 }
 
 const Calendar = ({ month, events, setActive, active }) => {
@@ -57,9 +67,9 @@ const Calendar = ({ month, events, setActive, active }) => {
     const cal = calendar(month)
     const eventDays = daysWithEvents(events)
 
-    return <Table fill>
+    return <Table>
         <TableHeader>
-            <TR>
+            <TR >
                 {cal[0].map((day, i) => <TD key={`d-${i}`}>{dfns.format(day, 'dd')}</TD>)}
             </TR>
         </TableHeader>
@@ -84,25 +94,6 @@ const Calendar = ({ month, events, setActive, active }) => {
 }
 
 
-const Event = (evt) => {
-
-    return <Box >
-
-        <Heading level={5}>{evt.summary}</Heading>
-        <Heading level={6}>
-            {evt.start.toLocaleDateString()} - {evt.end.toLocaleDateString()} <br />
-            <small>{evt.location}</small> <br />
-            <a href={evt.url} target="_blank">{evt.url}</a>
-        </Heading>
-
-        <p>
-            {evt.description && truncate(evt.description, 400)}
-        </p>
-        <p className={`event-${evt.type}`}>{evt.type}</p>
-        {evt.tags.map(t => <p key={t}>{t}</p>)}
-    </Box>
-}
-
 export default props => {
 
     const first = dfns.startOfMonth(new Date())
@@ -126,23 +117,38 @@ export default props => {
     }, [month, props.component, props.search]);
 
     return (
-        <Box fill>
-            <Box direction="row" justify="between" height="xxsmall" margin={{ bottom: "medium" }}>
-                <Button onClick={() => setMonth(dfns.subMonths(month, 1))} label="prev" />
-                <Heading size={4}>{dfns.format(month, "MMMM YYYY")}</Heading>
-                <Button onClick={() => setMonth(dfns.addMonths(month, 1))} label="next" />
+        <Box>
+            <Box width="medium">
+                <Box direction="row" fill justify="between" height="xxsmall" margin={{ bottom: "medium" }}>
+                    <Button onClick={() => setMonth(dfns.subMonths(month, 1))} label="prev" />
+                    <Text >{dfns.format(month, "MMMM YYYY")}</Text>
+                    <Button onClick={() => setMonth(dfns.addMonths(month, 1))} label="next" />
+                </Box>
+
+                <Box>
+                    <ThemeContext.Extend
+                        value={{
+                            table: {
+                                header: { border: "bottom", align: "center" },
+                                body: { border: "3px solid red" }
+                            },
+                        }}
+                    >
+                        <Calendar active={active} setActive={setActive} events={events} month={month} />
+                    </ThemeContext.Extend>
+                </Box>
             </Box>
-
-
-            <Calendar active={active} setActive={setActive} events={events} month={month} />
-
-            {events.map((ev, i) => {
-                if (active && !dfns.isSameDay(active, ev.start))
-                    return
-                else
-                    return <Event key={`evt-${i}`} {...ev} />
-            })}
-
+            <Box >
+                {
+                    events.map((ev, i) => {
+                        if (active && !dfns.isSameDay(active, ev.start))
+                            return
+                        else
+                            return <Event key={`evt-${i}`} {...ev} />
+                    })
+                }
+            </Box>
         </Box>
+
     );
 }

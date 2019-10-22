@@ -20,7 +20,7 @@ HELP_FUN = \
 	print "\n"; }
 
 # Process parameters/options
-CONTAINERS := web elasticsearch zookeper kafka frontend coordinator calendar
+CONTAINERS := web elasticsearch zookeeper kafka frontend coordinator calendar
 # rssreader videos comics rabbithole
 
 help: ##@other Show this help.

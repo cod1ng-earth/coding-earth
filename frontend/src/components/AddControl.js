@@ -1,12 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
-import {
-  Field,
-  Control,
-  Input
-} from "react-bulma-components/lib/components/form";
-import Button from "react-bulma-components/lib/components/button";
+import { Box, Button, Form, FormField, TextInput } from 'grommet'
+
 import { endpoint } from "../coordinator";
 
 export default props => {
@@ -25,21 +21,17 @@ export default props => {
   };
 
   return (
-    <form onSubmit={evt => doSubmit(evt)}>
-      <Field kind="addons">
-        <Control>
-          <Input
-            placeholder="an URL"
-            value={url}
-            onChange={evt => setUrl(evt.target.value)}
-          />
-        </Control>
-        <Control>
-          <Button renderAs="button" color="primary">
-            Add
-          </Button>
-        </Control>
-      </Field>
-    </form>
+
+    <Form onSubmit={evt => doSubmit(evt)}>
+      <Box direction="row" margin="xsmall">
+        <TextInput
+          placeholder="an URL"
+          value={url}
+          onChange={evt => setUrl(evt.target.value)}
+        />
+        <Button type="submit" primary label="Add" />
+
+      </Box>
+    </Form>
   );
 };

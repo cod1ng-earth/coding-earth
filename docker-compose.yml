@@ -149,6 +149,9 @@ services:
     image: node-npm
     volumes:
       - ./comics:/app
+    environment:
+      - KAFKA_HOST=kafka:9092
+      - ELASTICSEARCH_HOST=http://elasticsearch:9200
     depends_on:
       - elasticsearch
       - kafka
@@ -160,7 +163,3 @@ services:
     depends_on:
       - elasticsearch
       - kafka
-
-#networks:
-#  default:
-    #name: the_fucking_db_has_the_same_ip
