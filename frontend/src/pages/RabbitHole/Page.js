@@ -16,25 +16,25 @@ const CarrotBin = props => {
   const carrots = props.carrots.map((carrot, key) => {
     return (
       <li
-        class="carrot"
+        className="carrot"
         key={carrot.url}
         style={{
           position: "absolute",
-          top: key * 40 + "px",
+          top: (100 + (key * 40)) + "px",
           left: Math.floor(Math.random() * Math.floor(1000)) + "px",
           padding: "20px"
         }}
       >
-        <a href={"/" + carrot.url} target="_blank">
+        <a href={carrot.url} target="_blank" rel="noopener noreferrer">
           <img
             style={{ backgroundColor: "#fff", borderRadius: "50%" }}
-            src={carrot.favicon}
+            src={carrot.icon}
           />
         </a>
       </li>
     );
   });
-  return <ul>{carrots}</ul>;
+  return <ul style={{ listStyleType: "none" }}>{carrots}</ul>;
 };
 
 export default class Page extends React.Component {
@@ -54,13 +54,12 @@ export default class Page extends React.Component {
   componentDidMount() {
     this._fetch();
     eventEmitter.on('content-tweet', message => {
-        const carrot = JSON.parse(message.content);
+      const carrot = JSON.parse(message.content);
 
-        let carrots = this.state.carrots;
-        carrots.push(carrot);
-        this.setState({ carrots: carrots });
+      let carrots = this.state.carrots;
+      carrots.push(carrot);
+      this.setState({ carrots: carrots });
     });
-
 
   }
 

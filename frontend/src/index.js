@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import { Router } from "@reach/router";
-import RabbitHolePage from "./components/RabbitHole/Page";
+import RabbitHolePage from "./pages/RabbitHole/Page";
 import * as serviceWorker from "./serviceWorker";
 
 export const githubClientId = process.env.REACT_APP_GITHUB_CLIENT_ID;

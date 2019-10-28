@@ -6,7 +6,6 @@ const cors = require("cors");
 const logger = require("./lib/logger");
 const Actions = require("./actions/index");
 const search = require("./routes/search");
-const hello = require("./routes/hello");
 
 const app = express();
 app.use(logger.middleware);

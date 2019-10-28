@@ -160,6 +160,9 @@ services:
     image: node-npm
     volumes:
       - ./rabbithole:/app
+    environment:
+      - KAFKA_HOST=kafka:9092
+      - ELASTICSEARCH_HOST=http://elasticsearch:9200
     depends_on:
       - elasticsearch
       - kafka

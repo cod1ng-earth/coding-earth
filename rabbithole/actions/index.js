@@ -27,7 +27,6 @@ const startListening = async () => {
             add(value);
             break;
           case TOPIC_NEW_CARROT:
-            console.log("switch - case: NEW CARROT");
             doIndex(value);
             break;
         }

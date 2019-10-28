@@ -1,6 +1,6 @@
 const elastic = require("../lib/elasticsearch");
 const url = require("url");
-
+const logger = require("../lib/logger")
 module.exports = async (req, res) => {
   const { query } = url.parse(req.url, true);
 
@@ -31,7 +31,7 @@ module.exports = async (req, res) => {
       carrots: result.body.hits.hits
     });
   } catch (e) {
-    console.error(e.meta.body.error);
-    res.status(500).send({ error: e.meta.body.error });
+    logger.app.error(e.toString())
+    res.status(500).send({ error: e });
   }
 };

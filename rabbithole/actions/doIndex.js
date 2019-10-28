@@ -1,9 +1,9 @@
 const elastic = require("../lib/elasticsearch");
 const logger = require("../lib/logger");
 
-const doIndex = async ({ type, url, favicon }) => {
+const doIndex = async ({ type, url, icon }) => {
   console.log(
-    "Got Type " + type + " with URL " + url + "and favicon" + favicon
+    "Got Type " + type + " with URL " + url + "and icon " + icon
   );
 
   if (type !== "carrot") {
@@ -11,20 +11,17 @@ const doIndex = async ({ type, url, favicon }) => {
     return false;
   }
   try {
-    console.log("writing to elastic search...");
+    console.log("writing to elasticsearch...");
     const result = await elastic.index({
       index: "carrots",
-      id: Math.round(Math.random() * 10000),
+      //id: Math.round(Math.random() * 10000),
       type: "carrot",
-      body: { url, favicon }
+      body: { url, icon }
     });
-
-    console.log("Writing index: " + JSON.stringify(result));
-    return result;
+    console.log("written.");
+    return result
   } catch (e) {
-    console.log("ups - your carrot got lost");
-    console.log("Error: " + JSON.stringify(e, Object.getOwnPropertyNames(e)));
-    logger.app.error(e);
+    console.err("Error: " + JSON.stringify(e, Object.getOwnPropertyNames(e)));
     return false;
   }
 };
