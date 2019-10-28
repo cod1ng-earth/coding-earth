@@ -5,11 +5,13 @@ import { Box, Button, Form, FormField, TextInput } from 'grommet'
 
 import { endpoint } from "../coordinator";
 
-export default props => {
+export default ({ onSubmitted }) => {
   const [url, setUrl] = useState("");
 
   const doSubmit = async evt => {
     evt.preventDefault();
+    onSubmitted(url)
+
     await axios({
       method: "post",
       url: endpoint + "/url",

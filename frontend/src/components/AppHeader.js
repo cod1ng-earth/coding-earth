@@ -4,7 +4,7 @@ import { Box, Button, Text } from 'grommet'
 import { Globe } from 'grommet-icons'
 import AddControl from './AddControl'
 
-export default () => (
+export default ({ onSubmitted }) => (
 
     <Box justify="between" direction="row" background="dark-3">
 
@@ -16,6 +16,6 @@ export default () => (
                 </Text>
             </Box>
         </Button>
-        <AddControl />
+        <AddControl onSubmitted={onSubmitted} />
     </Box>
 )

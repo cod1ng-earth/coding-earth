@@ -18,6 +18,7 @@ const Home = () => (<div>home</div>)
 export default props => {
   const [knownServices, setServices] = useState({});
   const [search, setSearch] = useState("");
+  const [running, setRunning] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -35,8 +36,15 @@ export default props => {
     };
   }, []);
 
+  const startRunning = (url) => {
+    setRunning(true)
+    setTimeout(() => setRunning(false), 8000);
+  }
+
   return <Grommet theme={grommet} full>
-    <AppHeader onSearch={newSearch => setSearch(newSearch)} />
+    <AppHeader onSearch={newSearch => setSearch(newSearch)} onSubmitted={
+      (url) => startRunning(url)
+    } />
     <Box direction="row" >
       <Sidebar services={knownServices} />
       <Box margin="small" fill>
@@ -49,7 +57,7 @@ export default props => {
       </Box>
 
     </Box>
-    <HelperBar services={knownServices} />
+    <HelperBar services={knownServices} running={running} />
   </Grommet>
 
 };
