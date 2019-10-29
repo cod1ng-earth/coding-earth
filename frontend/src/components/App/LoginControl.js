@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import Button from "react-bulma-components/lib/components/button";
 import * as blockstack from 'blockstack';
 import GitHubLogin from 'react-github-login';
-import { githubClientId } from '..';
+import { githubClientId } from '../..';
 import axios from 'axios';
-import {endpoint} from "../coordinator";
+import { endpoint } from "../../coordinator";
 
 export default class LoginControl extends Component {
     constructor(props) {
@@ -33,8 +33,8 @@ export default class LoginControl extends Component {
                 <Button className="login-button" color="info" onClick={this.handleSignIn}>
                     Login with Blockstack
                 </Button>
-                <GitHubLogin 
-                    className="login-button" 
+                <GitHubLogin
+                    className="login-button"
                     clientId={githubClientId}
                     // redirectUri="https://patricia-3bw4nzq-ulyecw4ca3wk6.eu-2.platformsh.site"
                     redirectUri="http://localhost:3000"
@@ -57,7 +57,7 @@ export default class LoginControl extends Component {
         return (
             <div>
                 {button}
-            </div> 
+            </div>
         )
     }
 }

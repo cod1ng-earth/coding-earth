@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { grommet, Grommet, Box, Heading, Grid } from 'grommet'
+import { grommet, Grommet, Box, Layer, Collapsible, Heading, Grid } from 'grommet'
 
-import AppHeader from './components/AppHeader'
-import HelperBar from "./components/HelperBar";
+import AppHeader from './components/App/AppHeader'
+import HelperBar from "./components/App/HelperBar";
 
 import BuildComponent from "./components/BuildComponent";
-import Sidebar from './components/Sidebar';
-
+import Sidebar from './components/App/Sidebar';
 
 import eventEmitter from "./lib/event-emitter";
 
@@ -19,13 +18,13 @@ export default props => {
   const [knownServices, setServices] = useState({});
   const [search, setSearch] = useState("");
   const [running, setRunning] = useState(false);
+  const [sidebar, setSidebar] = useState(false);
 
   useEffect(() => {
-    async function fetchData() {
+    (async function fetchData() {
       const routes = await coordinator;
       setServices(routes.data);
-    }
-    fetchData();
+    })()
 
     const eventSource = new EventSource(`${endpoint}/events`);
     eventSource.onmessage = msg => {
@@ -42,22 +41,32 @@ export default props => {
   }
 
   return <Grommet theme={grommet} full>
-    <AppHeader onSearch={newSearch => setSearch(newSearch)} onSubmitted={
-      (url) => startRunning(url)
-    } />
-    <Box direction="row" >
-      <Sidebar services={knownServices} />
-      <Box margin="small" fill>
-        <Router>
-          <Home path="/" />
 
-          <BuildComponent path={`/:component`} search={search} />
+    <Box fill>
+      <AppHeader onSearch={newSearch => setSearch(newSearch)}
+        toggleSidebar={() => setSidebar(!sidebar)}
+        onSubmitted={
+          (url) => startRunning(url)
+        } />
 
-        </Router>
+      <Box direction="row" flex overflow="auto">
+        {sidebar && <Layer full="vertical" position="left" plain={true}
+          onClickOutside={() => setSidebar(false)}>
+          <Sidebar services={knownServices} />
+        </Layer>
+        }
+        <Box margin="small" fill>
+          <Router>
+            <Home path="/" />
+
+            <BuildComponent path={`/:component`} search={search} />
+
+          </Router>
+        </Box>
       </Box>
 
+      <HelperBar services={knownServices} running={running} />
     </Box>
-    <HelperBar services={knownServices} running={running} />
   </Grommet>
 
 };

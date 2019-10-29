@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-import { Box, Button, Form, FormField, TextInput } from 'grommet'
+import { Box, Button, Form, TextInput } from 'grommet'
 
-import { endpoint } from "../coordinator";
+import { endpoint } from "../../coordinator";
 
 export default ({ onSubmitted }) => {
   const [url, setUrl] = useState("");
