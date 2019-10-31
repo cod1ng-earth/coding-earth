@@ -1,6 +1,6 @@
 import React from 'react';
 import componentData from '../componentData'
-import eventEmitter from '../lib/event-emitter'
+import { eventEmitter } from '../store/EventSource'
 import { Box, Button, Image, Paragraph } from 'grommet'
 
 export default class Tweets extends React.Component {

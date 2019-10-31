@@ -9,7 +9,7 @@ import { ReactComponent as Rabbit } from "./images/hasi-holesite.svg";
 
 import { endpoint } from "../../coordinator";
 import componentData from "../../componentData";
-import eventEmitter from "../../lib/event-emitter";
+import { eventEmitter } from '../../store/EventSource'
 
 const CarrotBin = props => {
 

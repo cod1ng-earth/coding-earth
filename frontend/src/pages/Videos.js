@@ -1,6 +1,6 @@
 import React from 'react';
 import componentData from '../componentData'
-import eventEmitter from '../lib/event-emitter'
+import { eventEmitter } from '../store/EventSource'
 import { Box, Image, Paragraph } from 'grommet'
 import truncate from "../lib/truncate";
 

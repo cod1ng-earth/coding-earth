@@ -5,6 +5,7 @@ import Tweets from '../pages/Tweets'
 import ResponseRenderer from './ResponseRenderer'
 import Comics from '../pages/Comics';
 import Videos from '../pages/Videos';
+
 import { Box, Heading } from 'grommet'
 
 const components = {
@@ -18,6 +19,7 @@ const components = {
 export default props => {
     const TagName = components[props.component] || ResponseRenderer
     return <Box>
+
         <Heading margin={{ vertical: "medium" }}>{props.component}</Heading>
         <TagName {...props} />
     </Box>

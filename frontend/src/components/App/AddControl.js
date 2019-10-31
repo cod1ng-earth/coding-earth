@@ -27,11 +27,11 @@ export default ({ onSubmitted }) => {
     <Form onSubmit={evt => doSubmit(evt)}>
       <Box direction="row" margin="xsmall">
         <TextInput
-          placeholder="an URL"
+          placeholder="any URL"
           value={url}
           onChange={evt => setUrl(evt.target.value)}
         />
-        <Button type="submit" primary label="Add" />
+        <Button type="submit" primary label="Add" margin={{ left: "small" }} />
 
       </Box>
     </Form>

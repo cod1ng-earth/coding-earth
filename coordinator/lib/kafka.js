@@ -35,7 +35,7 @@ let host;
 try {
     const credentials = config.credentials('kafka');
     host = `${credentials.host}:${credentials.port}`;
-} catch(e) {
+} catch (e) {
     host = process.env.KAFKA_HOST || 'kafka:9092';
 }
 
@@ -45,13 +45,11 @@ const client = new Kafka({
     brokers: [host]
 })
 
-//const client = new kafka.KafkaClient({kafkaHost: host});
-
 const init = async () => {
     const admin = client.admin()
 
     await admin.connect()
-    await admin.createTopics({topics})
+    await admin.createTopics({ topics })
     await admin.disconnect()
 
     return client
