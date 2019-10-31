@@ -7,7 +7,7 @@ const Request = require('request')
 const kafkaClient = require('./lib/kafka')
 const logger = require('./lib/logger')
 
-const {routesDef} = require('./routesDef')
+const { routesDef } = require('./routesDef')
 
 const app = express()
 app.use(logger.middleware);
@@ -22,8 +22,6 @@ let PORT, routes, githubClientId, githubClientSecret;
 if (config.isValidPlatform()) {
     PORT = config.port
     routes = routesDef(config.routesDef);
-    githubClientId = config.variable('GITHUB_CLIENT_ID');
-    githubClientSecret = config.variable('GITHUB_CLIENT_SECRET');
 } else {
     PORT = process.env.PORT || 3000;
     const DEFAULT_HOST = process.env.DEFAULT_HOST || "cearth.local:8000";
@@ -32,43 +30,19 @@ if (config.isValidPlatform()) {
     routes = routesDef(definitions, DEFAULT_HOST, true);
 }
 
-kafkaClient.init().then( async () => {
+kafkaClient.init().then(async () => {
     const kafka = kafkaClient.kafka;
 
-    const consumer = kafka.consumer({groupId: 'coordinator-group'})
+    const consumer = kafka.consumer({ groupId: 'coordinator-group' })
     const producer = kafka.producer()
 
     await consumer.connect()
     await producer.connect()
 
-    await consumer.subscribe({topic: kafkaClient.TOPIC_NEW_CONTENT})
-    await consumer.subscribe({topic: kafkaClient.TOPIC_NEW_CARROT})
+    await consumer.subscribe({ topic: kafkaClient.TOPIC_NEW_CONTENT })
+    await consumer.subscribe({ topic: kafkaClient.TOPIC_NEW_CARROT })
 
-    app.get('/', (req, res) => res.json(routes) );
-
-    app.post('/github', async (req, res) => {
-        Request({
-            method: 'POST',
-            uri: 'https://github.com/login/oauth/access_token',
-            body: {
-                client_id: githubClientId,
-                client_secret: githubClientSecret,
-                code: req.code
-            },
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }, (error, response, body) => {
-            if (error || response.statusCode >= 400) {
-                return response.reject(response.body)
-            }
-            // const token = (JSON.parse(body).access_token);
-            logger.app.info("got a new bearer token")
-        });
-        logger.app.info("done with github");
-
-        res.sendStatus(200);
-    });
+    app.get('/', (req, res) => res.json(routes));
 
     app.post('/url', async (req, res) => {
         const body = req.body;
@@ -76,7 +50,7 @@ kafkaClient.init().then( async () => {
         const urlRes = await producer.send({
             topic: kafkaClient.TOPIC_NEW_URL,
             messages: [
-                { value:  JSON.stringify(body) },
+                { value: JSON.stringify(body) },
             ],
         })
         logger.app.info(urlRes);
@@ -89,10 +63,8 @@ kafkaClient.init().then( async () => {
         eachMessage: async ({ topic, partition, message }) => {
             logger.app.info(`${message.topic} ${message.offset}`);
             logger.app.info(`${message.value}`);
-            if (topic === kafkaClient.TOPIC_GITHUB) {
-                githubLogin(message.value)
-            }
-            openResponses.map(res => res.write(`data: ${message.value.toString()}\n\n`))
+            const msgValue = message.value.toString();
+            openResponses.map(res => res.write(`data: ${msgValue}\n\n`))
         },
     })
 
