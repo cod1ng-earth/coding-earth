@@ -8,13 +8,13 @@ const TOPIC_NEW_URL = "NewUrl";
 const TOPIC_NEW_CONTENT = "NewContent";
 const CLIENT_RESPONSE = "ClientResponse";
 
-const consumer = kafka.consumer({groupId: 'tweets-group'})
+const consumer = kafka.consumer({ groupId: 'tweets-group' })
 
 const startListening = async () => {
 
     await consumer.connect();
-    await consumer.subscribe({topic: TOPIC_NEW_URL})
-    await consumer.subscribe({topic: TOPIC_NEW_CONTENT})
+    await consumer.subscribe({ topic: TOPIC_NEW_URL })
+    await consumer.subscribe({ topic: TOPIC_NEW_CONTENT })
 
     await consumer.run({
         eachMessage: async ({ topic, partition, message }) => {
@@ -34,9 +34,7 @@ const startListening = async () => {
     logger.app.info("started listening");
 }
 
-startListening();
-
 module.exports = {
-    consumer
+    startListening,
 };
 

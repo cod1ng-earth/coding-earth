@@ -10,12 +10,12 @@ producer.connect();
 const add = async (value) => {
     const matches = value.url.match('/*\.twitter\.com/(.*)/status/(.*)');
     if (!matches) {
-        console.log(`${value.url} is not a tweet`)
+        logger.app.info(`${value.url} is not a tweet`)
         return false;
     }
     //const userId = matches[1];
-    try{
-        const twitter = await Twitter;
+    try {
+        const twitter = await Twitter();
         const content = await twitter.get(`statuses/show`, {
             id: matches[2],
             tweet_mode: 'extended'
@@ -26,12 +26,15 @@ const add = async (value) => {
             url: value.url,
             content
         });
+
         await producer.send({
             topic: TOPIC_NEW_CONTENT,
             messages: [
                 { value: messages },
             ],
         })
+
+        return true
     } catch (e) {
         logger.app.error(e);
     }

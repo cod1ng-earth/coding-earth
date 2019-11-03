@@ -21,12 +21,12 @@ if (config.isValidPlatform()) {
 const conc = credentials.consumer_key + ":" + credentials.consumer_secret
 const basicCredentials = Buffer.from(conc).toString('base64')
 
-module.exports = new Promise( (resolve, reject) => {
+module.exports = () => new Promise((resolve, reject) => {
 
     Request({
         method: 'POST',
         uri: 'https://api.twitter.com/oauth2/token',
-        form: {"grant_type":'client_credentials'},
+        form: { "grant_type": 'client_credentials' },
         headers: {
             'Authorization': 'Basic ' + basicCredentials,
         }

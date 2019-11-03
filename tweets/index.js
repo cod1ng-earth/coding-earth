@@ -17,3 +17,4 @@ const PORT = config.isValidPlatform() ? config.port : process.env.PORT || 3000;
 app.get("/", search);
 
 app.listen(PORT, () => logger.app.info(`tweet app listening on port ${PORT}!`));
+Actions.startListening()
