@@ -1,0 +1,1221 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--[if IE 6]>
+<html id="ie6" lang="en-US">
+<![endif]-->
+<!--[if IE 7]>
+<html id="ie7" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html id="ie8" lang="en-US">
+<![endif]-->
+<!--[if !(IE 6) | !(IE 7) | !(IE 8)  ]><!-->
+<html lang="en-US">
+<!--<![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+<meta name="google-site-verification" content="L7vrReM0FT2BRJohl0FMf9TsT23AXYVyBhj23jnVCtg" />
+
+<title>Debugging on the phone | CommitStrip</title>
+<meta name="description" content="The blog relating the daily life of web agency developers" />
+
+
+<meta property="fb:admins" content="100001671458949, 1587768533, 1847154934, 508413656, 502065433"/>
+<meta property="fb:app_id" content="327201120666000"/>
+
+<meta property="og:description" content=""/>
+<meta property="og:title" content="Debugging on the phone"/>
+<meta property="og:type" content="article"/>
+<meta property="og:image" content="http://www.commitstrip.com/wp-content/uploads/2019/09/HeadlineImageTemplate-Conflit-2.jpg"/>
+<meta property="og:url" content="http://www.commitstrip.com/en/2019/09/10/debugging-on-the-phone/"/>
+		
+<link rel="shortcut icon" href="http://www.commitstrip.com/wp-content/themes/krds_blog/favicon.png?v=5" />
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="stylesheet" type="text/css" media="all" href="http://www.commitstrip.com/wp-content/themes/krds_blog/style.css?t=17112016" />
+<link rel="stylesheet" type="text/css" media="all" href="http://www.commitstrip.com/wp-content/themes/krds_blog/style_en.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.1.2/css/swiper.min.css">
+
+<link rel="pingback" href="http://www.commitstrip.com/en/xmlrpc.php" />
+<!--[if lt IE 9]>
+<script src="http://www.commitstrip.com/wp-content/themes/krds_blog/js/html5.js" type="text/javascript"></script>
+<![endif]-->
+<script src="http://www.commitstrip.com/wp-content/themes/krds_blog/js/jquery-1.6.3.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.1.2/js/swiper.min.js"></script>
+<script src="http://www.commitstrip.com/wp-content/themes/krds_blog/js/flexie.js"></script>
+
+
+<script>
+					// Load the SDK Asynchronously
+					(function(d, s, id) {
+						var js, fjs = d.getElementsByTagName(s)[0];
+						if (d.getElementById(id)) {
+							return;
+						}
+						js = d.createElement(s);
+						js.id = id;
+						js.src = "//connect.facebook.net/en_US/all.js";
+						fjs.parentNode.insertBefore(js, fjs);
+					}(document, "script", "facebook-jssdk"));
+
+					window.fbAsyncInit = function() {
+						FB.init({
+							appId: "327201120666000",
+							channelUrl: "//www.commitstrip.com/channel.html", // Channel File
+							status: false,
+							cookie: true,
+							xfbml: true
+						});
+					};
+
+					!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+					</script>
+
+<!-- All in One SEO Pack 2.7.2 by Michael Torbert of Semper Fi Web Design[607,670] -->
+<link rel="canonical" href="http://www.commitstrip.com/en/2019/09/10/debugging-on-the-phone/" />
+<!-- /all in one seo pack -->
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="CommitStrip &raquo; Feed" href="http://www.commitstrip.com/en/feed/" />
+<link rel="alternate" type="application/rss+xml" title="CommitStrip &raquo; Comments Feed" href="http://www.commitstrip.com/en/comments/feed/" />
+<!-- This site uses the Google Analytics by MonsterInsights plugin v7.0.9 - Using Analytics tracking - https://www.monsterinsights.com/ -->
+<script type="text/javascript" data-cfasync="false">
+	var mi_track_user      = true;
+	var mi_no_track_reason = '';
+	
+	var disableStr = 'ga-disable-UA-29217904-3';
+
+	/* Function to detect opted out users */
+	function __gaTrackerIsOptedOut() {
+		return document.cookie.indexOf(disableStr + '=true') > -1;
+	}
+
+	/* Disable tracking if the opt-out cookie exists. */
+	if ( __gaTrackerIsOptedOut() ) {
+		window[disableStr] = true;
+	}
+
+	/* Opt-out function */
+	function __gaTrackerOptout() {
+	  document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';
+	  window[disableStr] = true;
+	}
+	
+	if ( mi_track_user ) {
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','__gaTracker');
+
+		__gaTracker('create', 'UA-29217904-3', 'auto');
+		__gaTracker('set', 'forceSSL', true);
+		__gaTracker('send','pageview');
+	} else {
+		console.log( "" );
+		(function() {
+			/* https://developers.google.com/analytics/devguides/collection/analyticsjs/ */
+			var noopfn = function() {
+				return null;
+			};
+			var noopnullfn = function() {
+				return null;
+			};
+			var Tracker = function() {
+				return null;
+			};
+			var p = Tracker.prototype;
+			p.get = noopfn;
+			p.set = noopfn;
+			p.send = noopfn;
+			var __gaTracker = function() {
+				var len = arguments.length;
+				if ( len === 0 ) {
+					return;
+				}
+				var f = arguments[len-1];
+				if ( typeof f !== 'object' || f === null || typeof f.hitCallback !== 'function' ) {
+					console.log( 'Not running function __gaTracker(' + arguments[0] + " ....) because you are not being tracked. " + mi_no_track_reason );
+					return;
+				}
+				try {
+					f.hitCallback();
+				} catch (ex) {
+
+				}
+			};
+			__gaTracker.create = function() {
+				return new Tracker();
+			};
+			__gaTracker.getByName = noopnullfn;
+			__gaTracker.getAll = function() {
+				return [];
+			};
+			__gaTracker.remove = noopfn;
+			window['__gaTracker'] = __gaTracker;
+					})();
+		}
+</script>
+<!-- / Google Analytics by MonsterInsights -->
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/www.commitstrip.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.2.4"}};
+			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='wp-pagenavi-css'  href='http://www.commitstrip.com/wp-content/plugins/wp-pagenavi/pagenavi-css.css?ver=2.70' type='text/css' media='all' />
+<script type='text/javascript' src='http://www.commitstrip.com/wp-includes/js/jquery/jquery.js?ver=1.12.4-wp'></script>
+<script type='text/javascript' src='http://www.commitstrip.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var monsterinsights_frontend = {"js_events_tracking":"true","is_debug_mode":"false","download_extensions":"doc,exe,js,pdf,ppt,tgz,zip,xls","inbound_paths":"","home_url":"http:\/\/www.commitstrip.com","track_download_as":"event","internal_label":"int","hash_tracking":"false"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.commitstrip.com/wp-content/plugins/google-analytics-for-wordpress/assets/js/frontend.min.js?ver=7.0.9'></script>
+<link rel='https://api.w.org/' href='http://www.commitstrip.com/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.commitstrip.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.commitstrip.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='Meanwhile, in a parallel universe&#8230;' href='http://www.commitstrip.com/en/2019/09/06/meanwhile-in-a-parallel-universe-5/' />
+<link rel='next' title='One small step for a coder&#8230;' href='http://www.commitstrip.com/en/2019/09/13/one-small-step-for-a-coder/' />
+<meta name="generator" content="WordPress 5.2.4" />
+<link rel='shortlink' href='http://www.commitstrip.com/?p=20738' />
+<link rel="alternate" type="application/json+oembed" href="http://www.commitstrip.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.commitstrip.com%2Fen%2F2019%2F09%2F10%2Fdebugging-on-the-phone%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.commitstrip.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.commitstrip.com%2Fen%2F2019%2F09%2F10%2Fdebugging-on-the-phone%2F&#038;format=xml" />
+<style type='text/css'></style>
+
+<meta http-equiv="Content-Language" content="en-US" />
+<style type="text/css" media="screen">
+.ppqtrans_flag span{display:none}
+.ppqtrans_flag{height:12px;width:18px;display:block}
+.ppqtrans_flag_and_text{padding-left:20px}
+.ppqtrans_flag_and_text{padding-left:20px}
+.ppqtrans_flag_en { background:url(http://www.commitstrip.com/wp-content/plugins/qtranslate-xp/flags/gb.png) no-repeat }
+.ppqtrans_flag_fr { background:url(http://www.commitstrip.com/wp-content/plugins/qtranslate-xp/flags/fr.png) no-repeat }
+</style>
+<link hreflang="fr" href="http://www.commitstrip.com/fr/2019/09/10/debugging-on-the-phone/" rel="alternate" />
+<!-- Place this tag in the <head> of your document -->
+<script type="text/javascript">
+// GA
+window.___gcfg = {lang: 'en'};
+(function() 
+{var po = document.createElement("script");
+po.type = "text/javascript"; po.async = true;po.src = "https://apis.google.com/js/plusone.js";
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(po, s);
+})();
+
+// Menu
+jQuery(document).ready(function($)
+{
+	$('.langSelected').on('click', function(e)
+	{
+	    e.stopPropagation();
+	    $('.langSelectorMenu').toggle();
+	    $('.langSelected').toggleClass('active');
+	});
+
+	$('.lang-en a, .lang-fr a').each(function(){
+		$(this).attr('href', $(this).attr('href') + '?setLocale=1');
+	});
+});
+</script>
+<!-- Facebook Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '319625625074624');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=319625625074624&ev=PageView&noscript=1"
+/></noscript>
+<!-- DO NOT MODIFY -->
+<!-- End Facebook Pixel Code -->
+<script>
+    (function() {
+      var script = document.createElement('script');
+      script.src = 'https://backerkit.com/assets/preorders.js';
+      script.async = true;
+      var entry = document.getElementsByTagName('script')[0];
+      entry.parentNode.insertBefore(script, entry);
+    })();
+</script>
+</head>
+
+<body class="post-template-default single single-post postid-20738 single-format-standard single-author singular two-column right-sidebar">
+<div id="fb-root"></div>
+<div id="page" class="hfeed">
+	<header id="branding" role="banner">
+		<h1 id="site-title">
+			<a href="http://www.commitstrip.com/" title="CommitStrip" rel="home">CommitStrip</a>
+		</h1>
+		<!--<img class="logoMask" src="http://www.commitstrip.com/wp-content/themes/krds_blog/images/logo_mask.png" alt="" />-->
+		<h2 id="site-description">The blog relating the daily life of web agency developers</h2>
+
+				<div id="site-menu" class="widget-area" role="complementary">
+			<aside id="nav_menu-2" class="widget widget_nav_menu"><div class="menu-main-menu-container"><ul id="menu-main-menu" class="menu"><li id="menu-item-11671" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-11671"><a href="http://www.commitstrip.com/">Webcomics</a></li>
+<li id="menu-item-18885" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-18885"><a href="https://docs.google.com/forms/d/e/1FAIpQLSfLnITsWJ9wOysG3E7j7EhqwVQphnkUHCEfSv43sp4zgllhrg/viewform">Suggest a strip idea</a></li>
+<li id="menu-item-11675" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-11675"><a href="http://www.commitstrip.com/shop">Shop</a></li>
+<li id="menu-item-19365" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19365"><a href="http://www.commitstrip.com/en/jobs/">Jobs</a></li>
+<li id="menu-item-11673" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-11673"><a href="http://www.commitstrip.com/en/about/">About</a></li>
+</ul></div></aside>		</div><!-- #third .widget-area -->
+		
+				<div class="langSelector">
+		    <a href="#" class="langSelected en"></a>
+		    <div id="second" class="widget-area langSelectorMenu" style="display: none;" role="complementary">
+			    <aside id="qtranslate-2" class="widget widget_qtranslate"><ul class="ppqtrans_language_chooser" id="qtranslate-2-chooser"><li class="lang-en active"><a href="http://www.commitstrip.com/en/2019/09/10/debugging-on-the-phone/" hreflang="en" title="English"><span>English</span></a></li><li class="lang-fr"><a href="http://www.commitstrip.com/fr/2019/09/10/debugging-on-the-phone/" hreflang="fr" title="Français"><span>Français</span></a></li></ul><div class="ppqtrans_widget_end"></div></aside>		    </div><!-- #second .widget-area -->
+		</div>
+					
+			
+	</header><!-- #branding -->
+	<div style="display:none;position: fixed;
+    padding: 8px 10px;
+    background: #FF3400;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 100;
+    font-weight: bold;
+    font-size: 13px;
+    color: white;">CommitStrip is off this week (April 18-22th) for Devoxx France! If you're going too, let's meet at our booth!</div>
+	<div id="main">
+			<div id="primary">
+			<div id="content" role="main">
+							<div class="swiper-container">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide" data-link="http://www.commitstrip.com/en/2019/09/10/debugging-on-the-phone/?_as_view=1">
+						
+							<nav class="nav-fixed">
+								<span class="nav-previous"><a href="http://www.commitstrip.com/en/2019/09/06/meanwhile-in-a-parallel-universe-5/" rel="prev"><i class="fa fa-chevron-left"></i></a></span>
+								<span class="nav-next"><a href="http://www.commitstrip.com/en/2019/09/13/one-small-step-for-a-coder/" rel="next"><i class="fa fa-chevron-right"></i></a></span>
+							</nav><!-- #nav-single -->
+
+							<article id="post-20738" class="post-20738 post type-post status-publish format-standard has-post-thumbnail hentry category-coder">
+	<header class="entry-header">
+		<h1 class="entry-title">Debugging on the phone</h1>
+
+				<div class="entry-meta">
+			<span class="sep"></span><a href="http://www.commitstrip.com/en/2019/09/10/debugging-on-the-phone/" title="05:46 PM" rel="bookmark"><time class="entry-date" datetime="2019-09-10T17:46:59+00:00" pubdate>Tuesday September 10th, 2019</time></a></span>		</div><!-- .entry-meta -->
+			</header><!-- .entry-header -->
+
+	<div class="entry-content">
+		<p><img src="https://www.commitstrip.com/wp-content/uploads/2019/09/Strip-Mimique-au-téléphone-650-finalenglish.jpg" alt="" width="650" height="595" class="alignnone size-full wp-image-20740" /></p>
+			</div><!-- .entry-content -->
+
+	<!-- <footer class="entry-meta">
+				
+				<div id="author-info">
+			<div id="author-avatar">
+							</div><!-- #author-avatar -->
+			<!-- <div id="author-description">
+				<h2></h2>
+								<div id="author-link">
+					<a href="" rel="author">
+											</a>
+				</div> <!-- #author-link	
+			</div> <!-- #author-description 
+		</div> <!-- #entry-author-info 
+			</footer> --> <!-- .entry-meta -->
+</article><!-- #post-20738 -->
+
+							
+							<div class="socialButtons">
+								<a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.commitstrip.com/en/2019/09/10/debugging-on-the-phone/" 
+							data-text="Debugging on the phone" data-lang="en"></a>	
+														<div class="likeWrap"><fb:like layout="button_count" send="false" width="450" show-faces="false" href="http://www.commitstrip.com/en/2019/09/10/debugging-on-the-phone/"></fb:like></div>
+								<div class="gplus"><g:plusone size="medium" href="http://www.commitstrip.com/en/2019/09/10/debugging-on-the-phone/"></g:plusone></div>
+
+							</div>
+
+							<nav class="nav-single">
+
+								<span class="nav-previous"><a href="http://www.commitstrip.com/en/2019/09/06/meanwhile-in-a-parallel-universe-5/" rel="prev"><span class="meta-nav">&larr;</span> Previous</a></span>
+								<span ><a href="/?random=1">Random</a></span>
+								<span class="nav-next"><a href="http://www.commitstrip.com/en/2019/09/13/one-small-step-for-a-coder/" rel="next">Next <span class="meta-nav">&rarr;</span></a></span>
+							</nav><!-- #nav-single -->
+
+							<!-- Newsletter -->
+							<div class="cm_newsletter cm_newsletter_en">
+						<p>
+							Every sunday, receive not only the 5 strips of the week, but also our selection of videos, 
+			animated gifs and articles, which we found fun and you will also probably like!
+						</p>
+						<p id="sample">
+							<a href="#" onclick="Newsletter.preview(); return false;">What does it look like?</a>
+						</p>
+						<p id="youlikeit" style="display:none">
+							<strong>You like it? Subscribe now!</strong>
+						</p>
+						<form onsubmit="return Newsletter.check();" action="http://krdsagency.createsend.com/t/r/s/jklrjhu/" method="post" id="subForm">
+							<div>
+								<input type="text" name="cm-name" id="name" placeholder="Your name" />
+								<input type="text" name="cm-jklrjhu-jklrjhu" id="jklrjhu-jklrjhu"  placeholder="Your email" />
+								<select name="cm-fo-ykutdtj">
+									<option value="3922351" selected="selected">EN - English</option>
+									<option value="3922352" >FR - Français</option>
+								</select>
+								<input type="submit" value="I subscribe" />
+							</div>
+						</form>
+						<span class="disclaimer">Your email will only be used to send you the newsletter.</span>
+					</div>
+							<div class="fbCommentsBlock">
+								<fb:comments href="http://www.commitstrip.com/en/2019/09/10/debugging-on-the-phone/" num_posts="5" width="570">
+								</fb:comments>
+							</div>
+
+							<div class="post-footer-link">
+								<a href="http://www.commitstrip.com">Go to Home</a>
+							</div>
+												</div>
+					</div>
+				</div><!-- #swiper-container -->
+			</div><!-- #content -->
+		</div><!-- #primary -->	
+	<script>
+	/*$(document).ready(function()
+	{			
+		var cSwiper = new Swiper('.swiper-container', {longSwipesRatio: 0.2}),
+			loadedStrips = ['http://www.commitstrip.com/en/2019/09/10/debugging-on-the-phone/?_as_view=1'],
+			prevStripUrl = "http://www.commitstrip.com/en/2019/09/06/meanwhile-in-a-parallel-universe-5/?_as_view=1",
+			nextStripUrl = "http://www.commitstrip.com/en/2019/09/13/one-small-step-for-a-coder/?_as_view=1",
+			stripsOrderedList = ['http://www.commitstrip.com/en/2019/09/10/debugging-on-the-phone/?_as_view=1'],
+			swipingFinished = true
+		;
+
+		if(nextStripUrl){
+			cSwiper.prependSlide([
+				'<div class="swiper-slide swiper-load loaderPosition" data-link="' + nextStripUrl + '">Loading...</div>'
+			]);
+
+			stripsOrderedList.unshift(nextStripUrl);
+		}
+
+		if(prevStripUrl){
+			cSwiper.appendSlide([
+				'<div class="swiper-slide swiper-load loaderPosition" data-link="' + prevStripUrl + '">Loading...</div>'
+			]);
+
+			stripsOrderedList.push(prevStripUrl);
+		}
+
+		var swapiness	=	function()
+		{								
+			cSwiper.once('onTouchStart', function()
+			{					
+				swipingFinished = false;
+				nextStripUrl = $('.swiper-slide.swiper-slide-prev').data('link');
+				prevStripUrl = $('.swiper-slide.swiper-slide-next').data('link');
+
+				// Need swaping direction
+				cSwiper.on('onSliderMove', function(swiper)
+				{			
+					// Required for swiper.touches.diff to be non 0
+					setTimeout(function()
+					{
+						if(swiper.touches.diff > 0 && nextStripUrl)
+						{
+							cSwiper.off('onSliderMove');
+							
+							if($.inArray(nextStripUrl, loadedStrips) !== -1)
+								return;
+
+							$.ajax({
+								url: nextStripUrl,
+								success: function(data)
+								{
+									loadedStrips.push(data.current);
+
+									if($.inArray(data.current, stripsOrderedList) === -1)
+										stripsOrderedList.unshift(data.current);
+
+									if($.inArray(data.next, stripsOrderedList) === -1)
+										stripsOrderedList.unshift(data.next);
+
+									$('.swiper-slide[data-link="' + data.current + '"]').html(data.content);
+
+									// UI broken when prepending slide and still swiping
+									var inject = function()
+									{
+										if(data.next && ! $('.swiper-slide[data-link="' + data.next + '"]').length)
+										{
+											cSwiper.prependSlide([
+												'<div class="swiper-slide swiper-load loaderPosition" data-link="' + data.next + '">Loading...</div>'
+											]);
+										}
+									};
+									
+									if(swipingFinished) // non ongoing transition animation
+										inject();
+									else
+										cSwiper.once('onTransitionEnd', inject);
+								},
+								dataType: 'json'
+							});
+						}
+
+						if(swiper.touches.diff < 0 && prevStripUrl)
+						{
+							cSwiper.off('onSliderMove');
+							
+							if($.inArray(prevStripUrl, loadedStrips) !== -1)
+								return;
+							
+							$.ajax({
+								url: prevStripUrl,
+								success: function(data)
+								{
+									loadedStrips.push(data.current);
+
+									if($.inArray(data.current, stripsOrderedList) === -1)
+										stripsOrderedList.push(data.current);
+
+									if($.inArray(data.prev, stripsOrderedList) === -1)
+										stripsOrderedList.push(data.prev);
+
+									$('.swiper-slide[data-link="' + data.current + '"]').html(data.content);
+
+									if(data.prev && ! $('.swiper-slide[data-link="' + data.prev + '"]').length)
+									{
+										cSwiper.appendSlide([
+											'<div class="swiper-slide swiper-load loaderPosition" data-link="' + data.prev + '">Loading...</div>'
+										]);
+									}
+								},
+								dataType: 'json'
+							});
+						}
+					}, 0);
+				});
+			});
+		};
+
+		cSwiper.on('onTouchEnd', function()
+		{	
+			swapiness();
+		});
+
+		cSwiper.on('onTransitionEnd', function()
+		{	
+			var cLink = $('.swiper-slide-active').data('link'),
+				cLinkB = cLink.replace('?_as_view=1', ''),
+				title = $('.swiper-slide-active .entry-title').text()
+			;
+
+			swipingFinished = true;
+			document.title = title;
+
+			history.pushState({cLink: cLink}, title, cLinkB);
+			
+			window.scrollTo(0, 0);
+			
+			// Add more smoothness to the swipe rendering (late execution)
+			FB.XFBML.parse(document.getElementById('content'));
+		});
+
+		// Lock the swiper in case of user zooming-in
+		$(document).bind('gestureend, scroll', function()
+		{			
+			$('.swiper-slide').toggleClass('swiper-no-swiping', document.body.clientWidth / window.innerWidth > 1);
+		});
+		
+		window.addEventListener('popstate', function(e)
+		{
+			if( ! e.state)
+				return;
+
+			if($.inArray(e.state.cLink, loadedStrips) !== -1)
+			{					
+				if($('.swiper-slide[data-link="' + e.state.cLink + '"]').prevAll('.swiper-slide-active').length)
+					cSwiper.slideNext(false);
+				else
+					cSwiper.slidePrev(false);
+			}
+		});
+
+		swapiness();
+
+		history.replaceState({cLink: 'http://www.commitstrip.com/en/2019/09/10/debugging-on-the-phone/?_as_view=1'}, $('.swiper-slide-active .entry-title').text(), document.location);
+	});*/
+	</script>
+			<div id="secondary" class="widget-area" role="complementary">
+				<aside id="custom_html-3" class="widget_text widget widget_custom_html"><h3 class="widget-title">Our New Book !</h3><div class="textwidget custom-html-widget"><iframe src="https://www.kickstarter.com/projects/commitstrip/commitstrip-the-summer-of-code-a-book-about-love/widget/card.html?v=2" width="195" height="380" frameborder="0" scrolling="no"></iframe>
+<style>.commitshop{display:none;}</style></div></aside><div><a class="commitshop" href="/shop/en/"><img src="/wp-content/themes/krds_blog/images/shopright.jpg" alt="CommitShop"/></a></div>
+		<div class="sidebar-social-plugins">
+							
+							<h3>Like & Follow us :)</h3>
+							<h6>Like us on <a href="http://www.facebook.com/WeAreCoders">Facebook</a>:</h6>
+							
+								<div class="fb-like" width="200" action="like" data-send="false" data-width="150" data-show-faces="true" href="http://www.facebook.com/pages/commitstrip/327120337324569"></div>					
+							
+							<h6>And follow us on Twitter :</h6>
+							<div class="btnTwitter">							
+								<a href="//twitter.com/CommitStrip" class="twitter-follow-button" data-width="200px"  data-show-count="false" data-size="large"  data-lang="en">Follow @twitter</a>
+							</div>
+							
+							<h6>Or why not on Google Plus!</h6>
+							<div class="g-plus" data-href="https://plus.google.com/109667167242617489800?rel=publisher" data-width="200" data-height="69" data-theme="light"></div>
+							<h6>RSS :</h6>
+							<p><a href="/en/feed/" rel="alternate" type="application/rss+xml" target="_blank"><img src="/wp-content/themes/krds_blog/images/rss-icon.jpg" alt="" style="vertical-align:middle;border:0"/></a></p>
+						 </div><aside id="collapsarch-3" class="widget widget_collapsarch"><h3 class="widget-title">Archives</h3><ul id='widget-collapsarch-3-top' class='collapsing archives list'>
+  <li class='collapsing archives collapse'><span title='click to collapse' class='collapsing archives collapse'><span class='sym'>&#x25BC;</span><a href='http://www.commitstrip.com/en/2019/'>2019 </a>
+</span>    <div  id='collapsArch-2019:3'>
+    <ul>
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2019/10/' title='October'>October  <span class="monthCount">(3)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2019/09/' title='September'>September  <span class="monthCount">(6)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2019/08/' title='August'>August  <span class="monthCount">(4)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2019/07/' title='July'>July  <span class="monthCount">(1)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2019/06/' title='June'>June  <span class="monthCount">(3)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2019/05/' title='May'>May  <span class="monthCount">(8)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2019/04/' title='April'>April  <span class="monthCount">(9)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2019/03/' title='March'>March  <span class="monthCount">(11)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2019/02/' title='February'>February  <span class="monthCount">(8)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2019/01/' title='January'>January  <span class="monthCount">(10)</span>
+</a>
+      </li> <!-- close month --> 
+  </ul>
+     </div>
+  </li> <!-- end year -->
+  <li class='collapsing archives expand'><span title='click to expand' class='collapsing archives expand'><span class='sym'>&#x25BA;</span><a href='http://www.commitstrip.com/en/2018/'>2018 </a>
+</span>    <div style='display:none' id='collapsArch-2018:3'>
+    <ul>
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2018/12/' title='December'>December  <span class="monthCount">(7)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2018/11/' title='November'>November  <span class="monthCount">(10)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2018/10/' title='October'>October  <span class="monthCount">(6)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2018/09/' title='September'>September  <span class="monthCount">(6)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2018/08/' title='August'>August  <span class="monthCount">(8)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2018/07/' title='July'>July  <span class="monthCount">(1)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2018/06/' title='June'>June  <span class="monthCount">(4)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2018/05/' title='May'>May  <span class="monthCount">(2)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2018/04/' title='April'>April  <span class="monthCount">(10)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2018/03/' title='March'>March  <span class="monthCount">(13)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2018/02/' title='February'>February  <span class="monthCount">(10)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2018/01/' title='January'>January  <span class="monthCount">(13)</span>
+</a>
+      </li> <!-- close month --> 
+  </ul>
+     </div>
+  </li> <!-- end year -->
+  <li class='collapsing archives expand'><span title='click to expand' class='collapsing archives expand'><span class='sym'>&#x25BA;</span><a href='http://www.commitstrip.com/en/2017/'>2017 </a>
+</span>    <div style='display:none' id='collapsArch-2017:3'>
+    <ul>
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2017/12/' title='December'>December  <span class="monthCount">(9)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2017/11/' title='November'>November  <span class="monthCount">(6)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2017/10/' title='October'>October  <span class="monthCount">(7)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2017/09/' title='September'>September  <span class="monthCount">(11)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2017/08/' title='August'>August  <span class="monthCount">(4)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2017/06/' title='June'>June  <span class="monthCount">(7)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2017/05/' title='May'>May  <span class="monthCount">(11)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2017/04/' title='April'>April  <span class="monthCount">(5)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2017/03/' title='March'>March  <span class="monthCount">(5)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2017/02/' title='February'>February  <span class="monthCount">(10)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2017/01/' title='January'>January  <span class="monthCount">(11)</span>
+</a>
+      </li> <!-- close month --> 
+  </ul>
+     </div>
+  </li> <!-- end year -->
+  <li class='collapsing archives expand'><span title='click to expand' class='collapsing archives expand'><span class='sym'>&#x25BA;</span><a href='http://www.commitstrip.com/en/2016/'>2016 </a>
+</span>    <div style='display:none' id='collapsArch-2016:3'>
+    <ul>
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2016/12/' title='December'>December  <span class="monthCount">(9)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2016/11/' title='November'>November  <span class="monthCount">(8)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2016/10/' title='October'>October  <span class="monthCount">(7)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2016/09/' title='September'>September  <span class="monthCount">(9)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2016/08/' title='August'>August  <span class="monthCount">(5)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2016/07/' title='July'>July  <span class="monthCount">(15)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2016/06/' title='June'>June  <span class="monthCount">(14)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2016/05/' title='May'>May  <span class="monthCount">(19)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2016/04/' title='April'>April  <span class="monthCount">(14)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2016/03/' title='March'>March  <span class="monthCount">(17)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2016/02/' title='February'>February  <span class="monthCount">(17)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2016/01/' title='January'>January  <span class="monthCount">(17)</span>
+</a>
+      </li> <!-- close month --> 
+  </ul>
+     </div>
+  </li> <!-- end year -->
+  <li class='collapsing archives expand'><span title='click to expand' class='collapsing archives expand'><span class='sym'>&#x25BA;</span><a href='http://www.commitstrip.com/en/2015/'>2015 </a>
+</span>    <div style='display:none' id='collapsArch-2015:3'>
+    <ul>
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2015/12/' title='December'>December  <span class="monthCount">(16)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2015/11/' title='November'>November  <span class="monthCount">(17)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2015/10/' title='October'>October  <span class="monthCount">(17)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2015/09/' title='September'>September  <span class="monthCount">(19)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2015/08/' title='August'>August  <span class="monthCount">(15)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2015/07/' title='July'>July  <span class="monthCount">(17)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2015/06/' title='June'>June  <span class="monthCount">(12)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2015/05/' title='May'>May  <span class="monthCount">(14)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2015/04/' title='April'>April  <span class="monthCount">(19)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2015/03/' title='March'>March  <span class="monthCount">(19)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2015/02/' title='February'>February  <span class="monthCount">(20)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2015/01/' title='January'>January  <span class="monthCount">(17)</span>
+</a>
+      </li> <!-- close month --> 
+  </ul>
+     </div>
+  </li> <!-- end year -->
+  <li class='collapsing archives expand'><span title='click to expand' class='collapsing archives expand'><span class='sym'>&#x25BA;</span><a href='http://www.commitstrip.com/en/2014/'>2014 </a>
+</span>    <div style='display:none' id='collapsArch-2014:3'>
+    <ul>
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2014/12/' title='December'>December  <span class="monthCount">(20)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2014/11/' title='November'>November  <span class="monthCount">(15)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2014/10/' title='October'>October  <span class="monthCount">(16)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2014/09/' title='September'>September  <span class="monthCount">(19)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2014/08/' title='August'>August  <span class="monthCount">(17)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2014/07/' title='July'>July  <span class="monthCount">(16)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2014/06/' title='June'>June  <span class="monthCount">(19)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2014/05/' title='May'>May  <span class="monthCount">(13)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2014/04/' title='April'>April  <span class="monthCount">(20)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2014/03/' title='March'>March  <span class="monthCount">(17)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2014/02/' title='February'>February  <span class="monthCount">(16)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2014/01/' title='January'>January  <span class="monthCount">(16)</span>
+</a>
+      </li> <!-- close month --> 
+  </ul>
+     </div>
+  </li> <!-- end year -->
+  <li class='collapsing archives expand'><span title='click to expand' class='collapsing archives expand'><span class='sym'>&#x25BA;</span><a href='http://www.commitstrip.com/en/2013/'>2013 </a>
+</span>    <div style='display:none' id='collapsArch-2013:3'>
+    <ul>
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2013/12/' title='December'>December  <span class="monthCount">(8)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2013/11/' title='November'>November  <span class="monthCount">(14)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2013/10/' title='October'>October  <span class="monthCount">(17)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2013/09/' title='September'>September  <span class="monthCount">(19)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2013/08/' title='August'>August  <span class="monthCount">(20)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2013/07/' title='July'>July  <span class="monthCount">(22)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2013/06/' title='June'>June  <span class="monthCount">(20)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2013/05/' title='May'>May  <span class="monthCount">(20)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2013/04/' title='April'>April  <span class="monthCount">(21)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2013/03/' title='March'>March  <span class="monthCount">(22)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2013/02/' title='February'>February  <span class="monthCount">(19)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2013/01/' title='January'>January  <span class="monthCount">(18)</span>
+</a>
+      </li> <!-- close month --> 
+  </ul>
+     </div>
+  </li> <!-- end year -->
+  <li class='collapsing archives expand'><span title='click to expand' class='collapsing archives expand'><span class='sym'>&#x25BA;</span><a href='http://www.commitstrip.com/en/2012/'>2012 </a>
+</span>    <div style='display:none' id='collapsArch-2012:3'>
+    <ul>
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2012/12/' title='December'>December  <span class="monthCount">(14)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2012/11/' title='November'>November  <span class="monthCount">(17)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2012/10/' title='October'>October  <span class="monthCount">(20)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2012/09/' title='September'>September  <span class="monthCount">(18)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2012/08/' title='August'>August  <span class="monthCount">(18)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2012/07/' title='July'>July  <span class="monthCount">(16)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2012/06/' title='June'>June  <span class="monthCount">(13)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2012/05/' title='May'>May  <span class="monthCount">(17)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2012/04/' title='April'>April  <span class="monthCount">(18)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2012/03/' title='March'>March  <span class="monthCount">(21)</span>
+</a>
+      </li> <!-- close month --> 
+      <li class='collapsing archives '><a href='http://www.commitstrip.com/en/2012/02/' title='February'>February  <span class="monthCount">(5)</span>
+</a>
+  </li> <!-- close month --></div><!-- close year -->
+</li> <!-- end of collapsing archives --><li style='display:none'><script type="text/javascript">
+// <![CDATA[
+/* These variables are part of the Collapsing Archives Plugin
+   * version: 2.0.5
+   * revision: $Id: collapsArch.php 1715352 2017-08-18 14:30:00Z robfelty $
+   * Copyright 2008 Robert Felty (robfelty.com)
+           */
+try { collapsItems['catTest'] = 'test'; } catch (err) { collapsItems = new Object(); }
+collapsItems['collapsArch-2019-10:3'] = '';
+collapsItems['collapsArch-2019-9:3'] = '';
+collapsItems['collapsArch-2019-8:3'] = '';
+collapsItems['collapsArch-2019-7:3'] = '';
+collapsItems['collapsArch-2019-6:3'] = '';
+collapsItems['collapsArch-2019-5:3'] = '';
+collapsItems['collapsArch-2019-4:3'] = '';
+collapsItems['collapsArch-2019-3:3'] = '';
+collapsItems['collapsArch-2019-2:3'] = '';
+collapsItems['collapsArch-2019-1:3'] = '';
+collapsItems['collapsArch-2018-12:3'] = '';
+collapsItems['collapsArch-2018-11:3'] = '';
+collapsItems['collapsArch-2018-10:3'] = '';
+collapsItems['collapsArch-2018-9:3'] = '';
+collapsItems['collapsArch-2018-8:3'] = '';
+collapsItems['collapsArch-2018-7:3'] = '';
+collapsItems['collapsArch-2018-6:3'] = '';
+collapsItems['collapsArch-2018-5:3'] = '';
+collapsItems['collapsArch-2018-4:3'] = '';
+collapsItems['collapsArch-2018-3:3'] = '';
+collapsItems['collapsArch-2018-2:3'] = '';
+collapsItems['collapsArch-2018-1:3'] = '';
+collapsItems['collapsArch-2017-12:3'] = '';
+collapsItems['collapsArch-2017-11:3'] = '';
+collapsItems['collapsArch-2017-10:3'] = '';
+collapsItems['collapsArch-2017-9:3'] = '';
+collapsItems['collapsArch-2017-8:3'] = '';
+collapsItems['collapsArch-2017-6:3'] = '';
+collapsItems['collapsArch-2017-5:3'] = '';
+collapsItems['collapsArch-2017-4:3'] = '';
+collapsItems['collapsArch-2017-3:3'] = '';
+collapsItems['collapsArch-2017-2:3'] = '';
+collapsItems['collapsArch-2017-1:3'] = '';
+collapsItems['collapsArch-2016-12:3'] = '';
+collapsItems['collapsArch-2016-11:3'] = '';
+collapsItems['collapsArch-2016-10:3'] = '';
+collapsItems['collapsArch-2016-9:3'] = '';
+collapsItems['collapsArch-2016-8:3'] = '';
+collapsItems['collapsArch-2016-7:3'] = '';
+collapsItems['collapsArch-2016-6:3'] = '';
+collapsItems['collapsArch-2016-5:3'] = '';
+collapsItems['collapsArch-2016-4:3'] = '';
+collapsItems['collapsArch-2016-3:3'] = '';
+collapsItems['collapsArch-2016-2:3'] = '';
+collapsItems['collapsArch-2016-1:3'] = '';
+collapsItems['collapsArch-2015-12:3'] = '';
+collapsItems['collapsArch-2015-11:3'] = '';
+collapsItems['collapsArch-2015-10:3'] = '';
+collapsItems['collapsArch-2015-9:3'] = '';
+collapsItems['collapsArch-2015-8:3'] = '';
+collapsItems['collapsArch-2015-7:3'] = '';
+collapsItems['collapsArch-2015-6:3'] = '';
+collapsItems['collapsArch-2015-5:3'] = '';
+collapsItems['collapsArch-2015-4:3'] = '';
+collapsItems['collapsArch-2015-3:3'] = '';
+collapsItems['collapsArch-2015-2:3'] = '';
+collapsItems['collapsArch-2015-1:3'] = '';
+collapsItems['collapsArch-2014-12:3'] = '';
+collapsItems['collapsArch-2014-11:3'] = '';
+collapsItems['collapsArch-2014-10:3'] = '';
+collapsItems['collapsArch-2014-9:3'] = '';
+collapsItems['collapsArch-2014-8:3'] = '';
+collapsItems['collapsArch-2014-7:3'] = '';
+collapsItems['collapsArch-2014-6:3'] = '';
+collapsItems['collapsArch-2014-5:3'] = '';
+collapsItems['collapsArch-2014-4:3'] = '';
+collapsItems['collapsArch-2014-3:3'] = '';
+collapsItems['collapsArch-2014-2:3'] = '';
+collapsItems['collapsArch-2014-1:3'] = '';
+collapsItems['collapsArch-2013-12:3'] = '';
+collapsItems['collapsArch-2013-11:3'] = '';
+collapsItems['collapsArch-2013-10:3'] = '';
+collapsItems['collapsArch-2013-9:3'] = '';
+collapsItems['collapsArch-2013-8:3'] = '';
+collapsItems['collapsArch-2013-7:3'] = '';
+collapsItems['collapsArch-2013-6:3'] = '';
+collapsItems['collapsArch-2013-5:3'] = '';
+collapsItems['collapsArch-2013-4:3'] = '';
+collapsItems['collapsArch-2013-3:3'] = '';
+collapsItems['collapsArch-2013-2:3'] = '';
+collapsItems['collapsArch-2013-1:3'] = '';
+collapsItems['collapsArch-2012-12:3'] = '';
+collapsItems['collapsArch-2012-11:3'] = '';
+collapsItems['collapsArch-2012-10:3'] = '';
+collapsItems['collapsArch-2012-9:3'] = '';
+collapsItems['collapsArch-2012-8:3'] = '';
+collapsItems['collapsArch-2012-7:3'] = '';
+collapsItems['collapsArch-2012-6:3'] = '';
+collapsItems['collapsArch-2012-5:3'] = '';
+collapsItems['collapsArch-2012-4:3'] = '';
+collapsItems['collapsArch-2012-3:3'] = '';
+collapsItems['collapsArch-2012-2:3'] = 'collapsArch-2012-2:3';
+/*  Collapse Functions, version 2.0
+ *
+ *--------------------------------------------------------------------------*/
+String.prototype.trim = function() {
+  return this.replace(/^\s+|\s+$/g,"");
+}
+
+function createCookie(name,value,days) {
+  if (days) {
+    var date = new Date();
+    date.setTime(date.getTime()+(days*24*60*60*1000));
+    var expires = "; expires="+date.toGMTString();
+  } else {
+    var expires = "";
+  }
+  document.cookie = name+"="+value+expires+"; path=/";
+}
+
+function readCookie(name) {
+  var nameEQ = name + "=";
+  var ca = document.cookie.split(';');
+  for(var i=0;i < ca.length;i++) {
+    var c = ca[i];
+    while (c.charAt(0)==' ') {
+      c = c.substring(1,c.length);
+    }
+    if (c.indexOf(nameEQ) == 0) {
+      return c.substring(nameEQ.length,c.length);
+    }
+  }
+  return null;
+}
+
+function eraseCookie(name) {
+  createCookie(name,"",-1);
+}
+
+function addExpandCollapse(id, expandSym, collapseSym, accordion) {
+  jQuery('#' + id + ' span.expand').on('click.collapsingArchives', function() {
+    if (accordion==1) {
+      var theDiv = jQuery(this).parent().parent().find('span.collapse').parent().children('div');
+      jQuery(theDiv).hide('normal');
+      jQuery(this).parent().parent().find('span.collapse').removeClass('collapse').addClass('expand');
+      createCookie(theDiv.attr('id'), 0, 7);
+      jQuery(this).parent().parent().find('span.sym').html(expandSym);
+      //jQuery('#' + id + ' .expand .sym').html(expandSym);
+    }
+    expandArch(this, expandSym, collapseSym);
+    return false;
+  });
+  jQuery('#' + id + ' span.collapse').on('click.collapsingArchives', function() {
+    collapseArch(this, expandSym, collapseSym);
+    return false;
+  });
+}
+
+function expandArch(symbol, expandSym, collapseSym) {
+    var theDiv = jQuery(symbol).parent().children('div');
+    try {
+      if (collapsItems[jQuery(theDiv).attr('id')]!='') {
+        jQuery(theDiv).html(collapsItems[jQuery(theDiv).attr('id')]).show('normal');
+      } else {
+        jQuery(theDiv).show('normal');
+      }
+    } catch (err) {
+      jQuery(theDiv).show('normal');
+    }
+    jQuery(symbol).removeClass('expand').addClass('collapse');
+    jQuery(symbol).children('.sym').html(collapseSym);
+    jQuery(symbol).off('click.collapsingArchives').on('click.collapsingArchives', function() {
+      collapseArch(symbol, expandSym, collapseSym);
+      return false;
+    });
+  createCookie(theDiv.attr('id'), 1, 7);
+}
+function collapseArch(symbol, expandSym, collapseSym) {
+    var theDiv = jQuery(symbol).parent().children('div');
+    jQuery(theDiv).hide('normal');
+    jQuery(symbol).removeClass('collapse').addClass('expand');
+    jQuery(symbol).children('.sym').html(expandSym);
+    jQuery(symbol).off('click.collapsingArchives').on('click.collapsingArchives', function() {
+      expandArch(symbol, expandSym, collapseSym);
+      return false;
+    });
+  createCookie(theDiv.attr('id'), 0, 7);
+}
+addExpandCollapse('widget-collapsarch-3-top','&#x25BA;', '&#x25BC;', 0)// ]]>
+</script></li>
+</ul>
+</aside><aside id="search-5" class="widget widget_search">	<form method="get" id="searchform" action="http://www.commitstrip.com/en/">
+		<label for="s" class="assistive-text">Search</label>
+		<input type="text" class="field" name="s" id="s" placeholder="Search" />
+		<input type="submit" class="submit" name="submit" id="searchsubmit" value="Search" />
+	</form>
+</aside><aside id="custom_html-2" class="widget_text widget widget_custom_html"><h3 class="widget-title">Blogroll</h3><div class="textwidget custom-html-widget"><div class="contentEN">
+	<a href="http://thewechatagency.com" target="_blank" rel="noopener noreferrer">The WeChat Agency - WeChat Expertise- Branding, Marketing, CRM & E-commerce on WeChat</a><br/>
+<a href="http://www.yelda.ai" target="_blank" rel="noopener noreferrer">Yelda</a> : <a href="http://www.yelda.ai " target="_blank" rel="noopener noreferrer">Yelda, bots platform on Google Home, Alexa and Messenger
+</a>, our new startup (by CommitStrip founder)<br/>
+<a href="https://www.singulart.com/en/" target="_blank" rel="noopener noreferrer">Buy Art Online – Singulart</a>: we work there too!
+</div>
+<div class="contentFR">
+	<a href="http://thewechatagency.com" target="_blank" rel="noopener noreferrer">The WeChat Agency - WeChat Expertise- Branding, Marketing, CRM & E-commerce on WeChat</a><br/>
+<a href="http://www.yelda.ai" target="_blank" rel="noopener noreferrer">Yelda</a> : <a href="http://www.yelda.ai " target="_blank" rel="noopener noreferrer">Yelda,  plateforme de bots sur Google Home, Alexa et Messenger</a>, notre nouvelle startup (par les fondateurs de CommitStrip)<br/>
+<a href="https://www.singulart.com/en/" target="_blank" rel="noopener noreferrer">Buy Art Online – Singulart</a>: we work there too!
+</div>
+<style>html:lang(en-US) .contentFR, html:lang(fr-FR) .contentEN{display:none;}</style>
+
+</div></aside>			</div><!-- #secondary .widget-area -->
+		</div><!-- #main -->
+
+	<footer id="colophon" role="contentinfo">
+
+			
+<div id="supplementary" class="three">
+		<div id="first" class="widget-area" role="complementary">
+		<aside id="text-3" class="widget widget_text"><h3 class="widget-title">We&#8217;re hiring</h3>			<div class="textwidget"><div class="contentEN"><a style="background: #d54e0a;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    display: block;
+    margin: 10px 0;
+    font-size: 15px;" href="https://docs.google.com/document/d/1qf_sSDjmFDjHxgeJPxTlclkU-5euYmZm1eEwc0B-lak/edit">View Job Description</a><p style="padding-left: 9px; border-left: 4px solid #CCC;">I'm hiring <a href="https://docs.google.com/document/d/1qf_sSDjmFDjHxgeJPxTlclkU-5euYmZm1eEwc0B-lak/edit">JS developers</a> and data scientists to join me in my new start-up, <a href="https://yelda.ai/" style="font-weight: bold; color: #612d6b">Yelda</a>. We're building a Virtual Assistants platform to allow all companies in the world to activate their assistant in a minute. <b><a href="https://docs.google.com/document/d/1qf_sSDjmFDjHxgeJPxTlclkU-5euYmZm1eEwc0B-lak/edit">Join us now !</a></b> It's only the beginning of the Age of the Assistance, we've the same feeling than when we were building the first web CMS in the early 2000's!</p>
+<b><a href="http://linkedin.com/in/thomasgx/">Thomas Gx, CommitStrip founder & Yelda CEO</a></b><br/>
+
+</div>
+<div class="contentFR"><a style="background: #d54e0a;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    display: block;
+    margin: 10px 0;
+    font-size: 15px;" href="https://docs.google.com/document/d/1qf_sSDjmFDjHxgeJPxTlclkU-5euYmZm1eEwc0B-lak/edit">Voir l'offre</a><p style="padding-left: 9px; border-left: 4px solid #CCC;">Je recrute des <a href="https://docs.google.com/document/d/1qf_sSDjmFDjHxgeJPxTlclkU-5euYmZm1eEwc0B-lak/edit">développeurs JS</a> et des data scientists pour me rejoindre dans ma nouvelle start-up, <a href="http://yelda.ai/" style="font-weight: bold; color: #612d6b">Yelda</a>. Nous construisons une plateforme d'assistants virtuels qui permet aux entreprises d'activer leurs assistants en quelques minutes. <b><a href="https://docs.google.com/document/d/1qf_sSDjmFDjHxgeJPxTlclkU-5euYmZm1eEwc0B-lak/edit">Rejoignez-nous</a></b>, c'est le moment ! Ce n'est encore que le début de l'Ère de l'Assistance, on a les mêmes sensations que quand on on développait les premiers CMS web au début des années 2000&nbsp;!</p>
+<b><a href="http://linkedin.com/in/thomasgx/">Thomas Gx, CommitStrip founder & Yelda CEO</a></b><br/>
+
+</div>
+<style>html:lang(en-US) .contentFR, html:lang(fr-FR) .contentEN{display:none;}</style>
+
+</div>
+		</aside>	</div><!-- #first .widget-area -->
+	</div><!-- #supplementary -->
+			<div id="site-generator">
+								<!--<a href="" title="" rel="generator"></a> 
+				<a href="http://www.commitstrip.com">Home</a>&nbsp;&nbsp;&nbsp;-->
+				<span>CommitStrip</span>
+			</div>
+	</footer><!-- #colophon -->
+</div><!-- #page -->
+
+<script>
+
+	//Newsletter
+	var Newsletter	=	{
+
+		emailReg	:	/^(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){255,})(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){65,}@)(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22))(?:\.(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22)))*@(?:(?:(?!.*[^.]{64,})(?:(?:(?:xn--)?[a-z0-9]+(?:-[a-z0-9]+)*\.){1,126}){1,}(?:(?:[a-z][a-z0-9]*)|(?:(?:xn--)[a-z0-9]+))(?:-[a-z0-9]+)*)|(?:\[(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){7})|(?:(?!(?:.*[a-f0-9][:\]]){7,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?)))|(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){5}:)|(?:(?!(?:.*[a-f0-9]:){5,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3}:)?)))?(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))(?:\.(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))){3}))\]))$/i,
+
+		check : function()
+		{
+			if(Newsletter.emailReg.test($('#jklrjhu-jklrjhu').val()) === false)
+			{
+				$('#jklrjhu-jklrjhu').css('border', '1px solid red');
+				$('#jklrjhu-jklrjhu').focus();
+				return false;
+			}
+
+			createCookie('is_newsletter', '1', 1000);
+
+			return true;
+		},
+
+		preview : function (){
+			window.open("http://www.commitstrip.com/wp-content/themes/krds_blog/newsletter-sample.php","The Newsletter by CommitStrip","menubar=no, status=no, scrollbars=yes, menubar=no, width=820, height=500");
+			$('#sample').hide();
+			$('#youlikeit').show();
+
+		}
+	};
+
+	function createCookie(name, value, days) {
+		if (days) {
+			var date = new Date();
+			date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+			var expires = "; expires=" + date.toGMTString();
+		} else var expires = "";
+		document.cookie = escape(name) + "=" + escape(value) + expires + "; path=/";
+	};
+</script>
+
+<script>
+var keyarr = [];
+var keys = {
+	48:'0',49:'1',50:'2',51:'3',52:'4',53:'5',	54:'6',55:'7',56:'8',	57:'9',
+	96:'0',97:'1',98:'2',99:'3',100:'4',101:'5',102:'6',103:'7',104:'8',105:'9'
+};
+document.onkeydown = checkKey;
+function checkKey(e) {
+var el = document.activeElement.tagName;
+if( el.toLowerCase() == 'body' ){	
+e = e || window.event;
+
+if(e.keyCode == 37){
+window.location.href = 'http://www.commitstrip.com/en/2019/09/06/meanwhile-in-a-parallel-universe-5/';
+}
+if(e.keyCode == 39){
+window.location.href = 'http://www.commitstrip.com/en/2019/09/13/one-small-step-for-a-coder/';
+}
+}
+}
+</script>
+
+<script type='text/javascript' src='http://www.commitstrip.com/wp-includes/js/wp-embed.min.js?ver=5.2.4'></script>
+
+</body>
+</html>
+
+<!--
+Performance optimized by W3 Total Cache. Learn more: https://www.w3-edge.com/products/
+
+Object Caching 30/31 objects using disk
+Page Caching using disk: enhanced (Requested URI contains query) 
+
+Served from: www.commitstrip.com @ 2019-11-03 20:28:55 by W3 Total Cache
+-->

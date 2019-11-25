@@ -1,5 +1,6 @@
 const kafka = require('../lib/kafka');
 const logger = require('../lib/logger');
+const getExpandedUrl = require('../lib/getExpandedUrl')
 
 const add = require('./add');
 const index = require('./doIndex')
@@ -9,6 +10,8 @@ const TOPIC_NEW_CONTENT = "NewContent";
 const CLIENT_RESPONSE = "ClientResponse";
 
 const consumer = kafka.consumer({ groupId: 'comics-group' })
+
+
 
 const startListening = async () => {
 
@@ -22,21 +25,16 @@ const startListening = async () => {
             try {
                 const value = JSON.parse(message.value);
 
-                if (value.type === 'tweet') {
-                    const expandedURL = value.content.entities.urls && value.content.entities.urls.length > 0 && value.content.entities.urls[0].expanded_url;
-
-                    if (expandedURL) {
-                        const url = value.content.entities.media && value.content.entities.media.length > 0 && value.content.entities.media[0].media_url_https;
-                        add({ url, guessedDomain: expandedURL });
-                    }
-
-                    return;
-                }
                 switch (topic) {
                     case TOPIC_NEW_URL:
                         add(value);
                         break;
                     case TOPIC_NEW_CONTENT:
+                        if (value.type === 'tweet') {
+                            url = getExpandedUrl(value)
+                            add({ url });
+                        }
+
                         index(value);
                         break;
                 }
@@ -49,9 +47,7 @@ const startListening = async () => {
     logger.app.info("started listening");
 }
 
-startListening();
-
 module.exports = {
-    consumer
+    startListening
 };
 
